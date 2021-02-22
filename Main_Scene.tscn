@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Voxel_Terrain_System/Voxel_World.gd" type="Script" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://particles/BreakBlock.tscn" type="PackedScene" id=3]
+
+[node name="Voxel_World" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Chunks" type="Spatial" parent="."]
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0 )
+JUMP_SPEED = 6.0
+path_to_voxel_world = NodePath("..")
+
+[node name="BreakBlock" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01682, 5.74009, 4.09622 )
