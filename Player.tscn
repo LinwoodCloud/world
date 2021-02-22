@@ -47,6 +47,9 @@ text = "FPS"
 valign = 1
 uppercase = true
 script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
 anchor_left = 0.5
@@ -64,8 +67,7 @@ __meta__ = {
 path_to_player = NodePath("../../../..")
 
 [node name="StoneTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
-margin_left = 32.0
-margin_right = 96.0
+margin_right = 64.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
 script = ExtResource( 4 )
@@ -88,8 +90,8 @@ region_enabled = true
 region_rect = Rect2( 64, 0, 64, 64 )
 
 [node name="CobbleTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
-margin_left = 100.0
-margin_right = 164.0
+margin_left = 68.0
+margin_right = 132.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
 script = ExtResource( 4 )
@@ -112,8 +114,8 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
 
 [node name="BedrockTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
-margin_left = 168.0
-margin_right = 232.0
+margin_left = 136.0
+margin_right = 200.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
 script = ExtResource( 4 )
@@ -134,8 +136,8 @@ region_enabled = true
 region_rect = Rect2( 128, 0, 64, 64 )
 
 [node name="GrassTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
-margin_left = 236.0
-margin_right = 300.0
+margin_left = 204.0
+margin_right = 268.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
 script = ExtResource( 4 )
@@ -156,8 +158,8 @@ region_enabled = true
 region_rect = Rect2( 64, 64, 64, 64 )
 
 [node name="DirtTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
-margin_left = 304.0
-margin_right = 368.0
+margin_left = 272.0
+margin_right = 336.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
 script = ExtResource( 4 )
@@ -176,6 +178,28 @@ scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 0, 64, 64, 64 )
+
+[node name="FlowerTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
+margin_left = 340.0
+margin_right = 404.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 2 )
+script = ExtResource( 4 )
+voxel_name = "Flower"
+
+[node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/FlowerTextureButton"]
+visible = false
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/FlowerTextureButton"]
+position = Vector2( 32, 32 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 128, 64, 64 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )

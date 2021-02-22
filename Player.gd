@@ -85,7 +85,6 @@ func process_input(delta):
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	# ----------------------------------
-func _unhandled_input(event):
 	if Input.is_action_just_pressed("use"):
 		do_raycast = true
 		mode_remove_voxel = false

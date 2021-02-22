@@ -32,6 +32,9 @@ var voxel_dictionary = {
 		{"transparent":false, "solid":true,
 		"texture":Vector2(0, 1), "texture_TOP":Vector2(2, 1),
 		"texture_NORTH":Vector2(1, 1), "texture_SOUTH":Vector2(1, 1), "texture_EAST":Vector2(1, 1), "texture_WEST":Vector2(1, 1)},
+	"Flower":
+		{"transparent":false, "solid":false,
+		"texture":Vector2(0, 2)},
 }
 
 # A list that we will use to store the voxels. We'll use this so we can store the
