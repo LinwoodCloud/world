@@ -499,10 +499,10 @@ func set_voxel_at_position(position, voxel):
 		# Update the mesh so that the new voxel is rendered.
 		update_mesh();
 		
-		var particle = particle_scene.instance()
-		particle.transform.origin = position
-		
-		add_child(particle)
+		if(voxel == null):
+			var particle = particle_scene.instance()
+			particle.transform.origin = position
+			add_child(particle)
 		
 		# Return true, as the voxel was placed successfully.
 		return true;
