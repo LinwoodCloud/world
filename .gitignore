@@ -12,3 +12,6 @@ data_*/
 
 # Exports
 export/
+
+# Editor
+.vscode

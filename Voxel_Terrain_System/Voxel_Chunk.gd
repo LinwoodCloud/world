@@ -67,11 +67,11 @@ func setup(p_chunk_size_x, p_chunk_size_y, p_chunk_size_z, p_voxel_size):
 	# Notice how we are making row and column lists, appending to them, and then adding
 	# these lists to voxels. This will make us a list of lists, effectively making a 3D list.
 	voxels = [];
-	for x in range(0, chunk_size_x):
+	for _x in range(0, chunk_size_x):
 		var row = [];
-		for y in range(0, chunk_size_y):
+		for _y in range(0, chunk_size_y):
 			var column = [];
-			for z in range(0, chunk_size_z):
+			for _z in range(0, chunk_size_z):
 				column.append(null);
 			row.append(column);
 		voxels.append(row);
