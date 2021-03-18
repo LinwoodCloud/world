@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-namespace LinwoodWorld.Terrain
+namespace LinwoodWorld.System
 {
     public abstract class Block
     {

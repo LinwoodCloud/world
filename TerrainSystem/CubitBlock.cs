@@ -1,7 +1,8 @@
 using Godot;
 using Godot.Collections;
 
-namespace LinwoodWorld.Terrain {
+namespace LinwoodWorld.System
+{
     public abstract class CubitBlock : Block
     {
         public enum Face
