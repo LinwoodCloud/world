@@ -80,6 +80,11 @@ previous_slot={
  ]
 }
 
+[mono]
+
+debugger_agent/wait_for_debugger=true
+debugger_agent/wait_timeout=15000
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
