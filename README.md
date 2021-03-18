@@ -13,18 +13,16 @@
 
 #### Android
 
-- [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/app-release.apk)
-- [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/app-release.apk)
+- [Stable](https://github.com/LinwoodCloud/world/releases/download/release/app-release.apk)
+- [Preview](https://github.com/LinwoodCloud/world/releases/download/preview/app-release.apk)
 
 ##### Stores
 
-- Play Store: <https://play.google.com/store/apps/details?id=com.github.linwoodcloud.dev_doctor>
-- SkyDroid: <https://to.skydroid.app/com.github.linwoodcloud.dev_doctor.izzyondroid>
-- FDroid: <https://www.f-droid.org/en/packages/com.github.linwoodcloud.dev_doctor/>
+> Currently not available
 
 ###### Community
 
-- ApkPure: <https://apkpure.com/dev-doctor/com.github.linwoodcloud.dev_doctor>
+> Currently not available
 
 #### iOS
 
@@ -39,13 +37,13 @@
 
 #### Windows
 
-- [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/windows.zip)
-- [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/windows.zip)
+- [Stable](https://github.com/LinwoodCloud/world/releases/download/release/windows.zip)
+- [Preview](https://github.com/LinwoodCloud/world/releases/download/preview/windows.zip)
 
 #### Linux
 
-- [Stable](https://github.com/LinwoodCloud/dev_doctor/releases/download/release/linux.zip)
-- [Preview](https://github.com/LinwoodCloud/dev_doctor/releases/download/preview/linux.zip)
+- [Stable](https://github.com/LinwoodCloud/world/releases/download/release/linux.zip)
+- [Preview](https://github.com/LinwoodCloud/world/releases/download/preview/linux.zip)
 
 #### MacOS
 
