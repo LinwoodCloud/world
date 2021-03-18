@@ -204,23 +204,46 @@ region_enabled = true
 region_rect = Rect2( 0, 128, 64, 64 )
 
 [node name="InfoHBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
-anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -200.0
-margin_top = -108.0
+margin_left = 15.0
+margin_top = 6.10352e-05
+margin_right = 158.0
+margin_bottom = 250.0
+rect_rotation = -90.0
+alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextureProgress" type="TextureProgress" parent="Rotation_Helper/Camera/Control/InfoHBoxContainer"]
-margin_right = 10.0
-margin_bottom = 108.0
+margin_right = 50.0
+margin_bottom = 250.0
 texture_under = ExtResource( 8 )
 texture_over = ExtResource( 7 )
 texture_progress = ExtResource( 8 )
 fill_mode = 2
+tint_under = Color( 0.729412, 0.203922, 0.203922, 1 )
+
+[node name="TextureProgress2" type="TextureProgress" parent="Rotation_Helper/Camera/Control/InfoHBoxContainer"]
+margin_left = 54.0
+margin_right = 104.0
+margin_bottom = 250.0
+texture_under = ExtResource( 8 )
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 8 )
+fill_mode = 2
+tint_under = Color( 0.729412, 0.52549, 0.203922, 1 )
+
+[node name="TextureProgress3" type="TextureProgress" parent="Rotation_Helper/Camera/Control/InfoHBoxContainer"]
+margin_left = 108.0
+margin_right = 158.0
+margin_bottom = 250.0
+texture_under = ExtResource( 8 )
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 8 )
+fill_mode = 2
+tint_under = Color( 0.203922, 0.545098, 0.729412, 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )

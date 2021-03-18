@@ -4,8 +4,6 @@
 [ext_resource path="res://Voxel_Terrain_System/2D_Assets/Tileset.png" type="Texture" id=2]
 
 [sub_resource type="SpatialMaterial" id=1]
-flags_unshaded = true
-flags_world_triplanar = true
 albedo_texture = ExtResource( 2 )
 
 [sub_resource type="BoxShape" id=2]
