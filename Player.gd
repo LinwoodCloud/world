@@ -45,7 +45,7 @@ func _physics_process(delta):
 			else:
 				voxel_world.set_world_voxel(result.position - (result.normal/2), null);
 
-func process_input(delta):
+func process_input(_delta):
 
 	# ----------------------------------
 	# Walking
