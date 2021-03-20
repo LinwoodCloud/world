@@ -15,6 +15,7 @@ var time = 0
 var start = false
 func _ready():
 	emitting = true
+
 func _process(delta):
 	 if not emitting:
 		  start = true

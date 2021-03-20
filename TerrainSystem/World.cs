@@ -23,12 +23,19 @@ namespace LinwoodWorld.System
             var tex = new ImageTexture();
             var img = new Image();
             img.Lock();
-            img.Create(400, 400, false, Image.Format.Rgb8);
+            var size = images.Count * 64;
+            var sizeX = 512 % size;
+            var sizeY = 512 / size * 64;
+            img.Create(sizeX, sizeY, false, Image.Format.Rgb8);
 
             coords = new Array<Vector2>();
-            foreach (var image in images)
+            for (int i = 0; i < images.Count; i++)
             {
-                var coord = new Vector2(0, 0);
+                var image = images[i];
+                var imageSize = i*64;
+                var x = 512 % imageSize;
+                var y = 512 / imageSize * 64;
+                var coord = new Vector2(x, y);
                 img.BlitRect(image, image.GetUsedRect(), coord);
                 coords.Add(coord);
             }
