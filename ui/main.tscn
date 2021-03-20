@@ -1,11 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://ui/MainScene.cs" type="Script" id=1]
+[ext_resource path="res://textures/blur_background.png" type="Texture" id=2]
 [ext_resource path="res://ui/Roboto-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://ui/blur.shader" type="Shader" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
 font_data = ExtResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 4 )
+shader_param/blur_amount = 1.909
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -14,6 +20,10 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+
+[node name="ForegroundLayer" type="CanvasLayer" parent="."]
 
 [node name="Panel" type="Panel" parent="."]
 anchor_bottom = 1.0
@@ -56,21 +66,21 @@ __meta__ = {
 }
 
 [node name="PlayButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 186.0
+margin_top = 192.0
 margin_right = 346.0
-margin_bottom = 208.0
+margin_bottom = 212.0
 text = "Play"
 flat = true
 
 [node name="OptionsButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 212.0
+margin_top = 216.0
 margin_right = 346.0
-margin_bottom = 234.0
+margin_bottom = 236.0
 text = "Options"
 flat = true
 
 [node name="NewsButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 238.0
+margin_top = 240.0
 margin_right = 346.0
 margin_bottom = 260.0
 text = "News"
@@ -79,23 +89,33 @@ flat = true
 [node name="WebsiteButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
 margin_top = 264.0
 margin_right = 346.0
-margin_bottom = 286.0
+margin_bottom = 284.0
 text = "Website"
 flat = true
 
 [node name="SourceButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 290.0
+margin_top = 288.0
 margin_right = 346.0
-margin_bottom = 312.0
+margin_bottom = 308.0
 text = "Source"
 flat = true
 
 [node name="Button3" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 316.0
+margin_top = 312.0
 margin_right = 346.0
-margin_bottom = 338.0
+margin_bottom = 332.0
 text = "Quit"
 flat = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/NewsButton" to="." method="OnNewsButtonPressed"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/WebsiteButton" to="." method="OnWebsiteButtonPressed"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/SourceButton" to="." method="OnSourceButtonPressed"]

@@ -21,20 +21,16 @@ _global_script_class_icons={
 [application]
 
 config/name="LinwoodWorld"
-run/main_scene="res://ui/main.tscn"
+run/main_scene="res://Main_Scene.tscn"
 config/icon="res://icon.png"
 
 [debug]
 
 settings/stdout/print_fps=true
 
-[editor_plugins]
+[display]
 
-enabled=PoolStringArray(  )
-
-[gui]
-
-theme/custom="res://ui/default_theme.tres"
+window/vsync/use_vsync=false
 
 [input]
 
