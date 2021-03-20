@@ -2,14 +2,8 @@
 
 [ext_resource path="res://Voxel_Terrain_System/Voxel_Chunk.gd" type="Script" id=1]
 
-[sub_resource type="StreamTexture" id=1]
-flags = 16
-load_path = "res://.import/Tileset.png-9cca0e2cb86a558fec75ad91b1d0a557.stex"
-
-[sub_resource type="SpatialMaterial" id=2]
-flags_unshaded = true
-flags_world_triplanar = true
-albedo_texture = SubResource( 1 )
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 2 )
 
 [sub_resource type="BoxShape" id=3]
 

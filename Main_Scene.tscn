@@ -1,8 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Voxel_Terrain_System/Voxel_World.gd" type="Script" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://discord.gd" type="Script" id=4]
+
+[sub_resource type="ProceduralSky" id=1]
+sky_top_color = Color( 0.364706, 0.580392, 0.698039, 1 )
+sun_color = Color( 0.862745, 0.843137, 0.4, 1 )
+sun_energy = 1.33
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+ambient_light_color = Color( 0.576471, 0.576471, 0.576471, 1 )
+ambient_light_energy = 0.18
+glow_enabled = true
 
 [node name="Voxel_World" type="Spatial"]
 script = ExtResource( 1 )
@@ -16,3 +28,11 @@ path_to_voxel_world = NodePath("..")
 
 [node name="Spatial" type="Spatial" parent="."]
 script = ExtResource( 4 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.563944, 0.825813, 0, -0.825813, -0.563944, 0, 33.0581, 0 )
+light_energy = 1.32
+shadow_enabled = true
