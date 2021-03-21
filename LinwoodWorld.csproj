@@ -2,4 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NLua" Version="1.5.7" />
+  </ItemGroup>
 </Project>
