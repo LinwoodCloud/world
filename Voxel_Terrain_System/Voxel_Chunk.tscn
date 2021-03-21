@@ -12,7 +12,6 @@ albedo_texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-material_override = SubResource( 2 )
 
 [node name="StaticBody" type="StaticBody" parent="."]
 

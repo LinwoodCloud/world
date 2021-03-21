@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://particles/BreakBlock.tscn" type="PackedScene" id=1]
 [ext_resource path="res://textures/dirt.png" type="Texture" id=2]
@@ -47,3 +47,6 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
 shape = SubResource( 5 )
+
+[node name="Spatial" type="Spatial" parent="."]
+script = ExtResource( 4 )
