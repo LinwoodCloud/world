@@ -4,7 +4,7 @@ namespace LinwoodWorld.System
 {
     public abstract class Block
     {
-		public abstract bool CausedRender(VoxelChunk chunk);
+        public abstract bool CausedRender(VoxelChunk chunk);
         //public abstract void BuildVoxelFace(Chunk chunk);
 
         // Declare member variables here. Examples:
@@ -17,6 +17,6 @@ namespace LinwoodWorld.System
         //  {
         //      
         //  }
-		public abstract void Render(VoxelChunk chunk, out Godot.Collections.Array<Vector3> verticies, out Godot.Collections.Array<Vector3> normals, out Godot.Collections.Array<Vector3> collision);
+        public abstract void Render(VoxelChunk chunk, out Godot.Collections.Array<Vector3> verticies, out Godot.Collections.Array<Vector3> normals, out Godot.Collections.Array<Vector3> collision);
     }
 }

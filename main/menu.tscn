@@ -1,0 +1,166 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://ui/Roboto-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://main/MainMenuScript.cs" type="Script" id=2]
+[ext_resource path="res://textures/blur_background.png" type="Texture" id=3]
+[ext_resource path="res://ui/blur.shader" type="Shader" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 36
+font_data = ExtResource( 1 )
+
+[sub_resource type="InputEventAction" id=3]
+action = "ui_cancel"
+
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 4 )
+shader_param/blur_amount = 2.94
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.45446
+margin_top = -0.263977
+margin_right = 1.45447
+margin_bottom = -0.263977
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_bottom = 1.0
+margin_right = 346.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -150.0
+margin_right = 150.0
+margin_bottom = 51.0
+custom_fonts/font = SubResource( 1 )
+text = "Linwood World"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 75.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
+margin_right = 346.0
+margin_bottom = 525.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ContinueButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 147.0
+margin_right = 346.0
+margin_bottom = 169.0
+rect_pivot_offset = Vector2( -321.039, -356.588 )
+text = "Continue"
+flat = true
+
+[node name="CreateButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 173.0
+margin_right = 346.0
+margin_bottom = 195.0
+rect_pivot_offset = Vector2( -321.039, -356.588 )
+text = "Create"
+flat = true
+
+[node name="LoadButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 199.0
+margin_right = 346.0
+margin_bottom = 221.0
+rect_pivot_offset = Vector2( -321.039, -356.588 )
+text = "Load"
+flat = true
+
+[node name="ModsButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 225.0
+margin_right = 346.0
+margin_bottom = 247.0
+rect_pivot_offset = Vector2( -321.039, -356.588 )
+text = "Mods"
+flat = true
+
+[node name="OptionsButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 251.0
+margin_right = 346.0
+margin_bottom = 273.0
+text = "Options"
+flat = true
+
+[node name="NewsButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 277.0
+margin_right = 346.0
+margin_bottom = 299.0
+text = "News"
+flat = true
+
+[node name="WebsiteButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 303.0
+margin_right = 346.0
+margin_bottom = 325.0
+text = "Website"
+flat = true
+
+[node name="SourceButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 329.0
+margin_right = 346.0
+margin_bottom = 351.0
+text = "Source"
+flat = true
+
+[node name="QuitButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 355.0
+margin_right = 346.0
+margin_bottom = 377.0
+shortcut = SubResource( 4 )
+text = "Quit"
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="TextureRect"]
+margin_left = 300.813
+margin_top = 156.359
+margin_right = 738.813
+margin_bottom = 461.359
+
+[node name="Label" type="Label" parent="TextureRect/Panel"]
+margin_right = 378.0
+margin_bottom = 38.0
+text = "Load"
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/NewsButton" to="." method="OnNewsButtonPressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/WebsiteButton" to="." method="OnWebsiteButtonPressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/SourceButton" to="." method="OnSourceButtonPressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/QuitButton" to="." method="OnQuitButtonPressed"]
