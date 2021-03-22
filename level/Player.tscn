@@ -1,6 +1,6 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://level/Player.gd" type="Script" id=1]
+[ext_resource path="res://level/Player.cs" type="Script" id=1]
 [ext_resource path="res://textures/slot.png" type="Texture" id=2]
 [ext_resource path="res://Voxel_Terrain_System/2D_Assets/Tileset.png" type="Texture" id=3]
 [ext_resource path="res://Voxel_Inventory_Button.gd" type="Script" id=4]
@@ -9,7 +9,7 @@
 [ext_resource path="res://textures/bar_over.png" type="Texture" id=7]
 [ext_resource path="res://textures/bar.png" type="Texture" id=8]
 [ext_resource path="res://textures/crosshair.png" type="Texture" id=9]
-
+[ext_resource path="res://level/pause.tscn" type="PackedScene" id=10]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Label
@@ -46,7 +46,6 @@ radius = 0.2
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
-JUMP_SPEED = 10.0
 
 [node name="Rotation_Helper" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0 )
@@ -57,10 +56,10 @@ far = 2000.0
 [node name="Control" type="Control" parent="Rotation_Helper/Camera"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 3.31482
-margin_top = -1.1954
-margin_right = 3.3147
-margin_bottom = -1.19543
+margin_left = 2.68488
+margin_top = -0.565426
+margin_right = 2.68481
+margin_bottom = -0.565491
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -68,7 +67,7 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Rotation_Helper/Camera/Control"]
 margin_right = 174.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 text = "FPS"
 valign = 1
 uppercase = true
@@ -246,7 +245,7 @@ margin_bottom = 250.0
 texture_under = ExtResource( 8 )
 texture_over = ExtResource( 7 )
 texture_progress = ExtResource( 8 )
-fill_mode = 2
+fill_mode = 3
 tint_under = Color( 0.729412, 0.203922, 0.203922, 1 )
 
 [node name="TextureProgress2" type="TextureProgress" parent="Rotation_Helper/Camera/Control/InfoHBoxContainer"]
@@ -256,7 +255,7 @@ margin_bottom = 250.0
 texture_under = ExtResource( 8 )
 texture_over = ExtResource( 7 )
 texture_progress = ExtResource( 8 )
-fill_mode = 2
+fill_mode = 3
 tint_under = Color( 0.729412, 0.52549, 0.203922, 1 )
 
 [node name="TextureProgress3" type="TextureProgress" parent="Rotation_Helper/Camera/Control/InfoHBoxContainer"]
@@ -266,7 +265,7 @@ margin_bottom = 250.0
 texture_under = ExtResource( 8 )
 texture_over = ExtResource( 7 )
 texture_progress = ExtResource( 8 )
-fill_mode = 2
+fill_mode = 3
 tint_under = Color( 0.203922, 0.545098, 0.729412, 1 )
 
 [node name="TextureRect" type="TextureRect" parent="Rotation_Helper/Camera/Control"]
@@ -283,6 +282,9 @@ texture = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="PauseCanvas" parent="Rotation_Helper/Camera" instance=ExtResource( 10 )]
+playerPath = NodePath("../../..")
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
