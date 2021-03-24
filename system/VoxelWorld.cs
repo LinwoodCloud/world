@@ -6,17 +6,6 @@ namespace LinwoodWorld.System
 {
     public class VoxelWorld : Spatial
     {
-        private Array<Addon> addons;
-
-        public Array<Addon> Addons { get => new Array<Addon>(addons); }
-
-
-        public void RegisterAddon(Addon addon){
-            addons.Add(addon);
-        }
-        public void UnregisterAddon(Addon addon){
-            addons.Add(addon);
-        }
 
         private ImageTexture BuildTileSet(Array<Image> images, out Array<Vector2> coords)
         {
@@ -42,6 +31,11 @@ namespace LinwoodWorld.System
             tex.CreateFromImage(img);
             img.SavePng("res://TerrainSystem/tileset.png");
             return tex;
+        }
+
+        internal void SetWorldVoxel(object v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -36,7 +36,7 @@ namespace LinwoodWorld.System
                     {
                         if (y + 1 == chunkSizeY / 2)
                         {
-                            //voxels[x, y, z] = world.getVoxelIntFromString("Grass");
+                            //voxels[x, y, z] = world.getVoxelIntFromstring("Grass");
                         }
                     }
                 }

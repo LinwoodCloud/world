@@ -97,7 +97,7 @@ margin_top = 225.0
 margin_right = 350.0
 margin_bottom = 247.0
 rect_pivot_offset = Vector2( -321.039, -356.588 )
-text = "Mods"
+text = "Addons"
 flat = true
 
 [node name="OptionsButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
