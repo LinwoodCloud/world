@@ -284,6 +284,7 @@ __meta__ = {
 }
 
 [node name="PauseCanvas" parent="Rotation_Helper/Camera" instance=ExtResource( 10 )]
+visible = false
 playerPath = NodePath("../../..")
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

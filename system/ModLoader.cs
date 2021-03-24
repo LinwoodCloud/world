@@ -8,7 +8,9 @@ namespace LinwoodWorld.System
         private Array<Addon> addons;
         public Array<Addon> Addons { get => new Array<Addon>(addons); }
 
+        public ModLoader(){
 
+        }
         public void LoadAddon(string name){
             ProjectSettings.LoadResourcePack($"res://Mods/{name}.pck");
             var configFile = new ConfigFile();
