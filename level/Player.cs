@@ -39,7 +39,8 @@ namespace LinwoodWorld.Level
             pauseCanvas = GetNode<PauseMenuScript>("Rotation_Helper/Camera/PauseCanvas");
             pauseCanvas.Visible = false;
             Input.SetMouseMode(Input.MouseMode.Captured);
-            voxelWorld = GetNode<VoxelWorld>(pathToVoxelWorld);
+            if (pathToVoxelWorld != null)
+                voxelWorld = GetNode<VoxelWorld>(pathToVoxelWorld);
         }
         public override void _PhysicsProcess(float delta)
         {
@@ -112,17 +113,20 @@ namespace LinwoodWorld.Level
             }
         }
 
-        public void WorldManipulationInput(){
-            if(Input.IsActionJustPressed("use")){
+        public void WorldManipulationInput()
+        {
+            if (Input.IsActionJustPressed("use"))
+            {
                 var ray = RayCast();
-                voxelWorld.SetWorldVoxel(ray["position"] );
+                voxelWorld.SetWorldVoxel(ray["position"]);
             }
         }
-        public Dictionary RayCast(){
+        public Dictionary RayCast()
+        {
             var spaceState = GetWorld().DirectSpaceState;
             var from = camera.ProjectRayOrigin(GetViewport().GetMousePosition());
             var to = from + camera.ProjectRayNormal(GetViewport().GetMousePosition());
-            var result = spaceState.IntersectRay(from, to, new Array{this});
+            var result = spaceState.IntersectRay(from, to, new Array { this });
             return result;
         }
     }
