@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://ui/Roboto-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://main/MainMenuScript.cs" type="Script" id=2]
 [ext_resource path="res://textures/blur_background.png" type="Texture" id=3]
 [ext_resource path="res://ui/blur.shader" type="Shader" id=4]
+[ext_resource path="res://system/VoxelWorld.cs" type="Script" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
@@ -74,79 +75,86 @@ __meta__ = {
 }
 
 [node name="ContinueButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 109.0
+margin_top = 94.0
 margin_right = 350.0
-margin_bottom = 136.0
+margin_bottom = 121.0
 rect_pivot_offset = Vector2( -321.039, -356.588 )
-text = "Continue"
+text = "continue"
 flat = true
 
 [node name="CreateButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 140.0
+margin_top = 125.0
 margin_right = 350.0
-margin_bottom = 167.0
+margin_bottom = 152.0
 rect_pivot_offset = Vector2( -321.039, -356.588 )
-text = "Create"
+text = "create"
 flat = true
 
 [node name="LoadButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 171.0
+margin_top = 156.0
 margin_right = 350.0
-margin_bottom = 198.0
+margin_bottom = 183.0
 rect_pivot_offset = Vector2( -321.039, -356.588 )
-text = "Load"
+text = "load"
 flat = true
 
 [node name="ModsButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 202.0
+margin_top = 187.0
 margin_right = 350.0
-margin_bottom = 229.0
+margin_bottom = 214.0
 rect_pivot_offset = Vector2( -321.039, -356.588 )
-text = "Addons"
+text = "mods"
 flat = true
 
 [node name="ProfileButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 233.0
+margin_top = 218.0
 margin_right = 350.0
-margin_bottom = 260.0
+margin_bottom = 245.0
 rect_pivot_offset = Vector2( -321.039, -356.588 )
-text = "Profile"
+text = "profile"
 flat = true
 
 [node name="OptionsButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 264.0
+margin_top = 249.0
 margin_right = 350.0
-margin_bottom = 291.0
-text = "Options"
+margin_bottom = 276.0
+text = "options"
 flat = true
 
 [node name="NewsButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 295.0
+margin_top = 280.0
 margin_right = 350.0
-margin_bottom = 322.0
-text = "News"
+margin_bottom = 307.0
+text = "news"
 flat = true
 
 [node name="WebsiteButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 326.0
+margin_top = 311.0
 margin_right = 350.0
-margin_bottom = 353.0
-text = "Website"
+margin_bottom = 338.0
+text = "website"
 flat = true
 
 [node name="SourceButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 357.0
+margin_top = 342.0
 margin_right = 350.0
-margin_bottom = 384.0
-text = "Source"
+margin_bottom = 369.0
+text = "source"
+flat = true
+
+[node name="LocalizationButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 373.0
+margin_right = 350.0
+margin_bottom = 400.0
+text = "localization"
 flat = true
 
 [node name="QuitButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_top = 388.0
+margin_top = 404.0
 margin_right = 350.0
-margin_bottom = 415.0
+margin_bottom = 431.0
 shortcut = SubResource( 3 )
-text = "Quit"
+text = "quit"
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -279,7 +287,25 @@ margin_bottom = 27.0
 disabled = true
 text = "Boots"
 flat = true
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -337.63
+margin_top = -159.5
+margin_right = 336.37
+margin_bottom = 159.5
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/NewsButton" to="." method="OnNewsButtonPressed"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/WebsiteButton" to="." method="OnWebsiteButtonPressed"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/SourceButton" to="." method="OnSourceButtonPressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/LocalizationButton" to="." method="OnSourceButtonPressed"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/QuitButton" to="." method="OnQuitButtonPressed"]

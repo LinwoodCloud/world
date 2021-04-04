@@ -85,6 +85,13 @@ previous_slot={
  ]
 }
 
+[locale]
+
+translation_remaps={
+
+}
+translations=PoolStringArray( "res://ui/localization.de.translation", "res://ui/localization.en.translation" )
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

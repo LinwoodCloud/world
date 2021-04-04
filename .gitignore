@@ -15,3 +15,7 @@ export/
 
 # Editor
 .vscode
+
+# Game specific
+textures/tileset.png
+textures/tileset.png.import

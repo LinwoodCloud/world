@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grass_side.png-a3ad4db282e02fbc977a6dfdf3aadd9c.stex"
+path="res://.import/stone.png-3ee6bfea2dee18420476e05e35857d66.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/grass_side.png"
-dest_files=[ "res://.import/grass_side.png-a3ad4db282e02fbc977a6dfdf3aadd9c.stex" ]
+source_file="res://mods/main/blocks/textures/stone.png"
+dest_files=[ "res://.import/stone.png-3ee6bfea2dee18420476e05e35857d66.stex" ]
 
 [params]
 
