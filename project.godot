@@ -24,10 +24,6 @@ config/name="LinwoodWorld"
 run/main_scene="res://main/menu.tscn"
 config/icon="res://icon.png"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [editor_plugins]
 
 enabled=PoolStringArray(  )
@@ -90,7 +86,7 @@ previous_slot={
 translation_remaps={
 
 }
-translations=PoolStringArray( "res://ui/localization.de.translation", "res://ui/localization.en.translation", "res://mods/main/localization.de.translation", "res://mods/main/localization.en.translation" )
+translations=PoolStringArray( "res://ui/localization.de.translation", "res://ui/localization.en.translation" )
 
 [rendering]
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://ui/Roboto-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://main/MainMenuScript.cs" type="Script" id=2]
 [ext_resource path="res://textures/blur_background.png" type="Texture" id=3]
 [ext_resource path="res://ui/blur.shader" type="Shader" id=4]
 [ext_resource path="res://system/VoxelWorld.cs" type="Script" id=5]
+[ext_resource path="res://system/ModLoader.cs" type="Script" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
@@ -311,6 +312,12 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+modLoader = NodePath("../Control")
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 6 )
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/NewsButton" to="." method="OnNewsButtonPressed"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/WebsiteButton" to="." method="OnWebsiteButtonPressed"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/WebsiteButton2" to="." method="OnWebsiteButtonPressed"]
