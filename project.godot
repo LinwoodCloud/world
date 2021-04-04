@@ -90,7 +90,7 @@ previous_slot={
 translation_remaps={
 
 }
-translations=PoolStringArray( "res://ui/localization.de.translation", "res://ui/localization.en.translation" )
+translations=PoolStringArray( "res://ui/localization.de.translation", "res://ui/localization.en.translation", "res://mods/main/localization.de.translation", "res://mods/main/localization.en.translation" )
 
 [rendering]
 

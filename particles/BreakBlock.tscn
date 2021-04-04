@@ -9,6 +9,8 @@
 
 
 
+
+
 [sub_resource type="Curve" id=1]
 max_value = 0.25
 _data = [ Vector2( 0, 0.025 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.218182 ), 0.0, 0.0, 0, 0 ]
