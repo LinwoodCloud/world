@@ -4,3 +4,6 @@ files:
     multilingual_spreadsheet: 1
     first_line_contains_header: 1
     scheme: 'identifier,source_phrase,de'
+  - source: mods/*/localization.csv
+    translation: '%original_path%/%original_file_name%'
+    scheme: 'identifier,source_phrase,de'
