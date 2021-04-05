@@ -8,4 +8,4 @@ files:
     translation: /%original_path%/%two_letters_code%.%file_extension%
     multilingual_spreadsheet: 1
     first_line_contains_header: 1
-    scheme: 'identifier,source_phrase,de'
+    scheme: 'identifier,source_phrase,de,fr'
