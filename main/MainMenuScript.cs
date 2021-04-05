@@ -20,6 +20,11 @@ public class MainMenuScript : Control
         OS.ShellOpen(uri);
     }
 
+    public void OnCreateButtonPressed()
+    {
+        GetTree().ChangeScene("res://level/Main_Scene.tscn");
+    }
+
     public void OnNewsButtonPressed()
     {
         Open("https://linwood.tk/blog");

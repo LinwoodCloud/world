@@ -1,7 +1,10 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://level/Particles.gd" type="Script" id=1]
-[ext_resource path="res://mods/main/blocks/textures/dirt.png" type="Texture" id=2]
+[ext_resource path="res://mods/main/textures/dirt.png" type="Texture" id=2]
+
+
+
 
 
 

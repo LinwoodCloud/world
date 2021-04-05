@@ -24,10 +24,6 @@ config/name="LinwoodWorld"
 run/main_scene="res://main/menu.tscn"
 config/icon="res://icon.png"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [editor_plugins]
 
 enabled=PoolStringArray(  )

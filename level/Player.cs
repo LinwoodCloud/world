@@ -12,7 +12,9 @@ namespace LinwoodWorld.Level
         public readonly int speed = 5;
         [Export]
         public readonly float jumpHeight = 10;
-        private const float accel = 4.5f;
+        [Export]
+        public readonly float jumps = 2;
+        private const float accel = 9.5f;
         private const float deaccel = 4.5f;
         [Export]
         private readonly float maxSlopeAngle = 4.5f;
@@ -25,6 +27,7 @@ namespace LinwoodWorld.Level
         private float MOUSE_SENSITIVITY = 0.05f;
         private Vector3 velocity = new Vector3();
         private VoxelWorld voxelWorld;
+        private int currentJumps = 0;
 
         public void Resume()
         {
@@ -65,9 +68,13 @@ namespace LinwoodWorld.Level
             inputMovementVector = inputMovementVector.Normalized();
 
             // Jumping
-            if (IsOnFloor())
-                if (Input.IsActionPressed("movement_jump"))
-                    velocity.y += jumpHeight;
+            if (IsOnFloor() && Input.IsActionPressed("movement_jump") || jumps > currentJumps && Input.IsActionJustPressed("movement_jump"))
+            {
+                velocity.y += jumpHeight;
+                currentJumps++;
+            }
+            if (IsOnFloor() && currentJumps != 0)
+                currentJumps = 0;
             dir += -camTransform.basis.z * inputMovementVector.y;
             dir += camTransform.basis.x * inputMovementVector.x;
             dir.y = 0;
@@ -84,7 +91,7 @@ namespace LinwoodWorld.Level
             hvel = hvel.LinearInterpolate(target, accel * delta);
             velocity.x = hvel.x;
             velocity.z = hvel.z;
-            velocity = MoveAndSlide(velocity, new Vector3(0, 1, 0), false, 4, Mathf.Deg2Rad(maxSlopeAngle));
+            velocity = MoveAndSlide(velocity, new Vector3(0, 1, 0), floorMaxAngle: Mathf.Deg2Rad(maxSlopeAngle));
         }
         private void ProcessInput(float delta)
         {

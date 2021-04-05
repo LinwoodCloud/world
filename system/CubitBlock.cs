@@ -26,12 +26,5 @@ namespace LinwoodWorld.System
         {
             return Transparent || !Solid;
         }
-
-        public override void Render(VoxelChunk chunk, out Array<Vector3> verticies, out Array<Vector3> normals, out Array<Vector3> collision)
-        {
-            verticies = new Array<Vector3>();
-            normals = new Array<Vector3>();
-            collision = new Array<Vector3>();
-        }
     }
 }
