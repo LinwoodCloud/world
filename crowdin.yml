@@ -1,6 +1,6 @@
 files:
   - source: /ui/localization.csv
-    translation: ui/%original_file_name%
+    translation: /ui/%file_name%%two_letters_code%.%file_extension%
     multilingual_spreadsheet: 1
     first_line_contains_header: 1
     scheme: 'identifier,source_phrase,de'
