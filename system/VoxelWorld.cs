@@ -4,17 +4,24 @@ using Godot.Collections;
 
 namespace LinwoodWorld.System
 {
-    public class VoxelWorld : TextureRect
+    public class VoxelWorld : Spatial
     {
         [Export]
         private NodePath modLoader;
         private Array<ModResources> modResources;
         private Array<string> textures = new Array<string>();
+        private ImageTexture texture;
         private Dictionary<string, Vector2> textureCoords = new Dictionary<string, Vector2>();
+        private Dictionary<string, Block> blocks = new Dictionary<string, Block>();
 
-        private ImageTexture BuildTileSet()
+        public ImageTexture Texture { get => texture; }
+        public Node chunkHolder;
+        private PackedScene chunkScene;
+        private const int VoxelUnitSize = 1;
+
+        private void BuildTileSet()
         {
-            var tex = new ImageTexture();
+            var texure = new ImageTexture();
             var img = new Image();
             var size = textures.Count * 64;
             var sizeX = 512;
@@ -36,14 +43,16 @@ namespace LinwoodWorld.System
                 textureCoords[texture] = coord;
             }
             img.SavePng("res://textures/tileset.png");
-            tex.CreateFromImage(img);
-            return tex;
+            texure.CreateFromImage(img);
         }
         public override void _Ready()
         {
+            chunkHolder = GetNode("Chunks");
+            chunkScene = ResourceLoader.Load<PackedScene>("res://level/Voxel_Chunk.tscn");
             GD.Print(textureCoords);
             LoadMods();
-            Texture = BuildTileSet();
+            BuildTileSet();
+
         }
 
         private void LoadMods()
@@ -65,9 +74,13 @@ namespace LinwoodWorld.System
                 return;
             directory.ListDirBegin(true);
             var fileName = directory.GetNext();
-            var blocks = new Array<Block>();
             while (!fileName.Empty())
             {
+                if(!fileName.EndsWith("import")){
+                    var path = $"res://mods/{mod.Path}/blocks/{fileName}";
+                    var resource = GD.Load<CSharpScript>(path);
+                    blocks[path] = (Block) resource.New();
+                }
                 fileName = directory.GetNext();
             }
 
@@ -91,6 +104,24 @@ namespace LinwoodWorld.System
             }
             GD.Print(textures);
             modResources.Add(new ModResources(mod, blocks));
+        }
+
+        public void CreateWorld(Vector3 worldSize, Vector3 chunkSize){
+            foreach(Node child in chunkHolder.GetChildren())
+                child.QueueFree();
+            for (int x = 0; x < worldSize.x; x++)
+            {
+                for (int y = 0; y < worldSize.y; y++)
+                {
+                    for (int z = 0; z < worldSize.z; z++)
+                    {
+                        var newChunk = chunkScene.Instance() as VoxelChunk;
+                        chunkHolder.AddChild(newChunk);
+                        newChunk.GlobalTransform = new Transform(newChunk.GlobalTransform.basis, new Vector3(x * chunkSize.x * VoxelUnitSize, y * chunkSize.y * VoxelUnitSize, z * chunkSize.z * VoxelUnitSize));
+                        newChunk.Setup(this, chunkSize, VoxelUnitSize);
+                    }
+                }
+            }
         }
 
         internal void SetWorldVoxel(object v)

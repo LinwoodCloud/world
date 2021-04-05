@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 namespace LinwoodWorld.System
 {
@@ -17,6 +18,13 @@ namespace LinwoodWorld.System
         //  {
         //      
         //  }
-        public abstract void Render(VoxelChunk chunk, out Godot.Collections.Array<Vector3> verticies, out Godot.Collections.Array<Vector3> normals, out Godot.Collections.Array<Vector3> collision);
+        public abstract void CreateRenderMesh(VoxelChunk chunk,
+            out Array<Vector3> vertices,
+            out Godot.Collections.Array<Vector3> normals,
+            out Godot.Collections.Array<int> indices,
+            out Godot.Collections.Array<Vector2> uvs);
+        public abstract void CreateCollisionMesh(VoxelChunk chunk,
+            out Array<Vector3> vertices,
+            out Array<int> indicees);
     }
 }

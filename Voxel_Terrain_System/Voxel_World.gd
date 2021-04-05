@@ -56,7 +56,7 @@ export (int) var voxel_texture_tile_size = 64;
 var voxel_texture_unit;
 
 # A reference to the chunk scene so we can instance chunks as needed.
-var chunk_scene = preload("res://Voxel_Terrain_System/Voxel_Chunk.tscn");
+var chunk_scene = preload("res://level/Voxel_Chunk.tscn");
 
 # The node that will hold all of the chunks. This is just for better organization in the remote debugger.
 var chunk_holder_node;
