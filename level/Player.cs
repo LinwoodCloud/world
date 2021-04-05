@@ -12,7 +12,7 @@ namespace LinwoodWorld.Level
         public readonly int speed = 5;
         [Export]
         public readonly float jumpHeight = 10;
-        private const float accel = 4.5f;
+        private const float accel = 9.5f;
         private const float deaccel = 4.5f;
         [Export]
         private readonly float maxSlopeAngle = 4.5f;
@@ -84,7 +84,7 @@ namespace LinwoodWorld.Level
             hvel = hvel.LinearInterpolate(target, accel * delta);
             velocity.x = hvel.x;
             velocity.z = hvel.z;
-            velocity = MoveAndSlide(velocity, new Vector3(0, 1, 0), false, 4, Mathf.Deg2Rad(maxSlopeAngle));
+            velocity = MoveAndSlide(velocity, new Vector3(0, 1, 0), floorMaxAngle: Mathf.Deg2Rad(maxSlopeAngle));
         }
         private void ProcessInput(float delta)
         {

@@ -31,9 +31,12 @@ namespace LinwoodWorld.System
             var locales = TranslationServer.GetLoadedLocales();
             foreach (var locale in locales)
             {
+                GD.Print(locale);
                 var translation = ResourceLoader.Load<Translation>($"res://mods/{name}/localization.{locale}.translation");
-                if (translation != null)
+                GD.Print(translation);
+                if (translation != null){
                     TranslationServer.AddTranslation(translation);
+                }
             }
         }
         public void DisableMod(string name)

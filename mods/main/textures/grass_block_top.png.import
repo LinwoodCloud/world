@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/dirt.png-366d6979c20007a7d95c7dd190433ab6.stex"
+path="res://.import/grass_block_top.png-da444823197ceae20dcf860ba15e87ae.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods/main/blocks/textures/dirt.png"
-dest_files=[ "res://.import/dirt.png-366d6979c20007a7d95c7dd190433ab6.stex" ]
+source_file="res://mods/main/textures/grass_block_top.png"
+dest_files=[ "res://.import/grass_block_top.png-da444823197ceae20dcf860ba15e87ae.stex" ]
 
 [params]
 

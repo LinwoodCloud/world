@@ -9,8 +9,10 @@ namespace LinwoodWorld.System
         [Export]
         private NodePath modLoader;
         private Array<ModResources> modResources;
+        private Array<string> textures = new Array<string>();
+        private Dictionary<string, Vector2> textureCoords = new Dictionary<string, Vector2>();
 
-        private ImageTexture BuildTileSet(Array<Texture> textures, out Array<Vector2> coords)
+        private ImageTexture BuildTileSet()
         {
             var tex = new ImageTexture();
             var img = new Image();
@@ -19,19 +21,19 @@ namespace LinwoodWorld.System
             var sizeY = (size / 512 + 1) * 64;
             GD.Print(sizeX, ", ", sizeY);
             img.Create(sizeX, sizeY, false, Image.Format.Rgba8);
-
-            coords = new Array<Vector2>();
+            
             for (int i = 0; i < textures.Count; i++)
             {
                 var texture = textures[i];
-                var image = texture.GetData();
+                var resource = GD.Load<StreamTexture>(texture);
+                var image = resource.GetData();
                 image.Convert(Image.Format.Rgba8);
                 var x = i == 0 ? 0 : i * image.GetWidth() % sizeX;
                 var y = i == 0 ? 0 : i * image.GetWidth() / sizeX * 64;
                 var coord = new Vector2(x, y);
                 GD.Print(coord, ", ", image.GetUsedRect());
                 img.BlitRect(image, image.GetUsedRect(), coord);
-                coords.Add(coord);
+                textureCoords[texture] = coord;
             }
             img.SavePng("res://textures/tileset.png");
             tex.CreateFromImage(img);
@@ -39,31 +41,9 @@ namespace LinwoodWorld.System
         }
         public override void _Ready()
         {
-            Array<Vector2> coords;
-            var textures = new Array<Texture>();
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/dirt.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/grass_block_side.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/grass_block_top.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/stone.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/dirt.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/grass_block_side.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/dirt.png"));
-            textures.Add(GD.Load<StreamTexture>("res://mods/main/blocks/textures/grass_block_side.png"));
-            Texture = BuildTileSet(textures, out coords);
+            GD.Print(textureCoords);
             LoadMods();
+            Texture = BuildTileSet();
         }
 
         private void LoadMods()
@@ -80,21 +60,41 @@ namespace LinwoodWorld.System
         private void LoadMod(Mod mod)
         {
             var directory = new Directory();
-            var error = directory.Open($"res://mods/{mod.Path}/blocks");
+            var error = directory.Open($"res://mods/{mod.Path}/blocks/");
             if(error != Error.Ok)
                 return;
-            directory.ListDirBegin();
+            directory.ListDirBegin(true);
             var fileName = directory.GetNext();
             var blocks = new Array<Block>();
-            while(!fileName.Empty() && fileName != "."){
-                GD.Print(fileName);
+            while(!fileName.Empty()){
+                fileName = directory.GetNext();
             }
+
+            
+            directory = new Directory();
+            error = directory.Open($"res://mods/{mod.Path}/textures/");
+            if(error != Error.Ok)
+                return;
+            directory.ListDirBegin(true);
+            fileName = directory.GetNext();
+            while(!fileName.Empty()){
+                GD.Print(fileName);
+                var resource = GD.Load<StreamTexture>($"res://mods/{mod.Path}/textures/{fileName}");
+                if(resource != null)
+                    textures.Add(resource.ResourcePath);
+                fileName = directory.GetNext();
+            }
+            GD.Print(textures);
             modResources.Add(new ModResources(mod, blocks));
         }
 
         internal void SetWorldVoxel(object v)
         {
             throw new NotImplementedException();
+        }
+
+        public Vector2 GetTextureCoord(String path){
+            return textureCoords[path];
         }
     }
 }

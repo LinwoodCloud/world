@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/stone.png-3ee6bfea2dee18420476e05e35857d66.stex"
+path="res://.import/dirt.png-8b8839f733d83ccfb7f58a778c6ce119.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods/main/blocks/textures/stone.png"
-dest_files=[ "res://.import/stone.png-3ee6bfea2dee18420476e05e35857d66.stex" ]
+source_file="res://mods/main/textures/dirt.png"
+dest_files=[ "res://.import/dirt.png-8b8839f733d83ccfb7f58a778c6ce119.stex" ]
 
 [params]
 
