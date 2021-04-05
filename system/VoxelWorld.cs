@@ -21,7 +21,7 @@ namespace LinwoodWorld.System
             var sizeY = (size / 512 + 1) * 64;
             GD.Print(sizeX, ", ", sizeY);
             img.Create(sizeX, sizeY, false, Image.Format.Rgba8);
-            
+
             for (int i = 0; i < textures.Count; i++)
             {
                 var texture = textures[i];
@@ -61,27 +61,32 @@ namespace LinwoodWorld.System
         {
             var directory = new Directory();
             var error = directory.Open($"res://mods/{mod.Path}/blocks/");
-            if(error != Error.Ok)
+            if (error != Error.Ok)
                 return;
             directory.ListDirBegin(true);
             var fileName = directory.GetNext();
             var blocks = new Array<Block>();
-            while(!fileName.Empty()){
+            while (!fileName.Empty())
+            {
                 fileName = directory.GetNext();
             }
 
-            
+
             directory = new Directory();
             error = directory.Open($"res://mods/{mod.Path}/textures/");
-            if(error != Error.Ok)
+            if (error != Error.Ok)
                 return;
             directory.ListDirBegin(true);
             fileName = directory.GetNext();
-            while(!fileName.Empty()){
+            while (!fileName.Empty())
+            {
                 GD.Print(fileName);
-                var resource = GD.Load<StreamTexture>($"res://mods/{mod.Path}/textures/{fileName}");
-                if(resource != null)
-                    textures.Add(resource.ResourcePath);
+                if (!fileName.EndsWith(".import"))
+                {
+                    var resource = GD.Load<StreamTexture>($"res://mods/{mod.Path}/textures/{fileName}");
+                    if (resource != null)
+                        textures.Add(resource.ResourcePath);
+                }
                 fileName = directory.GetNext();
             }
             GD.Print(textures);
@@ -93,7 +98,8 @@ namespace LinwoodWorld.System
             throw new NotImplementedException();
         }
 
-        public Vector2 GetTextureCoord(String path){
+        public Vector2 GetTextureCoord(String path)
+        {
             return textureCoords[path];
         }
     }
