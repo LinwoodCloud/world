@@ -125,7 +125,7 @@ namespace LinwoodWorld.Level
             if (Input.IsActionJustPressed("use"))
             {
                 var ray = RayCast();
-                voxelWorld.SetWorldVoxel(ray["position"]);
+                voxelWorld.SetWorldVoxel((Vector3) ray["position"], "");
             }
         }
         public Dictionary RayCast()

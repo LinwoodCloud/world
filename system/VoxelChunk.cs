@@ -76,7 +76,8 @@ namespace LinwoodWorld.System
                         Array<Vector3> currentNormals;
                         Array<int> currentIndices;
                         Array<Vector2> currentUvs;
-                        world.GetBlock(GetVoxel(new Vector3(x, y, z))).CreateRenderMesh(this, out currentVerticies, out currentNormals, out currentIndices, out currentUvs);
+                        var position = new Vector3(x, y, z);
+                        world.GetBlock(GetVoxel(position)).CreateRenderMesh(this, position, out currentVerticies, out currentNormals, out currentIndices, out currentUvs);
                         renderVerticies = ConcatArrays(renderVerticies, currentVerticies);
                         renderNormals = ConcatArrays(renderNormals, currentNormals);
                         renderIndices = ConcatArrays(renderIndices, currentIndices);
@@ -110,7 +111,8 @@ namespace LinwoodWorld.System
                     {
                         Array<Vector3> currentVerticies;
                         Array<int> currentIndices;
-                        world.GetBlock(GetVoxel(new Vector3(x, y, z))).CreateCollisionMesh(this, out currentVerticies, out currentIndices);
+                        var position = new Vector3(x, y, z);
+                        world.GetBlock(GetVoxel(position)).CreateCollisionMesh(this, position, out currentVerticies, out currentIndices);
                         collisionVerticies = ConcatArrays(collisionVerticies, currentVerticies);
                         collisionIndices = ConcatArrays(collisionIndices, currentIndices);
                     }

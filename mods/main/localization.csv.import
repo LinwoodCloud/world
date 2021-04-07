@@ -2,14 +2,11 @@
 
 importer="csv_translation"
 type="Translation"
+valid=false
 
 [deps]
 
-files=[ "res://mods/main/localization.en.translation", "res://mods/main/localization.de.translation" ]
-
 source_file="res://mods/main/localization.csv"
-dest_files=[ "res://mods/main/localization.en.translation", "res://mods/main/localization.de.translation" ]
-
 [params]
 
 compress=true

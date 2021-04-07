@@ -1,21 +1,11 @@
 using Godot;
+using LinwoodWorld.System;
 using System;
 
-public class GrassBlock : Node
+namespace LinwoodWorld.Main
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
-
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+    public class GrassBlock : CubitBlock
     {
-        
+        public override Texture BlockTexture => new Texture("res://mods/main/textures/grass_block_side.png", "res://mods/main/textures/grass_block_top.png", "res://mods/main/textures/dirt.png");
     }
-
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
 }
