@@ -2,11 +2,14 @@
 
 importer="csv_translation"
 type="Translation"
-valid=false
 
 [deps]
 
+files=[ "res://ui/localization.en.translation", "res://ui/localization.de.translation", "res://ui/localization.fr.translation" ]
+
 source_file="res://ui/localization.csv"
+dest_files=[ "res://ui/localization.en.translation", "res://ui/localization.de.translation", "res://ui/localization.fr.translation" ]
+
 [params]
 
 compress=true
