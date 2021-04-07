@@ -9,7 +9,7 @@ namespace LinwoodWorld.System
         {
             TOP, BOTTOM, EAST, WEST, NORTH, SOUTH
         }
-        public abstract bool CausedRender(VoxelChunk chunk);
+        public abstract bool CausedRender(VoxelChunk chunk, Vector3 position);
         //public abstract void BuildVoxelFace(Chunk chunk);
 
         // Declare member variables here. Examples:
