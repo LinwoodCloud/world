@@ -8,9 +8,14 @@ namespace LinwoodWorld.System
         private Array<Mod> mods;
         public Array<Mod> Mods { get => new Array<Mod>(mods); }
 
-        public void Setup(){
+
+        [Signal]
+        public delegate void ModsInitialized(Array<Mod> mods);
+
+        public override void _Ready(){
             mods = new Array<Mod>();
             EnableMod("main");
+            EmitSignal(nameof(ModsInitialized), mods);
         }
 
         public void LoadAddon(string name, bool enable = true)
@@ -24,16 +29,12 @@ namespace LinwoodWorld.System
         {
             var configFile = new ConfigFile();
             configFile.Load($"res://mods/{name}/mod.cfg");
-            GD.Print(name);
             Mod mod = new Mod(configFile, name);
-            GD.Print(mod);
             mods.Add(mod);
             var locales = TranslationServer.GetLoadedLocales();
             foreach (var locale in locales)
             {
-                GD.Print(locale);
                 var translation = ResourceLoader.Load<Translation>($"res://mods/{name}/localization.{locale}.translation");
-                GD.Print(translation);
                 if (translation != null){
                     TranslationServer.AddTranslation(translation);
                 }

@@ -6,9 +6,6 @@ namespace LinwoodWorld.System
 {
     public class VoxelWorld : Spatial
     {
-        [Export]
-        private NodePath modLoader;
-        private Array<ModResources> modResources;
         private Array<string> textures = new Array<string>();
         private ImageTexture texture;
         private Dictionary<string, Vector2> textureCoords = new Dictionary<string, Vector2>();
@@ -19,6 +16,13 @@ namespace LinwoodWorld.System
         private PackedScene chunkScene;
         private const int VoxelUnitSize = 1;
 
+
+        public override void _Ready()
+        {
+            chunkHolder = GetNode("Chunks");
+            
+        }
+
         private void BuildTileSet()
         {
             var texure = new ImageTexture();
@@ -26,7 +30,6 @@ namespace LinwoodWorld.System
             var size = textures.Count * 64;
             var sizeX = 512;
             var sizeY = (size / 512 + 1) * 64;
-            GD.Print(sizeX, ", ", sizeY);
             img.Create(sizeX, sizeY, false, Image.Format.Rgba8);
 
             for (int i = 0; i < textures.Count; i++)
@@ -38,29 +41,23 @@ namespace LinwoodWorld.System
                 var x = i == 0 ? 0 : i * image.GetWidth() % sizeX;
                 var y = i == 0 ? 0 : i * image.GetWidth() / sizeX * 64;
                 var coord = new Vector2(x, y);
-                GD.Print(coord, ", ", image.GetUsedRect());
                 img.BlitRect(image, image.GetUsedRect(), coord);
                 textureCoords[texture] = coord;
             }
             img.SavePng("res://textures/tileset.png");
             texure.CreateFromImage(img);
         }
-        public override void _Ready()
+        public void ModsInitialized(Array<Mod> mods)
         {
             chunkHolder = GetNode("Chunks");
             chunkScene = ResourceLoader.Load<PackedScene>("res://level/Voxel_Chunk.tscn");
-            GD.Print(textureCoords);
-            LoadMods();
+            LoadMods(mods);
             BuildTileSet();
 
         }
 
-        private void LoadMods()
+        private void LoadMods(Array<Mod> mods)
         {
-            var modLoaderNode = GetNode<ModLoader>(modLoader);
-            modLoaderNode.Setup();
-            var mods = modLoaderNode.Mods;
-            modResources = new Array<ModResources>();
             foreach (var mod in mods)
             {
                 LoadMod(mod);
@@ -93,7 +90,6 @@ namespace LinwoodWorld.System
             fileName = directory.GetNext();
             while (!fileName.Empty())
             {
-                GD.Print(fileName);
                 if (!fileName.EndsWith(".import"))
                 {
                     var resource = GD.Load<StreamTexture>($"res://mods/{mod.Path}/textures/{fileName}");
@@ -102,8 +98,6 @@ namespace LinwoodWorld.System
                 }
                 fileName = directory.GetNext();
             }
-            GD.Print(textures);
-            modResources.Add(new ModResources(mod, blocks));
         }
 
         public void CreateWorld(Vector3 worldSize, Vector3 chunkSize){
@@ -122,16 +116,46 @@ namespace LinwoodWorld.System
                     }
                 }
             }
+            GD.Print("Successfully created the world!");
         }
 
-        internal void SetWorldVoxel(object v)
+        public bool SetWorldVoxel(Vector3 position, string voxel)
         {
-            throw new NotImplementedException();
+            var result = false;
+            foreach (VoxelChunk chunk in chunkHolder.GetChildren())
+            {
+                result = chunk.SetVoxel(position, voxel);
+                if(result)
+                    break;
+            }
+            return result;
         }
 
-        public Vector2 GetTextureCoord(String path)
+        public Vector2 GetTextureCoord(string path)
         {
             return textureCoords[path];
+        }
+
+        public Block GetBlock(string path){
+            return blocks[path];
+        }
+        public string Export(){
+            Array<string> data = new Array<string>();
+            foreach (VoxelChunk chunk in chunkHolder.GetChildren())
+            {
+                data.Add(chunk.Export());
+            }
+            return JSON.Print(data);
+        }
+        public void Load(string json){
+            var result = JSON.Parse(json);
+            if(result.Error != Error.Ok)
+                return;
+            Array<string> chunks = result.Result as Array<string>;
+            foreach (var chunk in chunks)
+            {
+                
+            }
         }
     }
 }

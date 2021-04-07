@@ -37,6 +37,10 @@ public class MainMenuScript : Control
     {
         Open("https://linwood.tk/docs/world/overview");
     }
+    public void OnModsButtonPressed()
+    {
+        GetNode<WindowDialog>("ModsDialog").Popup_();
+    }
     public void OnQuitButtonPressed()
     {
         GetTree().Quit();
