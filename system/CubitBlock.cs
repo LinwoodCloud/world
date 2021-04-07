@@ -5,14 +5,16 @@ namespace LinwoodWorld.System
 {
     public abstract class CubitBlock : Block
     {
-        public struct Texture {
-            public string North {get; }
-            public string South {get; }
-            public string West {get; }
-            public string East {get; }
-            public string Top {get; }
-            public string Bottom {get; }
-            public Texture(string all){
+        public struct Texture
+        {
+            public string North { get; }
+            public string South { get; }
+            public string West { get; }
+            public string East { get; }
+            public string Top { get; }
+            public string Bottom { get; }
+            public Texture(string all)
+            {
                 North = all;
                 South = all;
                 West = all;
@@ -20,7 +22,8 @@ namespace LinwoodWorld.System
                 Top = all;
                 Bottom = all;
             }
-            public Texture(string side, string topBottom){
+            public Texture(string side, string topBottom)
+            {
                 North = side;
                 South = side;
                 West = side;
@@ -28,7 +31,8 @@ namespace LinwoodWorld.System
                 Top = topBottom;
                 Bottom = topBottom;
             }
-            public Texture(string side, string top, string bottom){
+            public Texture(string side, string top, string bottom)
+            {
                 North = side;
                 South = side;
                 West = side;
@@ -36,7 +40,8 @@ namespace LinwoodWorld.System
                 Top = top;
                 Bottom = bottom;
             }
-            public Texture(string north, string south, string west, string east, string top, string bottom){
+            public Texture(string north, string south, string west, string east, string top, string bottom)
+            {
                 North = north;
                 South = south;
                 West = west;
@@ -53,10 +58,7 @@ namespace LinwoodWorld.System
         {
             get;
         }
-        public bool Solid
-        {
-            get;
-        }
+        public bool Solid => true;
         public abstract Texture BlockTexture { get; }
 
         public override bool CausedRender(VoxelChunk chunk)
@@ -69,6 +71,22 @@ namespace LinwoodWorld.System
         }
         public override void CreateRenderMesh(VoxelChunk chunk, Vector3 position, out Array<Vector3> vertices, out Array<Vector3> normals, out Array<int> indices, out Array<Vector2> uvs)
         {
+            throw new global::System.NotImplementedException();
+        }
+
+        protected void CreateRenderFace(VoxelChunk chunk, Vector3 position, Face face, out Array<Vector3> vertices, out Array<Vector3> normals, out Array<int> indices, out Array<Vector2> uvs)
+        {
+            vertices = new Array<Vector3>();
+            normals = new Array<Vector3>();
+            indices = new Array<int>();
+            uvs = new Array<Vector2>();
+            if(chunk.GetVoxel(position) == null)
+                return;
+            
+        }
+        protected void CreateCollisionFace(VoxelChunk chunk, Vector3 position, Face face, out Array<Vector3> vertices, out Array<int> indicees)
+        {
+
             throw new global::System.NotImplementedException();
         }
     }

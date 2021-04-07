@@ -14,6 +14,7 @@ namespace LinwoodWorld.System
         public Array<Vector2> meshuvs;
         private MeshInstance meshInstance;
         private CollisionShape collisionShape;
+        public VoxelWorld World => world;
 
         public override void _Ready()
         {

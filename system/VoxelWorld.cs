@@ -131,7 +131,7 @@ namespace LinwoodWorld.System
             return result;
         }
 
-        public Vector2 GetTextureCoord(string path)
+        public Vector2 GetTexturePosition(string path)
         {
             return textureCoords[path];
         }
