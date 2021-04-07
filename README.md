@@ -50,6 +50,8 @@
 
 ## Contributing
 
+![Locale chart](https://badges.awesome-crowdin.com/translation-200008942-8.png)
+
 ### Coding
 
 - Download the Godot Engine - Mono [here](https://godotengine.org/download)
