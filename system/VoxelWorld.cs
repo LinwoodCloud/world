@@ -14,22 +14,22 @@ namespace LinwoodWorld.System
         public ImageTexture Texture { get => texture; }
         public Node chunkHolder;
         private PackedScene chunkScene;
-        private const int VoxelUnitSize = 1;
+        public int voxelUnitSize = 1;
 
 
         public override void _Ready()
         {
             chunkHolder = GetNode("Chunks");
-            
+
         }
 
         private void BuildTileSet()
         {
-            var texure = new ImageTexture();
+            texture = new ImageTexture();
             var img = new Image();
             var size = textures.Count * 64;
-            var sizeX = 512;
-            var sizeY = (size / 512 + 1) * 64;
+            var sizeX = 256;
+            var sizeY = (size / 256 + 1) * 64;
             img.Create(sizeX, sizeY, false, Image.Format.Rgba8);
 
             for (int i = 0; i < textures.Count; i++)
@@ -42,10 +42,15 @@ namespace LinwoodWorld.System
                 var y = i == 0 ? 0 : i * image.GetWidth() / sizeX * 64;
                 var coord = new Vector2(x, y);
                 img.BlitRect(image, image.GetUsedRect(), coord);
-                textureCoords[texture] = coord;
+                textureCoords[texture] = coord / 64f;
             }
+            img.ClearMipmaps();
             img.SavePng("res://textures/tileset.png");
-            texure.CreateFromImage(img);
+            texture.CreateFromImage(img);
+            var flags = (Godot.Texture.FlagsEnum) texture.Flags;
+            flags &= ~Godot.Texture.FlagsEnum.Filter;
+            GD.Print(flags);
+            texture.Flags = (uint) flags;
         }
         public void ModsInitialized(Array<Mod> mods)
         {
@@ -53,7 +58,7 @@ namespace LinwoodWorld.System
             chunkScene = ResourceLoader.Load<PackedScene>("res://level/Voxel_Chunk.tscn");
             LoadMods(mods);
             BuildTileSet();
-
+            CreateWorld(new Vector3(1, 1, 1), new Vector3(16, 16, 16));
         }
 
         private void LoadMods(Array<Mod> mods)
@@ -73,10 +78,11 @@ namespace LinwoodWorld.System
             var fileName = directory.GetNext();
             while (!fileName.Empty())
             {
-                if(!fileName.EndsWith("import")){
+                if (!fileName.EndsWith("import"))
+                {
                     var path = $"res://mods/{mod.Path}/blocks/{fileName}";
                     var resource = GD.Load<CSharpScript>(path);
-                    blocks[path] = (Block) resource.New();
+                    blocks[path] = (Block)resource.New();
                 }
                 fileName = directory.GetNext();
             }
@@ -100,8 +106,9 @@ namespace LinwoodWorld.System
             }
         }
 
-        public void CreateWorld(Vector3 worldSize, Vector3 chunkSize){
-            foreach(Node child in chunkHolder.GetChildren())
+        public void CreateWorld(Vector3 worldSize, Vector3 chunkSize)
+        {
+            foreach (Node child in chunkHolder.GetChildren())
                 child.QueueFree();
             for (int x = 0; x < worldSize.x; x++)
             {
@@ -111,8 +118,8 @@ namespace LinwoodWorld.System
                     {
                         var newChunk = chunkScene.Instance() as VoxelChunk;
                         chunkHolder.AddChild(newChunk);
-                        newChunk.GlobalTransform = new Transform(newChunk.GlobalTransform.basis, new Vector3(x * chunkSize.x * VoxelUnitSize, y * chunkSize.y * VoxelUnitSize, z * chunkSize.z * VoxelUnitSize));
-                        newChunk.Setup(this, chunkSize, VoxelUnitSize);
+                        newChunk.GlobalTransform = new Transform(newChunk.GlobalTransform.basis, new Vector3(x * chunkSize.x * voxelUnitSize, y * chunkSize.y * voxelUnitSize, z * chunkSize.z * voxelUnitSize));
+                        newChunk.Setup(this, chunkSize, voxelUnitSize);
                     }
                 }
             }
@@ -125,7 +132,7 @@ namespace LinwoodWorld.System
             foreach (VoxelChunk chunk in chunkHolder.GetChildren())
             {
                 result = chunk.SetVoxel(position, voxel);
-                if(result)
+                if (result)
                     break;
             }
             return result;
@@ -136,10 +143,14 @@ namespace LinwoodWorld.System
             return textureCoords[path];
         }
 
-        public Block GetBlock(string path){
+        public Block GetBlock(string path)
+        {
+            if(path == null || !blocks.ContainsKey(path))
+                return null;
             return blocks[path];
         }
-        public string Export(){
+        public string Export()
+        {
             Array<string> data = new Array<string>();
             foreach (VoxelChunk chunk in chunkHolder.GetChildren())
             {
@@ -147,14 +158,15 @@ namespace LinwoodWorld.System
             }
             return JSON.Print(data);
         }
-        public void Load(string json){
+        public void Load(string json)
+        {
             var result = JSON.Parse(json);
-            if(result.Error != Error.Ok)
+            if (result.Error != Error.Ok)
                 return;
             Array<string> chunks = result.Result as Array<string>;
             foreach (var chunk in chunks)
             {
-                
+
             }
         }
     }

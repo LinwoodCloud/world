@@ -1,10 +1,8 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://level/Player.cs" type="Script" id=1]
 [ext_resource path="res://textures/slot.png" type="Texture" id=2]
-[ext_resource path="res://Voxel_Terrain_System/2D_Assets/Tileset.png" type="Texture" id=3]
-[ext_resource path="res://Voxel_Inventory_Button.gd" type="Script" id=4]
-[ext_resource path="res://Voxel_Inventory.gd" type="Script" id=5]
+[ext_resource path="res://textures/tileset.png" type="Texture" id=3]
 [ext_resource path="res://textures/slot_enabled.png" type="Texture" id=6]
 [ext_resource path="res://textures/bar_over.png" type="Texture" id=7]
 [ext_resource path="res://textures/bar.png" type="Texture" id=8]
@@ -85,18 +83,14 @@ margin_left = -200.0
 margin_top = -64.0
 margin_right = 200.0
 alignment = 1
-script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-path_to_player = NodePath("../../../..")
 
 [node name="StoneTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
 margin_right = 64.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
-script = ExtResource( 4 )
-voxel_name = "Stone"
 
 [node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/StoneTextureButton"]
 visible = false
@@ -112,16 +106,13 @@ position = Vector2( 32, 32 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
 region_enabled = true
-region_rect = Rect2( 64, 0, 64, 64 )
+region_rect = Rect2( 192, 0, 64, 64 )
 
 [node name="CobbleTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
 margin_left = 68.0
 margin_right = 132.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
-script = ExtResource( 4 )
-voxel_name = "Cobble"
-start_selected = true
 
 [node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/CobbleTextureButton"]
 visible = false
@@ -143,8 +134,6 @@ margin_left = 136.0
 margin_right = 200.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
-script = ExtResource( 4 )
-voxel_name = "Bedrock"
 
 [node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/BedrockTextureButton"]
 visible = false
@@ -165,8 +154,6 @@ margin_left = 204.0
 margin_right = 268.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
-script = ExtResource( 4 )
-voxel_name = "Grass"
 
 [node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/GrassTextureButton"]
 visible = false
@@ -187,8 +174,6 @@ margin_left = 272.0
 margin_right = 336.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
-script = ExtResource( 4 )
-voxel_name = "Dirt"
 
 [node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/DirtTextureButton"]
 visible = false
@@ -209,8 +194,6 @@ margin_left = 340.0
 margin_right = 404.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
-script = ExtResource( 4 )
-voxel_name = "Flower"
 
 [node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/FlowerTextureButton"]
 visible = false

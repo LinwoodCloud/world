@@ -3,12 +3,8 @@ using Godot.Collections;
 
 namespace LinwoodWorld.System
 {
-    public abstract class Block
+    public abstract class Block : Godot.Object
     {
-        public enum Face
-        {
-            TOP, BOTTOM, EAST, WEST, NORTH, SOUTH
-        }
         public abstract bool CausedRender(VoxelChunk chunk, Vector3 position);
         //public abstract void BuildVoxelFace(Chunk chunk);
 
@@ -22,13 +18,12 @@ namespace LinwoodWorld.System
         //  {
         //      
         //  }
-        public abstract void CreateRenderMesh(VoxelChunk chunk, Vector3 position, 
-            out Array<Vector3> vertices,
-            out Godot.Collections.Array<Vector3> normals,
-            out Godot.Collections.Array<int> indices,
-            out Godot.Collections.Array<Vector2> uvs);
-        public abstract void CreateCollisionMesh(VoxelChunk chunk, Vector3 position, 
-            out Array<Vector3> vertices,
-            out Array<int> indicees);
+        public abstract void CreateMesh(VoxelChunk chunk, Vector3 position, int verticesCount, 
+            out Array<Vector3> renderVertices,
+            out Godot.Collections.Array<Vector3> renderNormals,
+            out Godot.Collections.Array<int> renderIndices,
+            out Godot.Collections.Array<Vector2> renderUvs,
+            out Array<Vector3> collisionVertices,
+            out Array<int> collisionIndices);
     }
 }

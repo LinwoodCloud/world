@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+using System.Collections.Generic;
 
 namespace LinwoodWorld.System
 {
@@ -15,10 +16,18 @@ namespace LinwoodWorld.System
         private MeshInstance meshInstance;
         private CollisionShape collisionShape;
         public VoxelWorld World => world;
+        public Texture AlbedoTexture => (meshInstance.MaterialOverride as SpatialMaterial).AlbedoTexture;
 
         public override void _Ready()
         {
 
+        }
+
+        public void Setup(VoxelWorld voxelWorld, Vector3 chunkSize, int voxelUnitSize)
+        {
+            world = voxelWorld;
+            this.chunkSize = chunkSize;
+            voxels = new string[(int)chunkSize.x, (int)chunkSize.y, (int)chunkSize.z];
             surfaceTool = new SurfaceTool();
             meshInstance = GetNode<MeshInstance>("MeshInstance");
             collisionShape = GetNode<CollisionShape>("StaticBody/CollisionShape");
@@ -27,13 +36,6 @@ namespace LinwoodWorld.System
             {
                 AlbedoTexture = world.Texture
             };
-        }
-
-        public void Setup(VoxelWorld voxelWorld, Vector3 chunkSize, int voxelUnitSize)
-        {
-            world = voxelWorld;
-            this.chunkSize = chunkSize;
-            voxels = new string[(int)chunkSize.x, (int)chunkSize.y, (int)chunkSize.z];
             MakeStarterTerrain();
         }
         public void MakeStarterTerrain()
@@ -44,7 +46,7 @@ namespace LinwoodWorld.System
                 {
                     for (int z = 0; z < chunkSize.z; z++)
                     {
-                        if (y + 1 == chunkSize.y / 2)
+                        if (y + 1 == chunkSize.y / 2 && x == chunkSize.x / 2 && z == chunkSize.z / 2)
                             voxels[x, y, z] = "res://mods/main/blocks/GrassBlock.cs";
                         else if (y >= chunkSize.y / 4)
                             voxels[x, y, z] = "res://mods/main/blocks/Dirt.cs";
@@ -53,49 +55,7 @@ namespace LinwoodWorld.System
                     }
                 }
             }
-        }
-        public void UpdateMesh()
-        {
-        }
-
-        private void UpdateRenderMesh()
-        {
-
-            var renderVertices = new Array<Vector3>();
-            var renderNormals = new Array<Vector3>();
-            var renderIndices = new Array<int>();
-            var renderUvs = new Array<Vector2>();
-            for (int x = 0; x < chunkSize.x; x++)
-            {
-
-                for (int y = 0; x < chunkSize.y; y++)
-                {
-
-                    for (int z = 0; z < chunkSize.z; z++)
-                    {
-                        Array<Vector3> currentVertices;
-                        Array<Vector3> currentNormals;
-                        Array<int> currentIndices;
-                        Array<Vector2> currentUvs;
-                        var position = new Vector3(x, y, z);
-                        world.GetBlock(GetVoxel(position)).CreateRenderMesh(this, position, out currentVertices, out currentNormals, out currentIndices, out currentUvs);
-                        renderVertices = ObjectUtils.ConcatArrays(renderVertices, currentVertices);
-                        renderNormals = ObjectUtils.ConcatArrays(renderNormals, currentNormals);
-                        renderIndices = ObjectUtils.ConcatArrays(renderIndices, currentIndices);
-                        renderUvs = ObjectUtils.ConcatArrays(renderUvs, currentUvs);
-                    }
-                }
-            }
-            surfaceTool.Clear();
-            surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
-            for (int i = 0; i < renderVertices.Count; i++)
-            {
-                surfaceTool.AddNormal(renderNormals[i]);
-                surfaceTool.AddUv(renderUvs[i]);
-                surfaceTool.AddVertex(renderVertices[i]);
-            }
-            surfaceTool.GenerateTangents();
-            meshInstance.Mesh = surfaceTool.Commit();
+            UpdateMesh();
         }
 
         public bool VoxelInBounds(Vector3 position)
@@ -109,28 +69,61 @@ namespace LinwoodWorld.System
             return true;
         }
 
-        private void UpdateCollisionMesh()
+        public void UpdateMesh()
         {
+            var renderVertices = new List<Vector3>();
+            var renderNormals = new List<Vector3>();
+            var renderIndices = new List<int>();
+            var renderUvs = new List<Vector2>();
 
-            var collisionVertices = new Array<Vector3>();
-            var collisionIndices = new Array<int>();
+            var collisionVertices = new List<Vector3>();
+            var collisionIndices = new List<int>();
+
             for (int x = 0; x < chunkSize.x; x++)
             {
 
-                for (int y = 0; x < chunkSize.y; y++)
+                for (int y = 0; y < chunkSize.y; y++)
                 {
 
                     for (int z = 0; z < chunkSize.z; z++)
                     {
-                        Array<Vector3> currentVertices;
-                        Array<int> currentIndices;
+                        Array<Vector3> currentCollisionVertices;
+                        Array<int> currentCollisionIndices;
+                        Array<Vector3> currentRenderVertices;
+                        Array<Vector3> currentRenderNormals;
+                        Array<int> currentRenderIndices;
+                        Array<Vector2> currentRenderUvs;
                         var position = new Vector3(x, y, z);
-                        world.GetBlock(GetVoxel(position)).CreateCollisionMesh(this, position, out currentVertices, out currentIndices);
-                        collisionVertices = ObjectUtils.ConcatArrays(collisionVertices, currentVertices);
-                        collisionIndices = ObjectUtils.ConcatArrays(collisionIndices, currentIndices);
+                        var block = world.GetBlock(GetVoxel(position));
+                        if (block != null)
+                        {
+                            block.CreateMesh(this, position, renderVertices.Count, out currentRenderVertices, out currentRenderNormals, out currentRenderIndices, out currentRenderUvs, 
+                                out currentCollisionVertices, out currentCollisionIndices);
+                            renderVertices.AddRange(currentRenderVertices);
+                            renderNormals.AddRange(currentRenderNormals);
+                            renderIndices.AddRange(currentRenderIndices);
+                            renderUvs.AddRange(currentRenderUvs);
+                            collisionVertices.AddRange(currentCollisionVertices);
+                            collisionIndices.AddRange(currentCollisionIndices);
+                        }
                     }
                 }
             }
+            surfaceTool.Clear();
+            surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
+            for (int i = 0; i < renderVertices.Count; i++)
+            {
+                surfaceTool.AddNormal(renderNormals[i]);
+                surfaceTool.AddUv(renderUvs[i]);
+                surfaceTool.AddVertex(renderVertices[i]);
+            }
+            for (int i = 0; i < renderIndices.Count; i++)
+            {
+                surfaceTool.AddIndex(renderIndices[i]);
+            }
+            surfaceTool.GenerateTangents();
+            meshInstance.Mesh = surfaceTool.Commit();
+
             surfaceTool.Clear();
             surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
             for (int i = 0; i < collisionVertices.Count; i++)
@@ -143,19 +136,24 @@ namespace LinwoodWorld.System
             }
             collisionShape.Shape = surfaceTool.Commit().CreateTrimeshShape();
         }
-        protected bool IsVoxelInBounds(Vector3 coords)
+        protected bool IsVoxelInBounds(Vector3 position)
         {
-            return coords.x >= 0 || coords.x <= chunkSize.x - 1 ||
-                coords.y >= 0 || coords.x <= chunkSize.y - 1 ||
-                coords.z >= 0 || coords.x <= chunkSize.z - 1;
+            return position.x >= 0 && position.x <= chunkSize.x - 1 &&
+                position.y >= 0 && position.x <= chunkSize.y - 1 &&
+                position.z >= 0 && position.x <= chunkSize.z - 1;
         }
         public string GetVoxel(Vector3 position)
         {
-            return voxels[(int)position.x, (int)position.y, (int)position.z];
+            if (IsVoxelInBounds(position))
+                return voxels[(int)position.x, (int)position.y, (int)position.z];
+            return null;
         }
         public bool CausedRender(Vector3 position)
         {
-            return world.GetBlock(GetVoxel(position)).CausedRender(this, position);
+            var block = world.GetBlock(GetVoxel(position));
+            if (block == null)
+                return true;
+            return block.CausedRender(this, position);
         }
         public string Export()
         {
@@ -170,9 +168,13 @@ namespace LinwoodWorld.System
             UpdateMesh();
         }
 
-        public void SetVoxel(Vector3 position, string voxel)
+        public bool SetVoxel(Vector3 position, string voxel)
         {
-            voxels[(int)position.x, (int)position.y, (int)position.z] = voxel;
+            if (IsVoxelInBounds(position))
+                voxels[(int)position.x, (int)position.y, (int)position.z] = voxel;
+            else
+                return false;
+            return true;
         }
     }
 }

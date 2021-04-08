@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Voxel_Terrain_System/Voxel_World.gd" type="Script" id=1]
+[ext_resource path="res://system/VoxelWorld.cs" type="Script" id=1]
 [ext_resource path="res://level/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://system/ModLoader.cs" type="Script" id=3]
 
 [sub_resource type="ProceduralSky" id=1]
 sky_top_color = Color( 0.364706, 0.580392, 0.698039, 1 )
@@ -29,5 +30,8 @@ environment = SubResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -0.563944, 0.825813, 0, -0.825813, -0.563944, 0, 33.0581, 0 )
-light_energy = 1.32
 shadow_enabled = true
+
+[node name="ModLoader" type="Spatial" parent="."]
+script = ExtResource( 3 )
+[connection signal="ModsInitialized" from="ModLoader" to="." method="ModsInitialized"]
