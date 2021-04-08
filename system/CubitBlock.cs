@@ -69,7 +69,7 @@ namespace LinwoodWorld.System
                     case Face.TOP:
                         return Top;
                     case Face.BOTTOM:
-                        return North;
+                        return Bottom;
                     default:
                         return null;
                 }
@@ -79,10 +79,7 @@ namespace LinwoodWorld.System
         {
             get;
         }
-        public bool Transparent
-        {
-            get;
-        }
+        public bool Transparent => false;
         public bool Solid => true;
         public abstract BlockTexture Texture { get; }
 
@@ -90,7 +87,7 @@ namespace LinwoodWorld.System
         {
             return Transparent || !Solid;
         }
-        public override void CreateMesh(VoxelChunk chunk, Vector3 position,int verticesCount,
+        public override void CreateMesh(VoxelChunk chunk, Vector3 position, int verticesCount,
             out Array<Vector3> renderVertices,
             out Godot.Collections.Array<Vector3> renderNormals,
             out Godot.Collections.Array<int> renderIndices,
@@ -127,6 +124,7 @@ namespace LinwoodWorld.System
             }
             else
                 CreateFace(chunk, position, Face.TOP, verticesCount, out topRenderVertices, out topRenderNormals, out topRenderIndices, out topRenderUvs, out topCollisionVertices, out topCollisionIndices);
+            verticesCount += topRenderVertices.Count;
 
             var bottomRenderVertices = new Array<Vector3>();
             var bottomRenderNormals = new Array<Vector3>();
@@ -139,8 +137,8 @@ namespace LinwoodWorld.System
                 if (chunk.CausedRender(bottomPos))
                     CreateFace(chunk, position, Face.BOTTOM, verticesCount, out bottomRenderVertices, out bottomRenderNormals, out bottomRenderIndices, out bottomRenderUvs, out bottomCollisionVertices, out bottomCollisionIndices);
             }
-            else
-                CreateFace(chunk, position, Face.BOTTOM, verticesCount, out bottomRenderVertices, out bottomRenderNormals, out bottomRenderIndices, out bottomRenderUvs, out bottomCollisionVertices, out bottomCollisionIndices);
+            CreateFace(chunk, position, Face.BOTTOM, verticesCount, out bottomRenderVertices, out bottomRenderNormals, out bottomRenderIndices, out bottomRenderUvs, out bottomCollisionVertices, out bottomCollisionIndices);
+            verticesCount += bottomRenderVertices.Count;
 
             var eastRenderVertices = new Array<Vector3>();
             var eastRenderNormals = new Array<Vector3>();
@@ -155,6 +153,7 @@ namespace LinwoodWorld.System
             }
             else
                 CreateFace(chunk, position, Face.EAST, verticesCount, out eastRenderVertices, out eastRenderNormals, out eastRenderIndices, out eastRenderUvs, out eastCollisionVertices, out eastCollisionIndices);
+            verticesCount += eastRenderVertices.Count;
 
             var westRenderVertices = new Array<Vector3>();
             var westRenderNormals = new Array<Vector3>();
@@ -169,6 +168,7 @@ namespace LinwoodWorld.System
             }
             else
                 CreateFace(chunk, position, Face.WEST, verticesCount, out westRenderVertices, out westRenderNormals, out westRenderIndices, out westRenderUvs, out westCollisionVertices, out westCollisionIndices);
+            verticesCount += westRenderVertices.Count;
 
             var northRenderVertices = new Array<Vector3>();
             var northRenderNormals = new Array<Vector3>();
@@ -183,6 +183,7 @@ namespace LinwoodWorld.System
             }
             else
                 CreateFace(chunk, position, Face.NORTH, verticesCount, out northRenderVertices, out northRenderNormals, out northRenderIndices, out northRenderUvs, out northCollisionVertices, out northCollisionIndices);
+            verticesCount += northRenderVertices.Count;
 
             var southRenderVertices = new Array<Vector3>();
             var southRenderNormals = new Array<Vector3>();
@@ -197,6 +198,7 @@ namespace LinwoodWorld.System
             }
             else
                 CreateFace(chunk, position, Face.SOUTH, verticesCount, out southRenderVertices, out southRenderNormals, out southRenderIndices, out southRenderUvs, out southCollisionVertices, out southCollisionIndices);
+            verticesCount += southRenderVertices.Count;
 
             renderVertices = ObjectUtils.ConcatArrays(topRenderVertices, bottomRenderVertices, eastRenderVertices, westRenderVertices, northRenderVertices, southRenderVertices);
             renderNormals = ObjectUtils.ConcatArrays(topRenderNormals, bottomRenderNormals, eastRenderNormals, westRenderNormals, northRenderNormals, southRenderNormals);
@@ -207,7 +209,7 @@ namespace LinwoodWorld.System
         }
 
         protected void CreateFace(VoxelChunk chunk, Vector3 position, Face face, int verticesCount,
-        out Array<Vector3> renderVertices, out Array<Vector3> renderNormals, out Array<int> renderIndices, out Array<Vector2> renderUvs, out Array<Vector3> collisionVertices, out Array<int> collisionIndices)
+            out Array<Vector3> renderVertices, out Array<Vector3> renderNormals, out Array<int> renderIndices, out Array<Vector2> renderUvs, out Array<Vector3> collisionVertices, out Array<int> collisionIndices)
         {
             var uvPos = chunk.World.GetTexturePosition(Texture.GetTextureByFace(face));
             var vSize = chunk.World.voxelUnitSize;
@@ -219,7 +221,6 @@ namespace LinwoodWorld.System
             renderUvs = new Array<Vector2>();
             collisionIndices = new Array<int>();
             collisionVertices = new Array<Vector3>();
-
             switch (face)
             {
                 case Face.TOP:
@@ -233,10 +234,10 @@ namespace LinwoodWorld.System
                     renderNormals.Add(new Vector3(0, 1, 0));
                     if (Solid)
                     {
-                        collisionVertices.Add(new Vector3(position.x, position.y + vSize, position.z + vSize));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y + vSize, position.z + vSize));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y + vSize, position.z));
-                        collisionVertices.Add(new Vector3(position.x, position.y + vSize, position.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y + vSize, sizedPos.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y + vSize, sizedPos.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y + vSize, sizedPos.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y + vSize, sizedPos.z));
                     }
                     break;
                 case Face.BOTTOM:
@@ -250,10 +251,10 @@ namespace LinwoodWorld.System
                     renderNormals.Add(new Vector3(0, -1, 0));
                     if (Solid)
                     {
-                        collisionVertices.Add(new Vector3(position.x, position.y, position.z + vSize));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y, position.z + vSize));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y, position.z));
-                        collisionVertices.Add(new Vector3(position.x, position.y, position.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y, sizedPos.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y, sizedPos.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y, sizedPos.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y, sizedPos.z));
                     }
                     break;
                 case Face.NORTH:
@@ -267,10 +268,10 @@ namespace LinwoodWorld.System
                     renderNormals.Add(new Vector3(0, 0, 1));
                     if (Solid)
                     {
-                        collisionVertices.Add(new Vector3(position.x, position.y, position.z + vSize));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y, position.z + vSize));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y + vSize, position.z + vSize));
-                        collisionVertices.Add(new Vector3(position.x, position.y + vSize, position.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y, sizedPos.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y, sizedPos.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y + vSize, sizedPos.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y + vSize, sizedPos.z + vSize));
                     }
                     break;
                 case Face.SOUTH:
@@ -284,10 +285,10 @@ namespace LinwoodWorld.System
                     renderNormals.Add(new Vector3(0, 0, -1));
                     if (Solid)
                     {
-                        collisionVertices.Add(new Vector3(position.x, position.y, position.z));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y, position.z));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y + vSize, position.z));
-                        collisionVertices.Add(new Vector3(position.x, position.y + vSize, position.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y, sizedPos.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y, sizedPos.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y + vSize, sizedPos.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y + vSize, sizedPos.z));
                     }
                     break;
                 case Face.EAST:
@@ -301,10 +302,10 @@ namespace LinwoodWorld.System
                     renderNormals.Add(new Vector3(1, 0, 0));
                     if (Solid)
                     {
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y, position.z + vSize));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y, position.z));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y + vSize, position.z));
-                        collisionVertices.Add(new Vector3(position.x + vSize, position.y + vSize, position.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y, sizedPos.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y, sizedPos.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y + vSize, sizedPos.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x + vSize, sizedPos.y + vSize, sizedPos.z + vSize));
                     }
                     break;
                 case Face.WEST:
@@ -318,10 +319,10 @@ namespace LinwoodWorld.System
                     renderNormals.Add(new Vector3(-1, 0, 0));
                     if (Solid)
                     {
-                        collisionVertices.Add(new Vector3(position.x, position.y, position.z + vSize));
-                        collisionVertices.Add(new Vector3(position.x, position.y, position.z));
-                        collisionVertices.Add(new Vector3(position.x, position.y + vSize, position.z));
-                        collisionVertices.Add(new Vector3(position.x, position.y + vSize, position.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y, sizedPos.z + vSize));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y, sizedPos.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y + vSize, sizedPos.z));
+                        collisionVertices.Add(new Vector3(sizedPos.x, sizedPos.y + vSize, sizedPos.z + vSize));
                     }
                     break;
             }
@@ -333,14 +334,6 @@ namespace LinwoodWorld.System
             renderUvs.Add(new Vector2(sizedUvPos.x + textureUnitX, sizedUvPos.y + textureUnitY));
             renderUvs.Add(new Vector2(sizedUvPos.x + textureUnitX, sizedUvPos.y));
             renderUvs.Add(new Vector2(sizedUvPos.x, sizedUvPos.y));
-            if(this is GrassBlock){
-                GD.Print(uvPos);
-                GD.Print(sizedUvPos);
-                GD.Print(textureUnitX);
-                GD.Print(textureUnitY);
-                GD.Print(renderUvs);
-                GD.Print("---");
-            }
 
             renderIndices.Add(renderVertices.Count + verticesCount - 4);
             renderIndices.Add(renderVertices.Count + verticesCount - 3);

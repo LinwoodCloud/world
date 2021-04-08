@@ -47,9 +47,11 @@ namespace LinwoodWorld.System
             img.ClearMipmaps();
             img.SavePng("res://textures/tileset.png");
             texture.CreateFromImage(img);
-            var flags = (Godot.Texture.FlagsEnum) texture.Flags;
-            flags &= ~Godot.Texture.FlagsEnum.Filter;
-            GD.Print(flags);
+            var flags = (Godot.Texture.FlagsEnum)texture.Flags;
+            if (flags.HasFlag(Godot.Texture.FlagsEnum.Filter))
+            {
+                flags -= Godot.Texture.FlagsEnum.Filter;
+            }
             texture.Flags = (uint) flags;
         }
         public void ModsInitialized(Array<Mod> mods)
@@ -145,7 +147,7 @@ namespace LinwoodWorld.System
 
         public Block GetBlock(string path)
         {
-            if(path == null || !blocks.ContainsKey(path))
+            if (path == null || !blocks.ContainsKey(path))
                 return null;
             return blocks[path];
         }

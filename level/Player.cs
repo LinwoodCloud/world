@@ -106,6 +106,8 @@ namespace LinwoodWorld.Level
                     pauseCanvas.Visible = true;
                     Input.SetMouseMode(Input.MouseMode.Visible);
                 }
+            if (pathToVoxelWorld != null)
+                WorldManipulationInput();
         }
         public override void _Input(InputEvent @event)
         {
@@ -122,17 +124,26 @@ namespace LinwoodWorld.Level
 
         public void WorldManipulationInput()
         {
+            if (Input.IsActionJustPressed("break"))
+            {
+                var ray = RayCast();
+                if (ray != null)
+                {
+                    var position = (Vector3)ray["position"] - ((Vector3)ray["normal"] / 2);
+                    voxelWorld.SetWorldVoxel(position, "");
+                }
+            }
             if (Input.IsActionJustPressed("use"))
             {
                 var ray = RayCast();
-                voxelWorld.SetWorldVoxel((Vector3) ray["position"], "");
+                voxelWorld.SetWorldVoxel((Vector3)ray["position"], "");
             }
         }
         public Dictionary RayCast()
         {
             var spaceState = GetWorld().DirectSpaceState;
             var from = camera.ProjectRayOrigin(GetViewport().GetMousePosition());
-            var to = from + camera.ProjectRayNormal(GetViewport().GetMousePosition());
+            var to = from + camera.ProjectRayNormal(GetViewport().GetMousePosition()) * 100;
             var result = spaceState.IntersectRay(from, to, new Array { this });
             return result;
         }
