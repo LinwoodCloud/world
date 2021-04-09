@@ -1,12 +1,12 @@
 using Godot;
-using System;
-using Godot.Collections;
+using System.Collections.Generic;
+using System.Threading;
 
-namespace LinwoodWorld.System
+namespace LinwoodWorld.WorldSystem
 {
     public class VoxelWorld : Spatial
     {
-        private Array<string> textures = new Array<string>();
+        private List<string> textures = new List<string>();
         private ImageTexture texture;
         private Dictionary<string, Vector2> textureCoords = new Dictionary<string, Vector2>();
         private Dictionary<string, Block> blocks = new Dictionary<string, Block>();
@@ -15,6 +15,7 @@ namespace LinwoodWorld.System
         public Node chunkHolder;
         private PackedScene chunkScene;
         public int voxelUnitSize = 1;
+        private Vector3 chunkSize = new Vector3(16, 16, 16);
 
 
         public override void _Ready()
@@ -52,18 +53,18 @@ namespace LinwoodWorld.System
             {
                 flags -= Godot.Texture.FlagsEnum.Filter;
             }
-            texture.Flags = (uint) flags;
+            texture.Flags = (uint)flags;
         }
-        public void ModsInitialized(Array<Mod> mods)
+        public void ModsInitialized(List<Mod> mods)
         {
             chunkHolder = GetNode("Chunks");
             chunkScene = ResourceLoader.Load<PackedScene>("res://level/Voxel_Chunk.tscn");
             LoadMods(mods);
             BuildTileSet();
-            CreateWorld(new Vector3(1, 1, 1), new Vector3(16, 16, 16));
+            CreateWorld(new Vector3(16, 1, 16));
         }
 
-        private void LoadMods(Array<Mod> mods)
+        private void LoadMods(List<Mod> mods)
         {
             foreach (var mod in mods)
             {
@@ -108,7 +109,9 @@ namespace LinwoodWorld.System
             }
         }
 
-        public void CreateWorld(Vector3 worldSize, Vector3 chunkSize)
+        private List<System.Threading.Thread> threads = new List<System.Threading.Thread>();
+
+        public void CreateWorld(Vector3 worldSize)
         {
             foreach (Node child in chunkHolder.GetChildren())
                 child.QueueFree();
@@ -118,14 +121,27 @@ namespace LinwoodWorld.System
                 {
                     for (int z = 0; z < worldSize.z; z++)
                     {
+                        var position = new Vector3(x, y, z);
                         var newChunk = chunkScene.Instance() as VoxelChunk;
                         chunkHolder.AddChild(newChunk);
-                        newChunk.GlobalTransform = new Transform(newChunk.GlobalTransform.basis, new Vector3(x * chunkSize.x * voxelUnitSize, y * chunkSize.y * voxelUnitSize, z * chunkSize.z * voxelUnitSize));
+                        newChunk.GlobalTransform = new Transform(newChunk.GlobalTransform.basis, position * chunkSize);
                         newChunk.Setup(this, chunkSize, voxelUnitSize);
+                        var thread = new System.Threading.Thread(new ThreadStart( () => CreateChunk(newChunk)));
+                        thread.Start();
+                        threads.Add(thread);
                     }
                 }
             }
+            GD.Print("Starting threading...");
+            foreach (var thread in threads)
+            {
+                thread.Join();
+            }
             GD.Print("Successfully created the world!");
+        }
+        private void CreateChunk(VoxelChunk chunk)
+        {
+            chunk.MakeStarterTerrain();
         }
 
         public bool SetWorldVoxel(Vector3 position, string voxel)
@@ -133,7 +149,7 @@ namespace LinwoodWorld.System
             var result = false;
             foreach (VoxelChunk chunk in chunkHolder.GetChildren())
             {
-                result = chunk.SetVoxel(position, voxel);
+                result = chunk.SetVoxel(chunk.GlobalTransform.XformInv(position), voxel);
                 if (result)
                     break;
             }
@@ -153,7 +169,7 @@ namespace LinwoodWorld.System
         }
         public string Export()
         {
-            Array<string> data = new Array<string>();
+            List<string> data = new List<string>();
             foreach (VoxelChunk chunk in chunkHolder.GetChildren())
             {
                 data.Add(chunk.Export());
@@ -165,7 +181,7 @@ namespace LinwoodWorld.System
             var result = JSON.Parse(json);
             if (result.Error != Error.Ok)
                 return;
-            Array<string> chunks = result.Result as Array<string>;
+            List<string> chunks = result.Result as List<string>;
             foreach (var chunk in chunks)
             {
 

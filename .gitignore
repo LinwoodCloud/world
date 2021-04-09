@@ -15,6 +15,9 @@ export/
 
 # Editor
 .vscode
+.vs
+*.iml
+.idea
 
 # Game specific
 textures/tileset.png

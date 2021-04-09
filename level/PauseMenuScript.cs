@@ -21,17 +21,44 @@ namespace LinwoodWorld.Level
 
         public void OnQuitButtonPressed()
         {
+            Resume();
             GetTree().Quit();
+        }
+        public void Resume()
+        {
+            Visible = false;
+            GetTree().Paused = false;
+            Input.SetMouseMode(Input.MouseMode.Captured);
         }
 
         public void OnResumeButtonPressed()
         {
-            player.Resume();
+            Resume();
+        }
+
+        public void Pause()
+        {
+            Visible = true;
+            GetTree().Paused = true;
+            Input.SetMouseMode(Input.MouseMode.Visible);
         }
 
         public void OnMainMenuButtonPressed()
         {
+            GetTree().Paused = false;
             GetTree().ChangeScene("res://main/menu.tscn");
+        }
+        public override void _Input(InputEvent @event)
+        {
+            if (Input.IsActionJustPressed("ui_cancel"))
+                if (Input.GetMouseMode() == Input.MouseMode.Visible)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Pause();
+                }
         }
 
         //  // Called every frame. 'delta' is the elapsed time since the previous frame.

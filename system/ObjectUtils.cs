@@ -1,12 +1,12 @@
-using Godot.Collections;
+using System.Collections.Generic;
 
-namespace LinwoodWorld.System
+namespace LinwoodWorld.WorldSystem
 {
-    public static class ObjectUtils 
+    public static class ObjectUtils
     {
-        public static Array<T> ConcatArrays<T>(params Array<T>[] arrays)
+        public static List<T> ConcatArrays<T>(params List<T>[] arrays)
         {
-            Array<T> array = new Array<T>();
+            List<T> array = new List<T>();
             foreach (var current in arrays)
             {
                 foreach (var item in current)

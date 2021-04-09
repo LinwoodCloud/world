@@ -1,19 +1,19 @@
 using Godot;
-using Godot.Collections;
+using System.Collections.Generic;
 
-namespace LinwoodWorld.System
+namespace LinwoodWorld.WorldSystem
 {
     public class ModLoader : Node
     {
-        private Array<Mod> mods;
-        public Array<Mod> Mods { get => new Array<Mod>(mods); }
+        private List<Mod> mods;
+        public List<Mod> Mods { get => new List<Mod>(mods); }
 
 
         [Signal]
-        public delegate void ModsInitialized(Array<Mod> mods);
+        public delegate void ModsInitialized(List<Mod> mods);
 
         public override void _Ready(){
-            mods = new Array<Mod>();
+            mods = new List<Mod>();
             EnableMod("main");
             EmitSignal(nameof(ModsInitialized), mods);
         }

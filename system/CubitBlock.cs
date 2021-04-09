@@ -1,8 +1,8 @@
 using Godot;
-using Godot.Collections;
 using LinwoodWorld.Main;
+using System.Collections.Generic;
 
-namespace LinwoodWorld.System
+namespace LinwoodWorld.WorldSystem
 {
     public abstract class CubitBlock : Block
     {
@@ -88,19 +88,19 @@ namespace LinwoodWorld.System
             return Transparent || !Solid;
         }
         public override void CreateMesh(VoxelChunk chunk, Vector3 position, int verticesCount,
-            out Array<Vector3> renderVertices,
-            out Godot.Collections.Array<Vector3> renderNormals,
-            out Godot.Collections.Array<int> renderIndices,
-            out Godot.Collections.Array<Vector2> renderUvs,
-            out Array<Vector3> collisionVertices,
-            out Array<int> collisionIndices)
+            out List<Vector3> renderVertices,
+            out List<Vector3> renderNormals,
+            out List<int> renderIndices,
+            out List<Vector2> renderUvs,
+            out List<Vector3> collisionVertices,
+            out List<int> collisionIndices)
         {
-            renderVertices = new Array<Vector3>();
-            renderNormals = new Array<Vector3>();
-            renderIndices = new Array<int>();
-            renderUvs = new Array<Vector2>();
-            collisionVertices = new Array<Vector3>();
-            collisionIndices = new Array<int>();
+            renderVertices = new List<Vector3>();
+            renderNormals = new List<Vector3>();
+            renderIndices = new List<int>();
+            renderUvs = new List<Vector2>();
+            collisionVertices = new List<Vector3>();
+            collisionIndices = new List<int>();
             if (chunk.GetVoxel(position) == null)
                 return;
 
@@ -111,12 +111,12 @@ namespace LinwoodWorld.System
             var northPos = new Vector3(position.x, position.y, position.z + 1);
             var southPos = new Vector3(position.x, position.y, position.z - 1);
 
-            var topRenderVertices = new Array<Vector3>();
-            var topRenderNormals = new Array<Vector3>();
-            var topRenderIndices = new Array<int>();
-            var topRenderUvs = new Array<Vector2>();
-            var topCollisionVertices = new Array<Vector3>();
-            var topCollisionIndices = new Array<int>();
+            var topRenderVertices = new List<Vector3>();
+            var topRenderNormals = new List<Vector3>();
+            var topRenderIndices = new List<int>();
+            var topRenderUvs = new List<Vector2>();
+            var topCollisionVertices = new List<Vector3>();
+            var topCollisionIndices = new List<int>();
             if (chunk.VoxelInBounds(topPos))
             {
                 if (chunk.CausedRender(topPos))
@@ -125,13 +125,19 @@ namespace LinwoodWorld.System
             else
                 CreateFace(chunk, position, Face.TOP, verticesCount, out topRenderVertices, out topRenderNormals, out topRenderIndices, out topRenderUvs, out topCollisionVertices, out topCollisionIndices);
             verticesCount += topRenderVertices.Count;
+            renderVertices.AddRange(topRenderVertices);
+            renderNormals.AddRange(topRenderNormals);
+            renderIndices.AddRange(topRenderIndices);
+            renderUvs.AddRange(topRenderUvs);
+            collisionVertices.AddRange(topCollisionVertices);
+            collisionIndices.AddRange(topCollisionIndices);
 
-            var bottomRenderVertices = new Array<Vector3>();
-            var bottomRenderNormals = new Array<Vector3>();
-            var bottomRenderIndices = new Array<int>();
-            var bottomRenderUvs = new Array<Vector2>();
-            var bottomCollisionVertices = new Array<Vector3>();
-            var bottomCollisionIndices = new Array<int>();
+            var bottomRenderVertices = new List<Vector3>();
+            var bottomRenderNormals = new List<Vector3>();
+            var bottomRenderIndices = new List<int>();
+            var bottomRenderUvs = new List<Vector2>();
+            var bottomCollisionVertices = new List<Vector3>();
+            var bottomCollisionIndices = new List<int>();
             if (chunk.VoxelInBounds(bottomPos))
             {
                 if (chunk.CausedRender(bottomPos))
@@ -139,13 +145,19 @@ namespace LinwoodWorld.System
             }
             CreateFace(chunk, position, Face.BOTTOM, verticesCount, out bottomRenderVertices, out bottomRenderNormals, out bottomRenderIndices, out bottomRenderUvs, out bottomCollisionVertices, out bottomCollisionIndices);
             verticesCount += bottomRenderVertices.Count;
+            renderVertices.AddRange(bottomRenderVertices);
+            renderNormals.AddRange(bottomRenderNormals);
+            renderIndices.AddRange(bottomRenderIndices);
+            renderUvs.AddRange(bottomRenderUvs);
+            collisionVertices.AddRange(bottomCollisionVertices);
+            collisionIndices.AddRange(bottomCollisionIndices);
 
-            var eastRenderVertices = new Array<Vector3>();
-            var eastRenderNormals = new Array<Vector3>();
-            var eastRenderIndices = new Array<int>();
-            var eastRenderUvs = new Array<Vector2>();
-            var eastCollisionVertices = new Array<Vector3>();
-            var eastCollisionIndices = new Array<int>();
+            var eastRenderVertices = new List<Vector3>();
+            var eastRenderNormals = new List<Vector3>();
+            var eastRenderIndices = new List<int>();
+            var eastRenderUvs = new List<Vector2>();
+            var eastCollisionVertices = new List<Vector3>();
+            var eastCollisionIndices = new List<int>();
             if (chunk.VoxelInBounds(eastPos))
             {
                 if (chunk.CausedRender(eastPos))
@@ -154,13 +166,19 @@ namespace LinwoodWorld.System
             else
                 CreateFace(chunk, position, Face.EAST, verticesCount, out eastRenderVertices, out eastRenderNormals, out eastRenderIndices, out eastRenderUvs, out eastCollisionVertices, out eastCollisionIndices);
             verticesCount += eastRenderVertices.Count;
+            renderVertices.AddRange(eastRenderVertices);
+            renderNormals.AddRange(eastRenderNormals);
+            renderIndices.AddRange(eastRenderIndices);
+            renderUvs.AddRange(eastRenderUvs);
+            collisionVertices.AddRange(eastCollisionVertices);
+            collisionIndices.AddRange(eastCollisionIndices);
 
-            var westRenderVertices = new Array<Vector3>();
-            var westRenderNormals = new Array<Vector3>();
-            var westRenderIndices = new Array<int>();
-            var westRenderUvs = new Array<Vector2>();
-            var westCollisionVertices = new Array<Vector3>();
-            var westCollisionIndices = new Array<int>();
+            var westRenderVertices = new List<Vector3>();
+            var westRenderNormals = new List<Vector3>();
+            var westRenderIndices = new List<int>();
+            var westRenderUvs = new List<Vector2>();
+            var westCollisionVertices = new List<Vector3>();
+            var westCollisionIndices = new List<int>();
             if (chunk.VoxelInBounds(westPos))
             {
                 if (chunk.CausedRender(westPos))
@@ -169,13 +187,19 @@ namespace LinwoodWorld.System
             else
                 CreateFace(chunk, position, Face.WEST, verticesCount, out westRenderVertices, out westRenderNormals, out westRenderIndices, out westRenderUvs, out westCollisionVertices, out westCollisionIndices);
             verticesCount += westRenderVertices.Count;
+            renderVertices.AddRange(westRenderVertices);
+            renderNormals.AddRange(westRenderNormals);
+            renderIndices.AddRange(westRenderIndices);
+            renderUvs.AddRange(westRenderUvs);
+            collisionVertices.AddRange(westCollisionVertices);
+            collisionIndices.AddRange(westCollisionIndices);
 
-            var northRenderVertices = new Array<Vector3>();
-            var northRenderNormals = new Array<Vector3>();
-            var northRenderIndices = new Array<int>();
-            var northRenderUvs = new Array<Vector2>();
-            var northCollisionVertices = new Array<Vector3>();
-            var northCollisionIndices = new Array<int>();
+            var northRenderVertices = new List<Vector3>();
+            var northRenderNormals = new List<Vector3>();
+            var northRenderIndices = new List<int>();
+            var northRenderUvs = new List<Vector2>();
+            var northCollisionVertices = new List<Vector3>();
+            var northCollisionIndices = new List<int>();
             if (chunk.VoxelInBounds(northPos))
             {
                 if (chunk.CausedRender(northPos))
@@ -184,13 +208,19 @@ namespace LinwoodWorld.System
             else
                 CreateFace(chunk, position, Face.NORTH, verticesCount, out northRenderVertices, out northRenderNormals, out northRenderIndices, out northRenderUvs, out northCollisionVertices, out northCollisionIndices);
             verticesCount += northRenderVertices.Count;
+            renderVertices.AddRange(northRenderVertices);
+            renderNormals.AddRange(northRenderNormals);
+            renderIndices.AddRange(northRenderIndices);
+            renderUvs.AddRange(northRenderUvs);
+            collisionVertices.AddRange(northCollisionVertices);
+            collisionIndices.AddRange(northCollisionIndices);
 
-            var southRenderVertices = new Array<Vector3>();
-            var southRenderNormals = new Array<Vector3>();
-            var southRenderIndices = new Array<int>();
-            var southRenderUvs = new Array<Vector2>();
-            var southCollisionVertices = new Array<Vector3>();
-            var southCollisionIndices = new Array<int>();
+            var southRenderVertices = new List<Vector3>();
+            var southRenderNormals = new List<Vector3>();
+            var southRenderIndices = new List<int>();
+            var southRenderUvs = new List<Vector2>();
+            var southCollisionVertices = new List<Vector3>();
+            var southCollisionIndices = new List<int>();
             if (chunk.VoxelInBounds(southPos))
             {
                 if (chunk.CausedRender(southPos))
@@ -199,28 +229,27 @@ namespace LinwoodWorld.System
             else
                 CreateFace(chunk, position, Face.SOUTH, verticesCount, out southRenderVertices, out southRenderNormals, out southRenderIndices, out southRenderUvs, out southCollisionVertices, out southCollisionIndices);
             verticesCount += southRenderVertices.Count;
-
-            renderVertices = ObjectUtils.ConcatArrays(topRenderVertices, bottomRenderVertices, eastRenderVertices, westRenderVertices, northRenderVertices, southRenderVertices);
-            renderNormals = ObjectUtils.ConcatArrays(topRenderNormals, bottomRenderNormals, eastRenderNormals, westRenderNormals, northRenderNormals, southRenderNormals);
-            renderIndices = ObjectUtils.ConcatArrays(topRenderIndices, bottomRenderIndices, eastRenderIndices, westRenderIndices, northRenderIndices, southRenderIndices);
-            renderUvs = ObjectUtils.ConcatArrays(topRenderUvs, bottomRenderUvs, eastRenderUvs, westRenderUvs, northRenderUvs, southRenderUvs);
-            collisionVertices = ObjectUtils.ConcatArrays(topCollisionVertices, bottomCollisionVertices, eastCollisionVertices, westCollisionVertices, northCollisionVertices, southCollisionVertices);
-            collisionIndices = ObjectUtils.ConcatArrays(topCollisionIndices, bottomCollisionIndices, eastCollisionIndices, westCollisionIndices, northCollisionIndices, southCollisionIndices);
+            renderVertices.AddRange(southRenderVertices);
+            renderNormals.AddRange(southRenderNormals);
+            renderIndices.AddRange(southRenderIndices);
+            renderUvs.AddRange(southRenderUvs);
+            collisionVertices.AddRange(southCollisionVertices);
+            collisionIndices.AddRange(southCollisionIndices);
         }
 
         protected void CreateFace(VoxelChunk chunk, Vector3 position, Face face, int verticesCount,
-            out Array<Vector3> renderVertices, out Array<Vector3> renderNormals, out Array<int> renderIndices, out Array<Vector2> renderUvs, out Array<Vector3> collisionVertices, out Array<int> collisionIndices)
+            out List<Vector3> renderVertices, out List<Vector3> renderNormals, out List<int> renderIndices, out List<Vector2> renderUvs, out List<Vector3> collisionVertices, out List<int> collisionIndices)
         {
             var uvPos = chunk.World.GetTexturePosition(Texture.GetTextureByFace(face));
             var vSize = chunk.World.voxelUnitSize;
             var sizedPos = position * vSize;
 
-            renderVertices = new Array<Vector3>();
-            renderNormals = new Array<Vector3>();
-            renderIndices = new Array<int>();
-            renderUvs = new Array<Vector2>();
-            collisionIndices = new Array<int>();
-            collisionVertices = new Array<Vector3>();
+            renderVertices = new List<Vector3>();
+            renderNormals = new List<Vector3>();
+            renderIndices = new List<int>();
+            renderUvs = new List<Vector2>();
+            collisionIndices = new List<int>();
+            collisionVertices = new List<Vector3>();
             switch (face)
             {
                 case Face.TOP:

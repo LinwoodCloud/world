@@ -3,6 +3,7 @@
 [ext_resource path="res://level/Player.cs" type="Script" id=1]
 [ext_resource path="res://textures/slot.png" type="Texture" id=2]
 [ext_resource path="res://textures/tileset.png" type="Texture" id=3]
+[ext_resource path="res://ui/invert.shader" type="Shader" id=4]
 [ext_resource path="res://textures/slot_enabled.png" type="Texture" id=6]
 [ext_resource path="res://textures/bar_over.png" type="Texture" id=7]
 [ext_resource path="res://textures/bar.png" type="Texture" id=8]
@@ -17,26 +18,8 @@ func _process(delta):
 	text = \"FPS:\" + str(Engine.get_frames_per_second());
 "
 
-[sub_resource type="Shader" id=2]
-code = "shader_type canvas_item;
-
-uniform float blur_amount : hint_range(0, 5);
-
-void fragment() {
-	vec4 c= texture(TEXTURE, UV);
-
-		c.r=1.0-c.r;
-
-		c.g=1.0-c.g;
-
-		c.b=1.0-c.b;
-		COLOR.rgba=c;
-    // COLOR.rgb = vec3(1.0) - texture(TEXTURE, UV);
-}
-"
-
 [sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
+shader = ExtResource( 4 )
 shader_param/blur_amount = null
 
 [sub_resource type="CapsuleShape" id=4]
@@ -262,11 +245,13 @@ margin_top = -32.0
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 9 )
+stretch_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PauseCanvas" parent="Rotation_Helper/Camera" instance=ExtResource( 10 )]
+pause_mode = 2
 visible = false
 playerPath = NodePath("../../..")
 

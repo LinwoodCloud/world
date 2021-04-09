@@ -3,7 +3,7 @@ using System.Text;
 using Godot;
 using NLua;
 
-namespace LinwoodWorld.System
+namespace LinwoodWorld.WorldSystem
 {
     public class ScriptingNode : Spatial
     {

@@ -4,7 +4,7 @@ using Godot.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace LinwoodWorld.System
+namespace LinwoodWorld.WorldSystem
 {
     public class VoxelChunk : Spatial
     {
@@ -13,7 +13,7 @@ namespace LinwoodWorld.System
         private Vector3 chunkSize;
         private int voxelSize;
         private SurfaceTool surfaceTool;
-        public Array<Vector2> meshuvs;
+        public List<Vector2> meshuvs;
         private MeshInstance meshInstance;
         private CollisionShape collisionShape;
         public VoxelWorld World => world;
@@ -37,7 +37,6 @@ namespace LinwoodWorld.System
             {
                 AlbedoTexture = world.Texture
             };
-            MakeStarterTerrain();
         }
         public void MakeStarterTerrain()
         {
@@ -57,6 +56,7 @@ namespace LinwoodWorld.System
                 }
             }
             UpdateMesh();
+            
         }
 
         public bool VoxelInBounds(Vector3 position)
@@ -91,12 +91,12 @@ namespace LinwoodWorld.System
 
                     for (int z = 0; z < chunkSize.z; z++)
                     {
-                        Array<Vector3> currentCollisionVertices;
-                        Array<int> currentCollisionIndices;
-                        Array<Vector3> currentRenderVertices;
-                        Array<Vector3> currentRenderNormals;
-                        Array<int> currentRenderIndices;
-                        Array<Vector2> currentRenderUvs;
+                        List<Vector3> currentCollisionVertices;
+                        List<int> currentCollisionIndices;
+                        List<Vector3> currentRenderVertices;
+                        List<Vector3> currentRenderNormals;
+                        List<int> currentRenderIndices;
+                        List<Vector2> currentRenderUvs;
                         var position = new Vector3(x, y, z);
                         var block = world.GetBlock(GetVoxel(position));
                         if (block != null)
@@ -127,7 +127,8 @@ namespace LinwoodWorld.System
                 surfaceTool.AddIndex(renderIndices[i]);
             }
             surfaceTool.GenerateTangents();
-            meshInstance.Mesh = surfaceTool.Commit();
+            var mesh = surfaceTool.Commit();
+            meshInstance.Mesh = mesh;
 
             GD.Print(sw.ElapsedMilliseconds);
             surfaceTool.Clear();
@@ -140,15 +141,15 @@ namespace LinwoodWorld.System
             {
                 surfaceTool.AddIndex(collisionIndices[i]);
             }
-            collisionShape.Shape = surfaceTool.Commit().CreateTrimeshShape();
+            collisionShape.CallDeferred("set_shape", surfaceTool.Commit(new ArrayMesh()).CreateTrimeshShape());
             sw.Stop();
             GD.Print(sw.ElapsedMilliseconds);
         }
         protected bool IsVoxelInBounds(Vector3 position)
         {
             return position.x >= 0 && position.x < chunkSize.x &&
-                position.y >= 0 && position.x < chunkSize.y &&
-                position.z >= 0 && position.x < chunkSize.z;
+                position.y >= 0 && position.y < chunkSize.y &&
+                position.z >= 0 && position.z < chunkSize.z;
         }
         public string GetVoxel(Vector3 position)
         {

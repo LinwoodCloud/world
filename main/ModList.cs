@@ -1,7 +1,8 @@
 using Godot;
 using Godot.Collections;
-using LinwoodWorld.System;
+using LinwoodWorld.WorldSystem;
 using System;
+using System.Collections.Generic;
 
 public class ModList : Control
 {
@@ -15,7 +16,7 @@ public class ModList : Control
         
     }
 
-    public void InitializeMods(Array<Mod> mods)
+    public void InitializeMods(List<Mod> mods)
     {
         foreach (Node child in GetChildren())
         {

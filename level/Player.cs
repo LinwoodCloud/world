@@ -1,6 +1,6 @@
 using Godot;
 using Godot.Collections;
-using LinwoodWorld.System;
+using LinwoodWorld.WorldSystem;
 
 namespace LinwoodWorld.Level
 {
@@ -28,12 +28,6 @@ namespace LinwoodWorld.Level
         private Vector3 velocity = new Vector3();
         private VoxelWorld voxelWorld;
         private int currentJumps = 0;
-
-        public void Resume()
-        {
-            pauseCanvas.Visible = false;
-            Input.SetMouseMode(Input.MouseMode.Captured);
-        }
 
         public override void _Ready()
         {
@@ -95,17 +89,6 @@ namespace LinwoodWorld.Level
         }
         private void ProcessInput(float delta)
         {
-            if (Input.IsActionJustPressed("ui_cancel"))
-                if (Input.GetMouseMode() == Input.MouseMode.Visible)
-                {
-                    pauseCanvas.Visible = false;
-                    Input.SetMouseMode(Input.MouseMode.Captured);
-                }
-                else
-                {
-                    pauseCanvas.Visible = true;
-                    Input.SetMouseMode(Input.MouseMode.Visible);
-                }
             if (pathToVoxelWorld != null)
                 WorldManipulationInput();
         }
@@ -127,7 +110,7 @@ namespace LinwoodWorld.Level
             if (Input.IsActionJustPressed("break"))
             {
                 var ray = RayCast();
-                if (ray != null)
+                if (ray != null && ray.Contains("position") && ray.Contains("normal"))
                 {
                     var position = (Vector3)ray["position"] - ((Vector3)ray["normal"] / 2);
                     voxelWorld.SetWorldVoxel(position, "");

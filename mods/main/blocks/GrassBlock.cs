@@ -1,5 +1,5 @@
 using Godot;
-using LinwoodWorld.System;
+using LinwoodWorld.WorldSystem;
 using System;
 
 namespace LinwoodWorld.Main

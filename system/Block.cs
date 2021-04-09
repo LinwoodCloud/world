@@ -1,7 +1,7 @@
 using Godot;
-using Godot.Collections;
+using System.Collections.Generic;
 
-namespace LinwoodWorld.System
+namespace LinwoodWorld.WorldSystem
 {
     public abstract class Block : Godot.Object
     {
@@ -19,11 +19,11 @@ namespace LinwoodWorld.System
         //      
         //  }
         public abstract void CreateMesh(VoxelChunk chunk, Vector3 position, int verticesCount, 
-            out Array<Vector3> renderVertices,
-            out Godot.Collections.Array<Vector3> renderNormals,
-            out Godot.Collections.Array<int> renderIndices,
-            out Godot.Collections.Array<Vector2> renderUvs,
-            out Array<Vector3> collisionVertices,
-            out Array<int> collisionIndices);
+            out List<Vector3> renderVertices,
+            out List<Vector3> renderNormals,
+            out List<int> renderIndices,
+            out List<Vector2> renderUvs,
+            out List<Vector3> collisionVertices,
+            out List<int> collisionIndices);
     }
 }
