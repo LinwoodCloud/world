@@ -14,8 +14,10 @@ namespace LinwoodWorld.Level
         public readonly float jumpHeight = 10;
         [Export]
         public readonly float jumps = 2;
-        private const float accel = 9.5f;
-        private const float deaccel = 4.5f;
+        [Export]
+        public float accel = 9.5f;
+        [Export]
+        public float deaccel = 4.5f;
         [Export]
         private readonly float maxSlopeAngle = 4.5f;
         [Export]
@@ -50,7 +52,6 @@ namespace LinwoodWorld.Level
             var dir = new Vector3();
             var camTransform = camera.GlobalTransform;
             var inputMovementVector = new Vector2();
-
             if (Input.IsActionPressed("movement_forward"))
                 inputMovementVector.y += 1;
             if (Input.IsActionPressed("movement_backward"))
@@ -85,6 +86,11 @@ namespace LinwoodWorld.Level
             hvel = hvel.LinearInterpolate(target, accel * delta);
             velocity.x = hvel.x;
             velocity.z = hvel.z;
+
+            if (GlobalTransform.origin.y <= -100){
+                GlobalTransform = new Transform(GlobalTransform.basis, new Vector3(GlobalTransform.origin.x, voxelWorld.worldSize.y * voxelWorld.chunkSize.y + 100, GlobalTransform.origin.z));
+                velocity = new Vector3(0, 0, 0);
+            }
             velocity = MoveAndSlide(velocity, new Vector3(0, 1, 0), floorMaxAngle: Mathf.Deg2Rad(maxSlopeAngle));
         }
         private void ProcessInput(float delta)
@@ -119,7 +125,7 @@ namespace LinwoodWorld.Level
             if (Input.IsActionJustPressed("use"))
             {
                 var ray = RayCast();
-                voxelWorld.SetWorldVoxel((Vector3)ray["position"], "");
+                voxelWorld.SetWorldVoxel((Vector3)ray["position"], "res://mods/main/blocks/GrassBlock.cs");
             }
         }
         public Dictionary RayCast()

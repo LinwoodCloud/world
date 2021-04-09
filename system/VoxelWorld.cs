@@ -15,7 +15,8 @@ namespace LinwoodWorld.WorldSystem
         public Node chunkHolder;
         private PackedScene chunkScene;
         public int voxelUnitSize = 1;
-        private Vector3 chunkSize = new Vector3(16, 16, 16);
+        public Vector3 chunkSize = new Vector3(16, 16, 16);
+        public Vector3 worldSize;
 
 
         public override void _Ready()
@@ -61,7 +62,7 @@ namespace LinwoodWorld.WorldSystem
             chunkScene = ResourceLoader.Load<PackedScene>("res://level/Voxel_Chunk.tscn");
             LoadMods(mods);
             BuildTileSet();
-            CreateWorld(new Vector3(16, 1, 16));
+            CreateWorld(new Vector3(8, 16, 8));
         }
 
         private void LoadMods(List<Mod> mods)
@@ -113,6 +114,7 @@ namespace LinwoodWorld.WorldSystem
 
         public void CreateWorld(Vector3 worldSize)
         {
+            this.worldSize = worldSize;
             foreach (Node child in chunkHolder.GetChildren())
                 child.QueueFree();
             for (int x = 0; x < worldSize.x; x++)

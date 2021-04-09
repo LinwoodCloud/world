@@ -46,17 +46,28 @@ namespace LinwoodWorld.WorldSystem
                 {
                     for (int z = 0; z < chunkSize.z; z++)
                     {
-                        if (y + 1 == chunkSize.y / 2 && x == chunkSize.x / 2 && z == chunkSize.z / 2)
+                        var position = new Vector3(x, y, z);
+                        var globPos = GlobalTransform.Xform(position);
+                        if (y == 1)
+                            if (globPos.z % 30 == (int)(Mathf.Sin(globPos.x / 15) * 15) + 15)
+                                voxels[x, y, z] = "res://mods/main/blocks/GrassBlock.cs";
+                            else if (globPos.z % 30 == (int)(Mathf.Cos(globPos.x / 15) * 15) + 15)
+                                voxels[x, y, z] = "res://mods/main/blocks/GrassBlock.cs";
+                            else
+                                voxels[x, y, z] = "res://mods/main/blocks/Dirt.cs";
+                        /*if(globPos.z % 4 == 0 && globPos.x % 4 == 0 && globPos.y % 4 == 0)
+                            voxels[x,y,z] = "res://mods/main/blocks/GrassBlock.cs"; */
+                        /* if (y + 1 == chunkSize.y / 2 && x == chunkSize.x / 2 && z == chunkSize.z / 2)
                             voxels[x, y, z] = "res://mods/main/blocks/GrassBlock.cs";
                         else if (y >= chunkSize.y / 4)
                             voxels[x, y, z] = "res://mods/main/blocks/Dirt.cs";
                         else
-                            voxels[x, y, z] = "res://mods/main/blocks/Stone.cs";
+                            voxels[x, y, z] = "res://mods/main/blocks/Stone.cs"; */
                     }
                 }
             }
             UpdateMesh();
-            
+
         }
 
         public bool VoxelInBounds(Vector3 position)
@@ -101,7 +112,7 @@ namespace LinwoodWorld.WorldSystem
                         var block = world.GetBlock(GetVoxel(position));
                         if (block != null)
                         {
-                            block.CreateMesh(this, position, renderVertices.Count, out currentRenderVertices, out currentRenderNormals, out currentRenderIndices, out currentRenderUvs, 
+                            block.CreateMesh(this, position, renderVertices.Count, out currentRenderVertices, out currentRenderNormals, out currentRenderIndices, out currentRenderUvs,
                                 out currentCollisionVertices, out currentCollisionIndices);
                             renderVertices.AddRange(currentRenderVertices);
                             renderNormals.AddRange(currentRenderNormals);
