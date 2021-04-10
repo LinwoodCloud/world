@@ -38,8 +38,10 @@ namespace LinwoodWorld.WorldSystem
                 AlbedoTexture = world.Texture
             };
         }
+        private Random random = new Random();
         public void MakeStarterTerrain()
         {
+            var blocks = world.GetBlockPaths();
             for (int x = 0; x < chunkSize.x; x++)
             {
                 for (int y = 0; y < chunkSize.y / 2; y++)
@@ -48,15 +50,15 @@ namespace LinwoodWorld.WorldSystem
                     {
                         var position = new Vector3(x, y, z);
                         var globPos = GlobalTransform.Xform(position);
-                        if (y == 1)
+                        /*if (y == 1)
                             if (globPos.z % 30 == (int)(Mathf.Sin(globPos.x / 15) * 15) + 15)
                                 voxels[x, y, z] = "res://mods/main/blocks/GrassBlock.cs";
                             else if (globPos.z % 30 == (int)(Mathf.Cos(globPos.x / 15) * 15) + 15)
                                 voxels[x, y, z] = "res://mods/main/blocks/GrassBlock.cs";
                             else
-                                voxels[x, y, z] = "res://mods/main/blocks/Dirt.cs";
-                        /*if(globPos.z % 4 == 0 && globPos.x % 4 == 0 && globPos.y % 4 == 0)
-                            voxels[x,y,z] = "res://mods/main/blocks/GrassBlock.cs"; */
+                                voxels[x, y, z] = "res://mods/main/blocks/Dirt.cs";*/
+                        if(globPos.z % 4 == 0 && globPos.x % 4 == 0 && globPos.y % 4 == 0)
+                            voxels[x,y,z] = blocks[random.Next(blocks.Count)]; 
                         /* if (y + 1 == chunkSize.y / 2 && x == chunkSize.x / 2 && z == chunkSize.z / 2)
                             voxels[x, y, z] = "res://mods/main/blocks/GrassBlock.cs";
                         else if (y >= chunkSize.y / 4)
@@ -167,6 +169,10 @@ namespace LinwoodWorld.WorldSystem
             if (IsVoxelInBounds(position))
                 return voxels[(int)position.x, (int)position.y, (int)position.z];
             return null;
+        }
+        public Block GetBlock(Vector3 position)
+        {
+            return World.GetBlock(GetVoxel(position));
         }
         public bool CausedRender(Vector3 position)
         {

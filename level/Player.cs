@@ -87,7 +87,8 @@ namespace LinwoodWorld.Level
             velocity.x = hvel.x;
             velocity.z = hvel.z;
 
-            if (GlobalTransform.origin.y <= -100){
+            if (GlobalTransform.origin.y <= -100)
+            {
                 GlobalTransform = new Transform(GlobalTransform.basis, new Vector3(GlobalTransform.origin.x, voxelWorld.worldSize.y * voxelWorld.chunkSize.y + 100, GlobalTransform.origin.z));
                 velocity = new Vector3(0, 0, 0);
             }
@@ -119,13 +120,16 @@ namespace LinwoodWorld.Level
                 if (ray != null && ray.Contains("position") && ray.Contains("normal"))
                 {
                     var position = (Vector3)ray["position"] - ((Vector3)ray["normal"] / 2);
-                    voxelWorld.SetWorldVoxel(position, "");
+                    voxelWorld.SetWorldVoxel(position, null);
                 }
             }
             if (Input.IsActionJustPressed("use"))
             {
                 var ray = RayCast();
-                voxelWorld.SetWorldVoxel((Vector3)ray["position"], "res://mods/main/blocks/GrassBlock.cs");
+                if (ray != null && ray.Contains("position") && ray.Contains("normal"))
+                {
+                    voxelWorld.SetWorldVoxel((Vector3)ray["position"], "res://mods/main/blocks/GrassBlock.cs");
+                }
             }
         }
         public Dictionary RayCast()

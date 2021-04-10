@@ -30,7 +30,7 @@ enabled=PoolStringArray(  )
 
 [gui]
 
-theme/custom="res://ui/default_theme.tres"
+theme/custom="res://default_theme.tres"
 theme/custom_font="res://ui/Roboto.tres"
 
 [input]

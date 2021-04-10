@@ -189,5 +189,11 @@ namespace LinwoodWorld.WorldSystem
 
             }
         }
+        public List<string> GetBlockPaths() {
+            return new List<string>(blocks.Keys);
+        }
+        public List<Block> GetBlocks(){
+            return new List<Block>(blocks.Values);
+        }
     }
 }

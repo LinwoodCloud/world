@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/stone.png-4531637114ffef837c9af107b529fa85.s3tc.stex"
-path.etc2="res://.import/stone.png-4531637114ffef837c9af107b529fa85.etc2.stex"
+path.s3tc="res://.import/cobblestone.png-529b781617a9fbcbcd87933f083e7146.s3tc.stex"
+path.etc2="res://.import/cobblestone.png-529b781617a9fbcbcd87933f083e7146.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://mods/main/textures/stone.png"
-dest_files=[ "res://.import/stone.png-4531637114ffef837c9af107b529fa85.s3tc.stex", "res://.import/stone.png-4531637114ffef837c9af107b529fa85.etc2.stex" ]
+source_file="res://mods/main/textures/cobblestone.png"
+dest_files=[ "res://.import/cobblestone.png-529b781617a9fbcbcd87933f083e7146.s3tc.stex", "res://.import/cobblestone.png-529b781617a9fbcbcd87933f083e7146.etc2.stex" ]
 
 [params]
 
