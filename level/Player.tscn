@@ -163,6 +163,7 @@ margin_bottom = -5.0
 texture = ExtResource( 5 )
 expand = true
 stretch_mode = 6
+flip_h = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/dirt.png-8b8839f733d83ccfb7f58a778c6ce119.stex"
+path="res://.import/coal_ore.png-efa1144bfe988f96e1323278824e51c8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods/main/textures/dirt.png"
-dest_files=[ "res://.import/dirt.png-8b8839f733d83ccfb7f58a778c6ce119.stex" ]
+source_file="res://mods/main/textures/coal_ore.png"
+dest_files=[ "res://.import/coal_ore.png-efa1144bfe988f96e1323278824e51c8.stex" ]
 
 [params]
 

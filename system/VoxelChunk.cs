@@ -85,8 +85,6 @@ namespace LinwoodWorld.WorldSystem
 
         public void UpdateMesh()
         {
-            var sw = new Stopwatch();
-            sw.Start();
             var renderVertices = new List<Vector3>();
             var renderNormals = new List<Vector3>();
             var renderIndices = new List<int>();
@@ -95,7 +93,6 @@ namespace LinwoodWorld.WorldSystem
             var collisionVertices = new List<Vector3>();
             var collisionIndices = new List<int>();
 
-            GD.Print(sw.ElapsedMilliseconds);
             for (int x = 0; x < chunkSize.x; x++)
             {
 
@@ -126,7 +123,6 @@ namespace LinwoodWorld.WorldSystem
                     }
                 }
             }
-            GD.Print(sw.ElapsedMilliseconds);
             surfaceTool.Clear();
             surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
             for (int i = 0; i < renderVertices.Count; i++)
@@ -143,7 +139,6 @@ namespace LinwoodWorld.WorldSystem
             var mesh = surfaceTool.Commit();
             meshInstance.Mesh = mesh;
 
-            GD.Print(sw.ElapsedMilliseconds);
             surfaceTool.Clear();
             surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
             for (int i = 0; i < collisionVertices.Count; i++)
@@ -155,8 +150,6 @@ namespace LinwoodWorld.WorldSystem
                 surfaceTool.AddIndex(collisionIndices[i]);
             }
             collisionShape.CallDeferred("set_shape", surfaceTool.Commit(new ArrayMesh()).CreateTrimeshShape());
-            sw.Stop();
-            GD.Print(sw.ElapsedMilliseconds);
         }
         protected bool IsVoxelInBounds(Vector3 position)
         {
