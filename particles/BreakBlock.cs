@@ -28,8 +28,7 @@ namespace LinwoodWorld.Particles
 
             var collisionVertices = new List<Vector3>();
             var collisionIndices = new List<int>();
-            var chunk = new VoxelChunk();
-            chunk.GetBlock(position).CreateMesh(chunk, position, 0, out renderVertices, out renderNormals, out renderIndices, out renderUvs, out collisionVertices, out collisionIndices);
+            chunk.GetBlock(position).CreateMesh(chunk, position, 0, out renderVertices, out renderNormals, out renderIndices, out renderUvs, out collisionVertices, out collisionIndices, true);
 
             surfaceTool.Clear();
             surfaceTool.Begin(Mesh.PrimitiveType.Triangles);

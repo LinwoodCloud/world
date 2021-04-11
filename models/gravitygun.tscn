@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ui/recolor.shader" type="Shader" id=1]
+[ext_resource path="res://models/gravitygun.glb" type="PackedScene" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/fuwafuwa_speed = 1.5
+shader_param/fuwafuwa_size = 0.5
+shader_param/recolored = Color( 0, 0.952941, 1, 1 )
+shader_param/alpha = 0.5
+
+[node name="gravitygun" instance=ExtResource( 2 )]
+
+[node name="Fluid" parent="." index="2"]
+material/0 = SubResource( 1 )

@@ -93,7 +93,7 @@ namespace LinwoodWorld.WorldSystem
             out List<int> renderIndices,
             out List<Vector2> renderUvs,
             out List<Vector3> collisionVertices,
-            out List<int> collisionIndices)
+            out List<int> collisionIndices, bool renderAllFaces = false)
         {
             renderVertices = new List<Vector3>();
             renderNormals = new List<Vector3>();
@@ -117,7 +117,7 @@ namespace LinwoodWorld.WorldSystem
             var topRenderUvs = new List<Vector2>();
             var topCollisionVertices = new List<Vector3>();
             var topCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(topPos))
+            if (chunk.VoxelInBounds(topPos) && !renderAllFaces)
             {
                 if (chunk.CausedRender(topPos))
                     CreateFace(chunk, position, Face.TOP, verticesCount, out topRenderVertices, out topRenderNormals, out topRenderIndices, out topRenderUvs, out topCollisionVertices, out topCollisionIndices);
@@ -138,7 +138,7 @@ namespace LinwoodWorld.WorldSystem
             var bottomRenderUvs = new List<Vector2>();
             var bottomCollisionVertices = new List<Vector3>();
             var bottomCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(bottomPos))
+            if (chunk.VoxelInBounds(bottomPos) && !renderAllFaces)
             {
                 if (chunk.CausedRender(bottomPos))
                     CreateFace(chunk, position, Face.BOTTOM, verticesCount, out bottomRenderVertices, out bottomRenderNormals, out bottomRenderIndices, out bottomRenderUvs, out bottomCollisionVertices, out bottomCollisionIndices);
@@ -158,7 +158,7 @@ namespace LinwoodWorld.WorldSystem
             var eastRenderUvs = new List<Vector2>();
             var eastCollisionVertices = new List<Vector3>();
             var eastCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(eastPos))
+            if (chunk.VoxelInBounds(eastPos) && !renderAllFaces)
             {
                 if (chunk.CausedRender(eastPos))
                     CreateFace(chunk, position, Face.EAST, verticesCount, out eastRenderVertices, out eastRenderNormals, out eastRenderIndices, out eastRenderUvs, out eastCollisionVertices, out eastCollisionIndices);
@@ -179,7 +179,7 @@ namespace LinwoodWorld.WorldSystem
             var westRenderUvs = new List<Vector2>();
             var westCollisionVertices = new List<Vector3>();
             var westCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(westPos))
+            if (chunk.VoxelInBounds(westPos) && !renderAllFaces)
             {
                 if (chunk.CausedRender(westPos))
                     CreateFace(chunk, position, Face.WEST, verticesCount, out westRenderVertices, out westRenderNormals, out westRenderIndices, out westRenderUvs, out westCollisionVertices, out westCollisionIndices);
@@ -200,7 +200,7 @@ namespace LinwoodWorld.WorldSystem
             var northRenderUvs = new List<Vector2>();
             var northCollisionVertices = new List<Vector3>();
             var northCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(northPos))
+            if (chunk.VoxelInBounds(northPos) && !renderAllFaces)
             {
                 if (chunk.CausedRender(northPos))
                     CreateFace(chunk, position, Face.NORTH, verticesCount, out northRenderVertices, out northRenderNormals, out northRenderIndices, out northRenderUvs, out northCollisionVertices, out northCollisionIndices);
@@ -221,7 +221,7 @@ namespace LinwoodWorld.WorldSystem
             var southRenderUvs = new List<Vector2>();
             var southCollisionVertices = new List<Vector3>();
             var southCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(southPos))
+            if (chunk.VoxelInBounds(southPos) && !renderAllFaces)
             {
                 if (chunk.CausedRender(southPos))
                     CreateFace(chunk, position, Face.SOUTH, verticesCount, out southRenderVertices, out southRenderNormals, out southRenderIndices, out southRenderUvs, out southCollisionVertices, out southCollisionIndices);

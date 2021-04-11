@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://level/Player.cs" type="Script" id=1]
 [ext_resource path="res://textures/slot.png" type="Texture" id=2]
 [ext_resource path="res://textures/tileset.png" type="Texture" id=3]
 [ext_resource path="res://ui/invert.shader" type="Shader" id=4]
+[ext_resource path="res://textures/gravitygun.png" type="Texture" id=5]
 [ext_resource path="res://textures/slot_enabled.png" type="Texture" id=6]
 [ext_resource path="res://textures/bar_over.png" type="Texture" id=7]
 [ext_resource path="res://textures/bar.png" type="Texture" id=8]
@@ -58,14 +59,13 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
-anchor_left = 0.5
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -200.0
 margin_top = -64.0
-margin_right = 200.0
-alignment = 1
+alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -89,7 +89,7 @@ position = Vector2( 32, 32 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
 region_enabled = true
-region_rect = Rect2( 192, 0, 64, 64 )
+region_rect = Rect2( 0, 64, 64, 64 )
 
 [node name="CobbleTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
 margin_left = 68.0
@@ -132,65 +132,40 @@ texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 128, 0, 64, 64 )
 
-[node name="GrassTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
-margin_left = 204.0
-margin_right = 268.0
-margin_bottom = 64.0
-texture_normal = ExtResource( 2 )
-
-[node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/GrassTextureButton"]
-visible = false
-texture = ExtResource( 6 )
+[node name="ToolHBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 284.0
+margin_top = -64.0
+margin_right = 484.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/GrassTextureButton"]
-position = Vector2( 32, 32 )
-scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-region_enabled = true
-region_rect = Rect2( 64, 64, 64, 64 )
-
-[node name="DirtTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
-margin_left = 272.0
-margin_right = 336.0
+[node name="HandToolButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer"]
+margin_right = 64.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
 
-[node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/DirtTextureButton"]
-visible = false
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/DirtTextureButton"]
-position = Vector2( 32, 32 )
-scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-region_enabled = true
-region_rect = Rect2( 0, 64, 64, 64 )
-
-[node name="FlowerTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
-margin_left = 340.0
-margin_right = 404.0
+[node name="GunToolButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer"]
+margin_left = 68.0
+margin_right = 132.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
 
-[node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/FlowerTextureButton"]
-visible = false
-texture = ExtResource( 6 )
+[node name="TextureRect" type="TextureRect" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer/GunToolButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/FlowerTextureButton"]
-position = Vector2( 32, 32 )
-scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-region_enabled = true
-region_rect = Rect2( 0, 128, 64, 64 )
 
 [node name="InfoHBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
 anchor_top = 1.0
@@ -208,6 +183,7 @@ __meta__ = {
 [node name="TextureProgress" type="TextureProgress" parent="Rotation_Helper/Camera/Control/InfoHBoxContainer"]
 margin_right = 50.0
 margin_bottom = 250.0
+value = 100.0
 texture_under = ExtResource( 8 )
 texture_over = ExtResource( 7 )
 texture_progress = ExtResource( 8 )

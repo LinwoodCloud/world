@@ -18,12 +18,12 @@ namespace LinwoodWorld.WorldSystem
         //  {
         //      
         //  }
-        public abstract void CreateMesh(VoxelChunk chunk, Vector3 position, int verticesCount, 
+        public abstract void CreateMesh(VoxelChunk chunk, Vector3 position, int verticesCount,
             out List<Vector3> renderVertices,
             out List<Vector3> renderNormals,
             out List<int> renderIndices,
             out List<Vector2> renderUvs,
             out List<Vector3> collisionVertices,
-            out List<int> collisionIndices);
+            out List<int> collisionIndices, bool renderAllFaces = false);
     }
 }
