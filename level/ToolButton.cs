@@ -21,21 +21,32 @@ namespace LinwoodWorld.Level
         {
             player = GetNode<Player>(playerPath);
             selectedRect = GetNode<TextureRect>(new NodePath("SelectedTexture"));
-            UpdateDisplay();
+            UpdateDisplay(player.CurrentTool);
         }
-        private void UpdateDisplay()
+        private void UpdateDisplay(Tool current)
         {
-            selectedRect.Visible = player.CurrentTool == tool;
+            selectedRect.Visible = current == tool;
+        }
+
+        public void OnPressed()
+        {
+            ChangeTool();
         }
 
         public override void _PhysicsProcess(float delta)
         {
+            if (Input.IsActionJustPressed(tool.GetAction()))
+                ChangeTool();
+        }
+
+        private void ChangeTool()
+        {
             player.CurrentTool = tool;
         }
 
-        public void ToolChanged()
+        public void ToolChanged(Tool last, Tool current)
         {
-            UpdateDisplay();
+            UpdateDisplay(current);
         }
 
         //  // Called every frame. 'delta' is the elapsed time since the previous frame.

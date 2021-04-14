@@ -31,7 +31,7 @@ namespace LinwoodWorld.Level
         private VoxelWorld voxelWorld;
         private int currentJumps = 0;
         private Spatial rightHand;
-        private Tool currentTool;
+        private Tool currentTool = Tool.Hand;
 
         public Tool CurrentTool
         {
