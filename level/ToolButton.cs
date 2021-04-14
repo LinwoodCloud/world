@@ -30,10 +30,12 @@ namespace LinwoodWorld.Level
 
         public override void _PhysicsProcess(float delta)
         {
-            if(Input.IsActionJustPressed(tool.GetAction())){
-                player.CurrentTool = tool;
-                UpdateDisplay();
-            }
+            player.CurrentTool = tool;
+        }
+
+        public void ToolChanged()
+        {
+            UpdateDisplay();
         }
 
         //  // Called every frame. 'delta' is the elapsed time since the previous frame.

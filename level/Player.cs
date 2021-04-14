@@ -33,9 +33,18 @@ namespace LinwoodWorld.Level
         private Spatial rightHand;
         private Tool currentTool;
 
-        public Tool CurrentTool { get => currentTool; set {
-            currentTool = value;
-        } }
+        public Tool CurrentTool
+        {
+            get => currentTool; set
+            {
+                var last = currentTool;
+                currentTool = value;
+                EmitSignal(nameof(ToolChanged), last, value);
+            }
+        }
+
+        [Signal]
+        public delegate void ToolChanged(Tool last, Tool current);
 
         public override void _Ready()
         {
@@ -46,7 +55,7 @@ namespace LinwoodWorld.Level
             Input.SetMouseMode(Input.MouseMode.Captured);
             if (pathToVoxelWorld != null)
                 voxelWorld = GetNode<VoxelWorld>(pathToVoxelWorld);
-            if(voxelWorld == null)
+            if (voxelWorld == null)
                 voxelWorld = GetParent<VoxelWorld>();
         }
         public override void _PhysicsProcess(float delta)
