@@ -1,4 +1,5 @@
 using Godot;
+using LinwoodWorld.Level;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -17,6 +18,8 @@ namespace LinwoodWorld.WorldSystem
         public int voxelUnitSize = 1;
         public Vector3 chunkSize = new Vector3(16, 16, 16);
         public Vector3 worldSize;
+        [Signal]
+        public delegate void WorldCreated();
 
 
         public override void _Ready()
@@ -63,7 +66,7 @@ namespace LinwoodWorld.WorldSystem
             chunkScene = ResourceLoader.Load<PackedScene>("res://level/Voxel_Chunk.tscn");
             LoadMods(mods);
             BuildTileSet();
-            CreateWorld(new Vector3(8, 16, 8));
+            CreateWorld(new Vector3(4, 6, 4));
         }
 
         private void LoadMods(List<Mod> mods)
@@ -141,6 +144,14 @@ namespace LinwoodWorld.WorldSystem
                 thread.Join();
             }
             GD.Print("Successfully created the world!");
+            SpawnPlayer();
+            EmitSignal(nameof(WorldCreated));
+        }
+        private void SpawnPlayer()
+        {
+            var playerScene = ResourceLoader.Load<PackedScene>("res://level/Player.tscn");
+            var player = playerScene.Instance() as Player;
+            CallDeferred("add_child", player);
         }
         private void CreateChunk(VoxelChunk chunk)
         {

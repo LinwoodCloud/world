@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://level/Player.cs" type="Script" id=1]
 [ext_resource path="res://textures/slot.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://textures/bar.png" type="Texture" id=8]
 [ext_resource path="res://textures/crosshair.png" type="Texture" id=9]
 [ext_resource path="res://level/pause.tscn" type="PackedScene" id=10]
+[ext_resource path="res://models/gravitygun.tscn" type="PackedScene" id=11]
+[ext_resource path="res://level/ToolButton.cs" type="Script" id=12]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Label
@@ -58,7 +60,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
+[node name="ToolHBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -66,6 +68,75 @@ anchor_bottom = 1.0
 margin_left = -200.0
 margin_top = -64.0
 alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HandToolButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer"]
+margin_right = 64.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 2 )
+script = ExtResource( 12 )
+
+[node name="SelectedTexture" type="TextureRect" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer/HandToolButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SwordToolButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer"]
+margin_left = 68.0
+margin_right = 132.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 2 )
+
+[node name="SelectedTexture" type="TextureRect" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer/SwordToolButton"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BuildToolButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer"]
+margin_left = 136.0
+margin_right = 200.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer/BuildToolButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectedTexture" type="TextureRect" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer/BuildToolButton"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 284.0
+margin_top = -64.0
+margin_right = 484.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -99,6 +170,7 @@ texture_normal = ExtResource( 2 )
 
 [node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/CobbleTextureButton"]
 visible = false
+margin_right = 64.0
 margin_bottom = 64.0
 texture = ExtResource( 6 )
 __meta__ = {
@@ -131,42 +203,6 @@ scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 128, 0, 64, 64 )
-
-[node name="ToolHBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 284.0
-margin_top = -64.0
-margin_right = 484.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HandToolButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer"]
-margin_right = 64.0
-margin_bottom = 64.0
-texture_normal = ExtResource( 2 )
-
-[node name="GunToolButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer"]
-margin_left = 68.0
-margin_right = 132.0
-margin_bottom = 64.0
-texture_normal = ExtResource( 2 )
-
-[node name="TextureRect" type="TextureRect" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer/GunToolButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 5.0
-margin_top = 5.0
-margin_right = -5.0
-margin_bottom = -5.0
-texture = ExtResource( 5 )
-expand = true
-stretch_mode = 6
-flip_h = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="InfoHBoxContainer" type="HBoxContainer" parent="Rotation_Helper/Camera/Control"]
 anchor_top = 1.0
@@ -231,6 +267,11 @@ __meta__ = {
 pause_mode = 2
 visible = false
 playerPath = NodePath("../../..")
+
+[node name="RightHand" type="Spatial" parent="Rotation_Helper/Camera"]
+transform = Transform( 0.103782, 0, 0.9946, 0, 1, 0, -0.9946, 0, 0.103782, 0.417, -0.696, -0.54 )
+
+[node name="gravitygun" parent="Rotation_Helper/Camera/RightHand" instance=ExtResource( 11 )]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )

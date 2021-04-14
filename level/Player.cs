@@ -4,7 +4,7 @@ using LinwoodWorld.WorldSystem;
 
 namespace LinwoodWorld.Level
 {
-    class Player : KinematicBody
+    public class Player : KinematicBody
     {
         [Export]
         private int gravity = -24;
@@ -30,6 +30,12 @@ namespace LinwoodWorld.Level
         private Vector3 velocity = new Vector3();
         private VoxelWorld voxelWorld;
         private int currentJumps = 0;
+        private Spatial rightHand;
+        private Tool currentTool;
+
+        public Tool CurrentTool { get => currentTool; set {
+            currentTool = value;
+        } }
 
         public override void _Ready()
         {
@@ -40,6 +46,8 @@ namespace LinwoodWorld.Level
             Input.SetMouseMode(Input.MouseMode.Captured);
             if (pathToVoxelWorld != null)
                 voxelWorld = GetNode<VoxelWorld>(pathToVoxelWorld);
+            if(voxelWorld == null)
+                voxelWorld = GetParent<VoxelWorld>();
         }
         public override void _PhysicsProcess(float delta)
         {
@@ -112,7 +120,7 @@ namespace LinwoodWorld.Level
             }
         }
 
-        public void WorldManipulationInput()
+        private void WorldManipulationInput()
         {
             if (Input.IsActionJustPressed("break"))
             {
@@ -132,7 +140,7 @@ namespace LinwoodWorld.Level
                 }
             }
         }
-        public Dictionary RayCast()
+        private Dictionary RayCast()
         {
             var spaceState = GetWorld().DirectSpaceState;
             var from = camera.ProjectRayOrigin(GetViewport().GetMousePosition());
