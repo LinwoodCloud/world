@@ -33,9 +33,9 @@ namespace LinwoodWorld.Level
             ChangeTool();
         }
 
-        public override void _PhysicsProcess(float delta)
+        public override void _Input(InputEvent @event)
         {
-            if (Input.IsActionJustPressed(tool.GetAction()))
+            if (@event.IsActionPressed(tool.GetAction()))
                 ChangeTool();
         }
 

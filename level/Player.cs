@@ -32,7 +32,10 @@ namespace LinwoodWorld.Level
         private int currentJumps = 0;
         private Spatial rightHand;
         private Tool currentTool = Tool.Hand;
-
+        [Export]
+        public NodePath pauseMenu;
+        [Export]
+        public NodePath backpack;
         public Tool CurrentTool
         {
             get => currentTool; set
@@ -42,9 +45,22 @@ namespace LinwoodWorld.Level
                 EmitSignal(nameof(ToolChanged), last, value);
             }
         }
+        private int currentSlot = 0;
+        public int CurrentSlot
+        {
+            get => currentSlot; set
+            {
+                var last = currentSlot;
+                currentSlot = value;
+                EmitSignal(nameof(SlotChanged), last, value);
+            }
+        }
 
         [Signal]
         public delegate void ToolChanged(Tool last, Tool current);
+
+        [Signal]
+        public delegate void SlotChanged(int last, int current);
 
         public override void _Ready()
         {

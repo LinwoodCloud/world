@@ -1,0 +1,303 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://level/InventoryItem.tscn" type="PackedScene" id=1]
+[ext_resource path="res://textures/slot.png" type="Texture" id=2]
+[ext_resource path="res://textures/gravitygun.png" type="Texture" id=3]
+[ext_resource path="res://level/BackpackScript.cs" type="Script" id=4]
+
+[node name="Backpack" type="WindowDialog"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -350.0
+margin_top = -250.0
+margin_right = 350.0
+margin_bottom = 250.0
+window_title = "Backpack"
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GearPanel" type="Panel" parent="HSplitContainer"]
+margin_right = 300.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 300, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HSplitContainer/GearPanel"]
+anchor_right = 1.0
+margin_bottom = 27.0
+text = "Gear"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToolsContainer" type="HBoxContainer" parent="HSplitContainer/GearPanel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -90.0
+margin_bottom = -20.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="HSplitContainer/GearPanel/ToolsContainer"]
+margin_left = 41.0
+margin_right = 111.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 70, 70 )
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton2" type="TextureButton" parent="HSplitContainer/GearPanel/ToolsContainer"]
+margin_left = 115.0
+margin_right = 185.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 70, 70 )
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer/GearPanel/ToolsContainer/TextureButton2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 6.0
+margin_right = -6.0
+margin_bottom = -6.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton3" type="TextureButton" parent="HSplitContainer/GearPanel/ToolsContainer"]
+margin_left = 189.0
+margin_right = 259.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 70, 70 )
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryPanel" type="Panel" parent="HSplitContainer"]
+margin_left = 308.0
+margin_right = 700.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 300, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/InventoryPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="HSplitContainer/InventoryPanel/ScrollContainer"]
+margin_right = 392.0
+margin_bottom = 588.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="GridContainer" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer"]
+margin_left = 50.0
+margin_right = 342.0
+margin_bottom = 588.0
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+
+[node name="TextureButton2" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 74.0
+margin_right = 144.0
+
+[node name="TextureButton3" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 148.0
+margin_right = 218.0
+
+[node name="TextureButton4" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 222.0
+margin_right = 292.0
+
+[node name="TextureButton5" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_top = 74.0
+margin_bottom = 144.0
+
+[node name="TextureButton6" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 74.0
+margin_top = 74.0
+margin_right = 144.0
+margin_bottom = 144.0
+
+[node name="TextureButton7" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 148.0
+margin_top = 74.0
+margin_right = 218.0
+margin_bottom = 144.0
+
+[node name="TextureButton8" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 222.0
+margin_top = 74.0
+margin_right = 292.0
+margin_bottom = 144.0
+
+[node name="TextureButton9" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_top = 148.0
+margin_bottom = 218.0
+
+[node name="TextureButton10" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 74.0
+margin_top = 148.0
+margin_right = 144.0
+margin_bottom = 218.0
+
+[node name="TextureButton11" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 148.0
+margin_top = 148.0
+margin_right = 218.0
+margin_bottom = 218.0
+
+[node name="TextureButton12" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 222.0
+margin_top = 148.0
+margin_right = 292.0
+margin_bottom = 218.0
+
+[node name="TextureButton13" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_top = 222.0
+margin_bottom = 292.0
+
+[node name="TextureButton14" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 74.0
+margin_top = 222.0
+margin_right = 144.0
+margin_bottom = 292.0
+
+[node name="TextureButton15" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 148.0
+margin_top = 222.0
+margin_right = 218.0
+margin_bottom = 292.0
+
+[node name="TextureButton16" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 222.0
+margin_top = 222.0
+margin_right = 292.0
+margin_bottom = 292.0
+
+[node name="TextureButton17" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_top = 296.0
+margin_bottom = 366.0
+
+[node name="TextureButton18" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 74.0
+margin_top = 296.0
+margin_right = 144.0
+margin_bottom = 366.0
+
+[node name="TextureButton19" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 148.0
+margin_top = 296.0
+margin_right = 218.0
+margin_bottom = 366.0
+
+[node name="TextureButton20" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 222.0
+margin_top = 296.0
+margin_right = 292.0
+margin_bottom = 366.0
+
+[node name="TextureButton21" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_top = 370.0
+margin_bottom = 440.0
+
+[node name="TextureButton22" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 74.0
+margin_top = 370.0
+margin_right = 144.0
+margin_bottom = 440.0
+
+[node name="TextureButton23" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 148.0
+margin_top = 370.0
+margin_right = 218.0
+margin_bottom = 440.0
+
+[node name="TextureButton24" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 222.0
+margin_top = 370.0
+margin_right = 292.0
+margin_bottom = 440.0
+
+[node name="TextureButton25" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_top = 444.0
+margin_bottom = 514.0
+
+[node name="TextureButton26" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 74.0
+margin_top = 444.0
+margin_right = 144.0
+margin_bottom = 514.0
+
+[node name="TextureButton27" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 148.0
+margin_top = 444.0
+margin_right = 218.0
+margin_bottom = 514.0
+
+[node name="TextureButton28" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 222.0
+margin_top = 444.0
+margin_right = 292.0
+margin_bottom = 514.0
+
+[node name="TextureButton29" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_top = 518.0
+margin_bottom = 588.0
+
+[node name="TextureButton30" parent="HSplitContainer/InventoryPanel/ScrollContainer/CenterContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 74.0
+margin_top = 518.0
+margin_right = 144.0
+margin_bottom = 588.0
+
+[node name="Label" type="Label" parent="HSplitContainer/InventoryPanel"]
+anchor_right = 1.0
+margin_bottom = 27.0
+text = "Inventory"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

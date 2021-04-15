@@ -359,6 +359,7 @@ script = ExtResource( 5 )
 margin_right = 406.0
 margin_bottom = 27.0
 text = "Testmod"
+
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/CreateButton" to="." method="OnCreateButtonPressed"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/ModsButton" to="." method="OnModsButtonPressed"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/NewsButton" to="." method="OnNewsButtonPressed"]

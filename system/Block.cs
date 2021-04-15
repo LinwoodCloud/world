@@ -1,9 +1,10 @@
 using Godot;
+using LinwoodWorld.Inventory;
 using System.Collections.Generic;
 
 namespace LinwoodWorld.WorldSystem
 {
-    public abstract class Block : Godot.Object
+    public abstract class Block : Item
     {
         public abstract bool CausedRender(VoxelChunk chunk, Vector3 position);
         //public abstract void BuildVoxelFace(Chunk chunk);

@@ -82,6 +82,7 @@ namespace LinwoodWorld.WorldSystem
         public bool Transparent => false;
         public bool Solid => true;
         public abstract BlockTexture Texture { get; }
+        public override Texture UITexture => GD.Load<StreamTexture>(Texture.North);
 
         public override bool CausedRender(VoxelChunk chunk, Vector3 position)
         {

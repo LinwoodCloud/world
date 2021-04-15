@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://level/Player.cs" type="Script" id=1]
 [ext_resource path="res://textures/slot.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://level/pause.tscn" type="PackedScene" id=10]
 [ext_resource path="res://models/gravitygun.tscn" type="PackedScene" id=11]
 [ext_resource path="res://level/ToolButton.cs" type="Script" id=12]
+[ext_resource path="res://level/Backpack.tscn" type="PackedScene" id=13]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Label
@@ -77,6 +78,7 @@ margin_right = 64.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
 script = ExtResource( 12 )
+playerPath = NodePath("../../../../..")
 
 [node name="SelectedTexture" type="TextureRect" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer/HandToolButton"]
 anchor_right = 1.0
@@ -267,6 +269,8 @@ __meta__ = {
 pause_mode = 2
 visible = false
 playerPath = NodePath("../../..")
+
+[node name="Backpack" parent="Rotation_Helper/Camera" instance=ExtResource( 13 )]
 
 [node name="RightHand" type="Spatial" parent="Rotation_Helper/Camera"]
 transform = Transform( 0.103782, 0, 0.9946, 0, 1, 0, -0.9946, 0, 0.103782, 0.417, -0.696, -0.54 )

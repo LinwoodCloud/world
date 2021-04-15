@@ -4,7 +4,8 @@ namespace LinwoodWorld.Level
     {
         Hand,
         Sword,
-        Build
+        Build,
+        Wrench
     }
     public static class ToolMethods
     {

@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace LinwoodWorld.Level
@@ -14,6 +15,26 @@ namespace LinwoodWorld.Level
         {
             player = GetNode<Player>(playerPath);
             selectedRect = GetNode<TextureRect>(new NodePath("SelectedTexture"));
+            UpdateDisplay(player.CurrentSlot);
+        }
+
+        private void UpdateDisplay(int currentSlot)
+        {
+            selectedRect.Visible = currentSlot == slot;
+        }
+        public override void _Input(InputEvent @event)
+        {
+            if(@event.IsActionPressed("slot_" + slot))
+                ChangeSlot();
+        }
+        private void ChangeSlot()
+        {
+            player.CurrentSlot = slot;
+        }
+
+        public void ToolChanged(int last, int current)
+        {
+            UpdateDisplay(current);
         }
     }
 }
