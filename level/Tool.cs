@@ -11,7 +11,7 @@ namespace LinwoodWorld.Level
     {
         public static string GetAction(this Tool tool)
         {
-            return "tool_" + tool.ToString().ToLower();
+            return $"{tool.ToString().ToLower()}_tool";
         }
     }
 }
