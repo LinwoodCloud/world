@@ -82,7 +82,7 @@ namespace LinwoodWorld.WorldSystem
         public bool Transparent => false;
         public bool Solid => true;
         public abstract BlockTexture Texture { get; }
-        public override Texture UITexture => GD.Load<StreamTexture>(Texture.North);
+        public override string UITexture => Texture.North;
 
         public override bool CausedRender(VoxelChunk chunk, Vector3 position)
         {
@@ -102,7 +102,7 @@ namespace LinwoodWorld.WorldSystem
             renderUvs = new List<Vector2>();
             collisionVertices = new List<Vector3>();
             collisionIndices = new List<int>();
-            if (chunk.GetVoxel(position) == null)
+            if (chunk != null && chunk.GetVoxel(position) == null)
                 return;
 
             var topPos = new Vector3(position.x, position.y + 1, position.z);
@@ -118,7 +118,7 @@ namespace LinwoodWorld.WorldSystem
             var topRenderUvs = new List<Vector2>();
             var topCollisionVertices = new List<Vector3>();
             var topCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(topPos) && !renderAllFaces)
+            if (!renderAllFaces && chunk.VoxelInBounds(topPos))
             {
                 if (chunk.CausedRender(topPos))
                     CreateFace(chunk, position, Face.TOP, verticesCount, out topRenderVertices, out topRenderNormals, out topRenderIndices, out topRenderUvs, out topCollisionVertices, out topCollisionIndices);
@@ -139,7 +139,7 @@ namespace LinwoodWorld.WorldSystem
             var bottomRenderUvs = new List<Vector2>();
             var bottomCollisionVertices = new List<Vector3>();
             var bottomCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(bottomPos) && !renderAllFaces)
+            if (!renderAllFaces && chunk.VoxelInBounds(bottomPos))
             {
                 if (chunk.CausedRender(bottomPos))
                     CreateFace(chunk, position, Face.BOTTOM, verticesCount, out bottomRenderVertices, out bottomRenderNormals, out bottomRenderIndices, out bottomRenderUvs, out bottomCollisionVertices, out bottomCollisionIndices);
@@ -180,7 +180,7 @@ namespace LinwoodWorld.WorldSystem
             var westRenderUvs = new List<Vector2>();
             var westCollisionVertices = new List<Vector3>();
             var westCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(westPos) && !renderAllFaces)
+            if (!renderAllFaces && chunk.VoxelInBounds(westPos))
             {
                 if (chunk.CausedRender(westPos))
                     CreateFace(chunk, position, Face.WEST, verticesCount, out westRenderVertices, out westRenderNormals, out westRenderIndices, out westRenderUvs, out westCollisionVertices, out westCollisionIndices);
@@ -201,7 +201,7 @@ namespace LinwoodWorld.WorldSystem
             var northRenderUvs = new List<Vector2>();
             var northCollisionVertices = new List<Vector3>();
             var northCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(northPos) && !renderAllFaces)
+            if (!renderAllFaces && chunk.VoxelInBounds(northPos))
             {
                 if (chunk.CausedRender(northPos))
                     CreateFace(chunk, position, Face.NORTH, verticesCount, out northRenderVertices, out northRenderNormals, out northRenderIndices, out northRenderUvs, out northCollisionVertices, out northCollisionIndices);
@@ -222,7 +222,7 @@ namespace LinwoodWorld.WorldSystem
             var southRenderUvs = new List<Vector2>();
             var southCollisionVertices = new List<Vector3>();
             var southCollisionIndices = new List<int>();
-            if (chunk.VoxelInBounds(southPos) && !renderAllFaces)
+            if (!renderAllFaces && chunk.VoxelInBounds(southPos))
             {
                 if (chunk.CausedRender(southPos))
                     CreateFace(chunk, position, Face.SOUTH, verticesCount, out southRenderVertices, out southRenderNormals, out southRenderIndices, out southRenderUvs, out southCollisionVertices, out southCollisionIndices);

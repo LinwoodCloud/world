@@ -22,6 +22,7 @@ namespace LinwoodWorld.Level
             player = GetNode<Player>(playerPath);
             selectedRect = GetNode<TextureRect>(new NodePath("SelectedTexture"));
             UpdateDisplay(player.CurrentTool);
+            player.Connect("ToolChanged", this, nameof(ToolChanged));
         }
         private void UpdateDisplay(Tool current)
         {

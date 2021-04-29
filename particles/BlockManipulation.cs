@@ -16,11 +16,12 @@ namespace LinwoodWorld.Particles
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
+            GetNode<AnimationPlayer>("AnimationPlayer").Play("fade_in");
         }
 
-        public void Setup(VoxelChunk chunk, Vector3 position)
+        public void Setup(VoxelChunk voxelChunk, string block)
         {
-            ((ShaderMaterial) MaterialOverride).SetShaderParam("block_texture", chunk.AlbedoTexture);
+            ((ShaderMaterial)MaterialOverride).SetShaderParam("block_texture", voxelChunk.World.Texture);
             surfaceTool = new SurfaceTool();
             var renderVertices = new List<Vector3>();
             var renderNormals = new List<Vector3>();
@@ -29,7 +30,7 @@ namespace LinwoodWorld.Particles
 
             var collisionVertices = new List<Vector3>();
             var collisionIndices = new List<int>();
-            chunk.GetBlock(position).CreateMesh(chunk, new Vector3(0, 0, 0), 0, out renderVertices, out renderNormals, out renderIndices, out renderUvs, out collisionVertices, out collisionIndices, true);
+            voxelChunk.World.GetBlock(block).CreateMesh(voxelChunk, new Vector3(0, 0, 0), 0, out renderVertices, out renderNormals, out renderIndices, out renderUvs, out collisionVertices, out collisionIndices, renderAllFaces: true);
 
             surfaceTool.Clear();
             surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
@@ -48,9 +49,17 @@ namespace LinwoodWorld.Particles
             Mesh = mesh;
         }
 
-        public void OnTimeout()
+        public void Stop()
         {
-            QueueFree();
+            GetNode<AnimationPlayer>("AnimationPlayer").Play("fade_out");
         }
+        public void OnAnimationFinished(String name)
+        {
+            if (name == "fade_out")
+                QueueFree();
+        }
+
+        [Signal]
+        public delegate void OnStop();
     }
 }

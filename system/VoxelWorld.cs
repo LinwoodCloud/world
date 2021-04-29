@@ -42,6 +42,7 @@ namespace LinwoodWorld.WorldSystem
                 var texture = textures[i];
                 var resource = GD.Load<StreamTexture>(texture);
                 var image = resource.GetData();
+                image.Decompress();
                 image.Convert(Image.Format.Rgba8);
                 var x = i == 0 ? 0 : i * image.GetWidth() % sizeX;
                 var y = i == 0 ? 0 : i * image.GetWidth() / sizeX * 64;

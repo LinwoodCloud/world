@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://level/Player.cs" type="Script" id=1]
 [ext_resource path="res://textures/slot.png" type="Texture" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://models/gravitygun.tscn" type="PackedScene" id=11]
 [ext_resource path="res://level/ToolButton.cs" type="Script" id=12]
 [ext_resource path="res://level/Backpack.tscn" type="PackedScene" id=13]
+[ext_resource path="res://level/SlotButton.cs" type="Script" id=14]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Label
@@ -149,12 +150,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StoneTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
+[node name="FirstSlot" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
 margin_right = 64.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
+script = ExtResource( 14 )
+playerPath = NodePath("../../../../..")
 
-[node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/StoneTextureButton"]
+[node name="SelectedTexture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/FirstSlot"]
 visible = false
 margin_right = 64.0
 margin_bottom = 64.0
@@ -163,20 +166,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/StoneTextureButton"]
+[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/FirstSlot"]
 position = Vector2( 32, 32 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 0, 64, 64, 64 )
 
-[node name="CobbleTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
+[node name="SecondSlot" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
 margin_left = 68.0
 margin_right = 132.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
+script = ExtResource( 14 )
+slot = 1
+playerPath = NodePath("../../../../..")
 
-[node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/CobbleTextureButton"]
+[node name="SelectedTexture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/SecondSlot"]
 visible = false
 margin_right = 64.0
 margin_bottom = 64.0
@@ -185,27 +191,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/CobbleTextureButton"]
+[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/SecondSlot"]
 position = Vector2( 32, 32 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
 
-[node name="BedrockTextureButton" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
+[node name="ThirdSlot" type="TextureButton" parent="Rotation_Helper/Camera/Control/HBoxContainer"]
 margin_left = 136.0
 margin_right = 200.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
+script = ExtResource( 14 )
+slot = 2
+playerPath = NodePath("../../../../..")
 
-[node name="Select_Texture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/BedrockTextureButton"]
+[node name="SelectedTexture" type="TextureRect" parent="Rotation_Helper/Camera/Control/HBoxContainer/ThirdSlot"]
 visible = false
 texture = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/BedrockTextureButton"]
+[node name="Tileset" type="Sprite" parent="Rotation_Helper/Camera/Control/HBoxContainer/ThirdSlot"]
 position = Vector2( 32, 32 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
@@ -271,12 +280,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Backpack" parent="Rotation_Helper/Camera" instance=ExtResource( 13 )]
+
 [node name="PauseCanvas" parent="Rotation_Helper/Camera" instance=ExtResource( 10 )]
 pause_mode = 2
 visible = false
 playerPath = NodePath("../../..")
-
-[node name="Backpack" parent="Rotation_Helper/Camera" instance=ExtResource( 13 )]
 
 [node name="RightHand" type="Spatial" parent="Rotation_Helper/Camera"]
 transform = Transform( 0.103782, 0, 0.9946, 0, 1, 0, -0.9946, 0, 0.103782, 0.417, -0.696, -0.54 )
@@ -287,7 +296,3 @@ transform = Transform( 0.197738, 0, 0.0299968, 0, 0.2, 0, -0.0299968, 0, 0.19773
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 shape = SubResource( 3 )
-
-[connection signal="ToolChanged" from="." to="Rotation_Helper/Camera/Control/ToolHBoxContainer/HandToolButton" method="ToolChanged"]
-[connection signal="ToolChanged" from="." to="Rotation_Helper/Camera/Control/ToolHBoxContainer/BuildToolButton" method="ToolChanged"]
-[connection signal="ToolChanged" from="." to="Rotation_Helper/Camera/Control/ToolHBoxContainer/SwordToolButton" method="ToolChanged"]

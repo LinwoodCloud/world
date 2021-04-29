@@ -4,7 +4,7 @@ namespace LinwoodWorld.Inventory
 {
     public abstract class Item : Godot.Object
     {
-        public abstract Texture UITexture {get; }
+        public abstract string UITexture {get; }
         public void OnClick()
         {
             
