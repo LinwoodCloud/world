@@ -11,7 +11,6 @@ namespace LinwoodWorld.WorldSystem
         private VoxelWorld world;
         private string[,,] voxels;
         private Vector3 chunkSize;
-        private int voxelSize;
         private SurfaceTool surfaceTool;
         public List<Vector2> meshuvs;
         private MeshInstance meshInstance;
@@ -57,14 +56,14 @@ namespace LinwoodWorld.WorldSystem
                                 voxels[x, y, z] = "res://mods/main/blocks/GrassBlock.cs";
                             else
                                 voxels[x, y, z] = "res://mods/main/blocks/Dirt.cs";*/
-                        if(globPos.z % 4 == 0 && globPos.x % 4 == 0 && globPos.y % 4 == 0)
-                            voxels[x,y,z] = blocks[random.Next(blocks.Count)]; 
-                        /* if (y + 1 == chunkSize.y / 2 && x == chunkSize.x / 2 && z == chunkSize.z / 2)
+                        /*if(globPos.z % 4 == 0 && globPos.x % 4 == 0 && globPos.y % 4 == 0)
+                            voxels[x,y,z] = blocks[random.Next(blocks.Count)]; */
+                        if (y + 1 == chunkSize.y / 2)
                             voxels[x, y, z] = "res://mods/main/blocks/GrassBlock.cs";
                         else if (y >= chunkSize.y / 4)
                             voxels[x, y, z] = "res://mods/main/blocks/Dirt.cs";
                         else
-                            voxels[x, y, z] = "res://mods/main/blocks/Stone.cs"; */
+                            voxels[x, y, z] = "res://mods/main/blocks/Stone.cs";
                     }
                 }
             }
@@ -151,15 +150,9 @@ namespace LinwoodWorld.WorldSystem
             }
             collisionShape.CallDeferred("set_shape", surfaceTool.Commit(new ArrayMesh()).CreateTrimeshShape());
         }
-        protected bool IsVoxelInBounds(Vector3 position)
-        {
-            return position.x >= 0 && position.x < chunkSize.x &&
-                position.y >= 0 && position.y < chunkSize.y &&
-                position.z >= 0 && position.z < chunkSize.z;
-        }
         public string GetVoxel(Vector3 position)
         {
-            if (IsVoxelInBounds(position))
+            if (VoxelInBounds(position))
                 return voxels[(int)position.x, (int)position.y, (int)position.z];
             return null;
         }
@@ -189,7 +182,7 @@ namespace LinwoodWorld.WorldSystem
 
         public bool SetVoxel(Vector3 position, string voxel)
         {
-            if (IsVoxelInBounds(position))
+            if (VoxelInBounds(position))
                 voxels[(int)position.x, (int)position.y, (int)position.z] = voxel;
             else
                 return false;

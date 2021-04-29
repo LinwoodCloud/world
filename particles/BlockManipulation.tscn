@@ -1,10 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://particles/BreakBlock.cs" type="Script" id=1]
-[ext_resource path="res://mods/main/textures/dirt.png" type="Texture" id=2]
+[ext_resource path="res://particles/BlockManipulation.cs" type="Script" id=1]
 [ext_resource path="res://ui/recolor.shader" type="Shader" id=3]
-
-[sub_resource type="CubeMesh" id=1]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 3 )
@@ -12,9 +9,12 @@ shader_param/fuwafuwa_speed = 3.397
 shader_param/fuwafuwa_size = 0.435
 shader_param/recolored = Color( 0, 1, 0.976471, 0.254902 )
 shader_param/alpha = 0.5
-shader_param/blockTexture = ExtResource( 2 )
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 1, 1, 1 )
 
 [node name="Spatial" type="MeshInstance"]
+material_override = SubResource( 2 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 script = ExtResource( 1 )

@@ -22,6 +22,9 @@ namespace LinwoodWorld.WorldSystem
             Description = description;
             Blocks = blocks;
         }
+        public Mod(){
+            
+        }
 
         public Mod(ConfigFile config, string path) :
             this(config.GetValue("general", "name") as string, config.GetValue("general", "version") as string, config.GetValue("general", "website") as string, config.GetValue("general", "description") as string, config.GetValue("general", "name") as List<string>, path)

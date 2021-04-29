@@ -24,9 +24,10 @@ script = ExtResource( 1 )
 environment = SubResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, -0.563944, 0.825813, 0, -0.825813, -0.563944, 0, 33.0581, 0 )
+transform = Transform( 1, 0, 0, 0, -0.563944, 0.825813, 0, -0.825813, -0.563944, 0, 100, 0 )
 shadow_enabled = true
 
 [node name="ModLoader" type="Spatial" parent="."]
 script = ExtResource( 3 )
+
 [connection signal="ModsInitialized" from="ModLoader" to="." method="ModsInitialized"]

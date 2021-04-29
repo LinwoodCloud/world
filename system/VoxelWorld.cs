@@ -151,6 +151,7 @@ namespace LinwoodWorld.WorldSystem
         {
             var playerScene = ResourceLoader.Load<PackedScene>("res://level/Player.tscn");
             var player = playerScene.Instance() as Player;
+            player.Setup(this);
             CallDeferred("add_child", player);
         }
         private void CreateChunk(VoxelChunk chunk)
@@ -168,6 +169,14 @@ namespace LinwoodWorld.WorldSystem
                     break;
             }
             return result;
+        }
+        public VoxelChunk GetChunk(Vector3 position){
+            foreach (VoxelChunk chunk in chunkHolder.GetChildren())
+            {
+                if(chunk.VoxelInBounds(chunk.GlobalTransform.XformInv(position)))
+                    return chunk;
+            }
+            return null;
         }
 
         public Vector2 GetTexturePosition(string path)

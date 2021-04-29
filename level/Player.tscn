@@ -93,6 +93,9 @@ margin_left = 68.0
 margin_right = 132.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
+script = ExtResource( 12 )
+tool = 1
+playerPath = NodePath("../../../../..")
 
 [node name="SelectedTexture" type="TextureRect" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer/SwordToolButton"]
 visible = false
@@ -108,6 +111,9 @@ margin_left = 136.0
 margin_right = 200.0
 margin_bottom = 64.0
 texture_normal = ExtResource( 2 )
+script = ExtResource( 12 )
+tool = 2
+playerPath = NodePath("../../../../..")
 
 [node name="TextureRect" type="TextureRect" parent="Rotation_Helper/Camera/Control/ToolHBoxContainer/BuildToolButton"]
 anchor_right = 1.0
@@ -276,7 +282,12 @@ playerPath = NodePath("../../..")
 transform = Transform( 0.103782, 0, 0.9946, 0, 1, 0, -0.9946, 0, 0.103782, 0.417, -0.696, -0.54 )
 
 [node name="gravitygun" parent="Rotation_Helper/Camera/RightHand" instance=ExtResource( 11 )]
+transform = Transform( 0.197738, 0, 0.0299968, 0, 0.2, 0, -0.0299968, 0, 0.197738, 0.000139713, 0.0305769, 0.0013389 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 shape = SubResource( 3 )
+
+[connection signal="ToolChanged" from="." to="Rotation_Helper/Camera/Control/ToolHBoxContainer/HandToolButton" method="ToolChanged"]
+[connection signal="ToolChanged" from="." to="Rotation_Helper/Camera/Control/ToolHBoxContainer/BuildToolButton" method="ToolChanged"]
+[connection signal="ToolChanged" from="." to="Rotation_Helper/Camera/Control/ToolHBoxContainer/SwordToolButton" method="ToolChanged"]
