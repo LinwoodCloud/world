@@ -24,6 +24,10 @@ config/name="LinwoodWorld"
 run/main_scene="res://main/menu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+LoadingScreen="*res://main/loading.tscn"
+
 [editor_plugins]
 
 enabled=PoolStringArray(  )

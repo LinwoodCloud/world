@@ -9,6 +9,7 @@ namespace LinwoodWorld.Particles
     public class BlockManipulation : MeshInstance
     {
         private SurfaceTool surfaceTool;
+        private Tween tween;
         // Declare member variables here. Examples:
         // private int a = 2;
         // private string b = "text";
@@ -17,10 +18,13 @@ namespace LinwoodWorld.Particles
         public override void _Ready()
         {
             GetNode<AnimationPlayer>("AnimationPlayer").Play("fade_in");
+            tween = GetNode<Tween>("Tween");
         }
 
-        public void Setup(VoxelChunk voxelChunk, string block)
+        public void Setup(VoxelChunk voxelChunk, string block, Vector3 currentPos)
         {
+            this.currentPos = currentPos;
+            Translation = currentPos;
             ((ShaderMaterial)MaterialOverride).SetShaderParam("block_texture", voxelChunk.World.Texture);
             surfaceTool = new SurfaceTool();
             var renderVertices = new List<Vector3>();
@@ -55,13 +59,25 @@ namespace LinwoodWorld.Particles
         }
         public void OnAnimationFinished(String name)
         {
-            if (name == "fade_out"){
-                EmitSignal(nameof(OnStop));
+            if (name == "fade_out")
+            {
+                EmitSignal(nameof(OnStop), currentPos);
                 QueueFree();
             }
         }
 
         [Signal]
-        public delegate void OnStop();
+        public delegate void OnStop(Vector3 position);
+        private Vector3 currentPos;
+
+        internal void ChangePosition(Vector3 position)
+        {
+            if (currentPos != position){
+                //    GlobalTransform = new Transform(GlobalTransform.basis, position);
+                tween.InterpolateProperty(this, "translation", Translation, position, 0.5f, Tween.TransitionType.Linear, Tween.EaseType.InOut);
+                tween.Start();
+            }
+            currentPos = position;
+        }
     }
 }

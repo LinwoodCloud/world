@@ -57,7 +57,7 @@ namespace LinwoodWorld.Level
         {
             get => currentSlot; set
             {
-                while(value < 0)
+                while (value < 0)
                     value += hotbar.Length;
                 var last = currentSlot;
                 currentSlot = value % hotbar.Length;
@@ -97,6 +97,8 @@ namespace LinwoodWorld.Level
             if (currentWorld == null)
                 currentWorld = GetParent<VoxelWorld>();
             CurrentTool = Tool.Build;
+            if (currentWorld != null)
+                GlobalTransform = new Transform(GlobalTransform.basis, new Vector3(currentWorld.worldSize.x * currentWorld.chunkSize.x / 2, currentWorld.worldSize.y * currentWorld.chunkSize.y, currentWorld.worldSize.z * currentWorld.chunkSize.z / 2));
         }
         public void Setup(VoxelWorld world)
         {
@@ -185,7 +187,7 @@ namespace LinwoodWorld.Level
                     {
                         var position = (Vector3)ray["position"] + ((Vector3)ray["normal"] / 2);
                         position = position.Floor();
-                        blockManipulation.GlobalTransform = new Transform(blockManipulation.GlobalTransform.basis, position);
+                        blockManipulation.ChangePosition(position);
                     }
                 }
                 else
@@ -207,7 +209,7 @@ namespace LinwoodWorld.Level
             if (Input.IsActionJustPressed("break"))
             {
                 var ray = RayCast();
-                if (ray != null && ray.Contains("position") && ray.Contains("normal") && blockManipulation == null && currentBlock == null)
+                if (ray != null && ray.Contains("position") && ray.Contains("normal") && blockManipulation == null)
                 {
                     var position = (Vector3)ray["position"] - ((Vector3)ray["normal"] / 2);
                     var manipulateScene = ResourceLoader.Load<PackedScene>("res://particles/BlockManipulation.tscn");
@@ -215,21 +217,15 @@ namespace LinwoodWorld.Level
                     currentWorld.AddChild(blockManipulation);
                     var chunk = currentWorld.GetChunk(position);
                     var currentBlock = chunk.GetVoxel(chunk.GlobalTransform.XformInv(position));
-                    blockManipulation.Setup(chunk, currentBlock);
-                    blockManipulation.GlobalTransform = new Transform(blockManipulation.GlobalTransform.basis, position.Floor());
+                    blockManipulation.Setup(chunk, currentBlock, position.Floor());
+                    blockManipulation.ChangePosition(position.Floor());
                     currentWorld.SetWorldVoxel(position, null);
                     CurrentHotbar = currentBlock;
                 }
             }
             else if (Input.IsActionJustPressed("use"))
             {
-                var ray = RayCast();
-                if (ray != null && ray.Contains("position") && ray.Contains("normal") && currentBlock == null && CurrentHotbar != null)
-                {
-                    CurrentHotbar = null;
-                    currentBlock = (Vector3)ray["position"] + ((Vector3)ray["normal"] / 2);
-                    RemoveBlockPreview();
-                }
+                RemoveBlockPreview();
             }
             if (Input.IsActionJustReleased("slot_next"))
             {
@@ -239,12 +235,9 @@ namespace LinwoodWorld.Level
             if (Input.IsActionJustReleased("slot_previous"))
                 CurrentSlot--;
         }
-        private Vector3? currentBlock = null;
-        private void RemoveCurrentBlock()
+        private void RemoveCurrentBlock(Vector3 currentBlock)
         {
-            if(currentBlock != null)
-                currentWorld.SetWorldVoxel((Vector3) currentBlock, "res://mods/main/blocks/GrassBlock.cs");
-            currentBlock = null;
+            currentWorld.SetWorldVoxel(currentBlock, "res://mods/main/blocks/GrassBlock.cs");
         }
         private Dictionary RayCast()
         {

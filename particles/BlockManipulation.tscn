@@ -7,7 +7,7 @@
 shader = ExtResource( 3 )
 shader_param/fuwafuwa_speed = 3.397
 shader_param/fuwafuwa_size = 0.435
-shader_param/fade = 1.0
+shader_param/fade = 0.0
 shader_param/recolored = Color( 0, 1, 0.976471, 0.254902 )
 shader_param/alpha = 0.5
 
@@ -56,5 +56,7 @@ script = ExtResource( 1 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/fade_in = SubResource( 3 )
 anims/fade_out = SubResource( 4 )
+
+[node name="Tween" type="Tween" parent="."]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinished"]

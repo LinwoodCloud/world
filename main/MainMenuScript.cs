@@ -22,7 +22,9 @@ public class MainMenuScript : Control
 
     public void OnCreateButtonPressed()
     {
-        GetTree().ChangeScene("res://level/Main_Scene.tscn");
+        var loader = GetNode<LoadingScreen>("/root/LoadingScreen");
+        GD.Print("START LOADING");
+        loader.Load("res://level/Main_Scene.tscn");
     }
 
     public void OnNewsButtonPressed()

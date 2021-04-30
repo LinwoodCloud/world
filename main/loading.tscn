@@ -1,13 +1,29 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
+[ext_resource path="res://textures/blur_background.png" type="Texture" id=1]
 [ext_resource path="res://textures/loading_bar.png" type="Texture" id=2]
+[ext_resource path="res://ui/blur.shader" type="Shader" id=3]
+[ext_resource path="res://main/LoadingScreen.cs" type="Script" id=4]
 
-[node name="Control" type="Control"]
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 3 )
+shader_param/blur_amount = 1.5
+
+[node name="LoadingScreen" type="Control"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
 
 [node name="Panel" type="Panel" parent="."]
 anchor_top = 1.0
