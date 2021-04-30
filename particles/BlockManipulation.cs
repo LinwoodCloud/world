@@ -55,8 +55,10 @@ namespace LinwoodWorld.Particles
         }
         public void OnAnimationFinished(String name)
         {
-            if (name == "fade_out")
+            if (name == "fade_out"){
+                EmitSignal(nameof(OnStop));
                 QueueFree();
+            }
         }
 
         [Signal]

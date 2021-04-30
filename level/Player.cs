@@ -57,9 +57,10 @@ namespace LinwoodWorld.Level
         {
             get => currentSlot; set
             {
-                value = Mathf.Abs(value);
+                while(value < 0)
+                    value += hotbar.Length;
                 var last = currentSlot;
-                currentSlot = Mathf.Abs(value) % hotbar.Length;
+                currentSlot = value % hotbar.Length;
                 EmitSignal(nameof(SlotChanged), last, currentSlot);
             }
         }
@@ -195,6 +196,7 @@ namespace LinwoodWorld.Level
         {
             if (IsInstanceValid(blockManipulation) && blockManipulation != null)
             {
+                blockManipulation.Connect("OnStop", this, nameof(RemoveCurrentBlock));
                 blockManipulation.Stop();
                 blockManipulation = null;
             }
@@ -205,7 +207,7 @@ namespace LinwoodWorld.Level
             if (Input.IsActionJustPressed("break"))
             {
                 var ray = RayCast();
-                if (ray != null && ray.Contains("position") && ray.Contains("normal"))
+                if (ray != null && ray.Contains("position") && ray.Contains("normal") && blockManipulation == null && currentBlock == null)
                 {
                     var position = (Vector3)ray["position"] - ((Vector3)ray["normal"] / 2);
                     var manipulateScene = ResourceLoader.Load<PackedScene>("res://particles/BlockManipulation.tscn");
@@ -219,15 +221,14 @@ namespace LinwoodWorld.Level
                     CurrentHotbar = currentBlock;
                 }
             }
-            if (Input.IsActionJustPressed("use"))
+            else if (Input.IsActionJustPressed("use"))
             {
                 var ray = RayCast();
-                if (ray != null && ray.Contains("position") && ray.Contains("normal"))
+                if (ray != null && ray.Contains("position") && ray.Contains("normal") && currentBlock == null && CurrentHotbar != null)
                 {
-                    RemoveBlockPreview();
                     CurrentHotbar = null;
-                    var position = (Vector3)ray["position"] + ((Vector3)ray["normal"] / 2);
-                    currentWorld.SetWorldVoxel(position, "res://mods/main/blocks/GrassBlock.cs");
+                    currentBlock = (Vector3)ray["position"] + ((Vector3)ray["normal"] / 2);
+                    RemoveBlockPreview();
                 }
             }
             if (Input.IsActionJustReleased("slot_next"))
@@ -237,6 +238,13 @@ namespace LinwoodWorld.Level
             }
             if (Input.IsActionJustReleased("slot_previous"))
                 CurrentSlot--;
+        }
+        private Vector3? currentBlock = null;
+        private void RemoveCurrentBlock()
+        {
+            if(currentBlock != null)
+                currentWorld.SetWorldVoxel((Vector3) currentBlock, "res://mods/main/blocks/GrassBlock.cs");
+            currentBlock = null;
         }
         private Dictionary RayCast()
         {

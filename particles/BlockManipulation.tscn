@@ -7,7 +7,7 @@
 shader = ExtResource( 3 )
 shader_param/fuwafuwa_speed = 3.397
 shader_param/fuwafuwa_size = 0.435
-shader_param/fade = 0.0
+shader_param/fade = 1.0
 shader_param/recolored = Color( 0, 1, 0.976471, 0.254902 )
 shader_param/alpha = 0.5
 
@@ -23,7 +23,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 1.0 ]
@@ -38,7 +38,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 1.0, 0.0 ]
