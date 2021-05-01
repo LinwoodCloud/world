@@ -4,6 +4,7 @@ using System;
 public class LoadingScreen : Control
 {
     private Node currentScene;
+    private TextureProgress progressBar;
     private ResourceInteractiveLoader loader;
     private int waitFrames;
     const int maxTime = 120;
@@ -17,6 +18,7 @@ public class LoadingScreen : Control
     {
         var root = GetTree().Root;
         currentScene = root.GetChild(root.GetChildCount() - 1);
+        progressBar = GetNode<TextureProgress>("ProgressBar");
         Visible = false;
     }
 
@@ -30,6 +32,7 @@ public class LoadingScreen : Control
             return;
         }
         SetProcess(true);
+        progressBar.SetProcess(true);
         currentScene.QueueFree();
         // TODO: Add loading animation
         // GetNode<AnimationPlayer>("AnimationPlayer").Play("loading");
@@ -47,6 +50,7 @@ public class LoadingScreen : Control
         if (loader == null)
         {
             SetProcess(false);
+            progressBar.SetProcess(false);
             return;
         }
         if (waitFrames > 0)
@@ -55,7 +59,7 @@ public class LoadingScreen : Control
             return;
         }
         var t = OS.GetTicksMsec();
-        while (OS.GetTicksMsec() < t + maxTime)
+        while (true)
         {
             var error = loader.Poll();
             if (error == Error.FileEof)
@@ -79,9 +83,9 @@ public class LoadingScreen : Control
 
     private void UpdateProgress()
     {
-        var progress = (float)loader.GetStage() / loader.GetStageCount();
-        GetNode<TextureProgress>("ProgressBar").Value = progress;
-
+        var progress = ((double)loader.GetStage()) / loader.GetStageCount();
+        progressBar.Value = progress;
+        progressBar.MaxValue = 1;
 
     }
 
