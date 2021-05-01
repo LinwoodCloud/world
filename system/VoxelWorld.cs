@@ -47,7 +47,6 @@ namespace LinwoodWorld.WorldSystem
 				var x = i == 0 ? 0 : i * image.GetWidth() % sizeX;
 				var y = i == 0 ? 0 : i * image.GetWidth() / sizeX * 64;
 				var coord = new Vector2(x, y);
-				GD.Print(texture);
 				img.BlitRect(image, image.GetUsedRect(), coord);
 				textureCoords[texture] = coord / 64f;
 			}

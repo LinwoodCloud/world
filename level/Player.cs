@@ -229,15 +229,14 @@ namespace LinwoodWorld.Level
             }
             if (Input.IsActionJustReleased("slot_next"))
             {
-                GD.Print("TESTET");
                 CurrentSlot++;
             }
             if (Input.IsActionJustReleased("slot_previous"))
                 CurrentSlot--;
         }
-        private void RemoveCurrentBlock(Vector3 currentBlock)
+        private void RemoveCurrentBlock(Vector3 currentBlock, string block)
         {
-            currentWorld.SetWorldVoxel(currentBlock, "res://mods/main/blocks/GrassBlock.cs");
+            currentWorld.SetWorldVoxel(currentBlock, block);
         }
         private Dictionary RayCast()
         {

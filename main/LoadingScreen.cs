@@ -32,8 +32,8 @@ public class LoadingScreen : Control
             return;
         }
         SetProcess(true);
-        progressBar.SetProcess(true);
         currentScene.QueueFree();
+        progressBar.Value = 0.5;
         // TODO: Add loading animation
         // GetNode<AnimationPlayer>("AnimationPlayer").Play("loading");
         waitFrames = 1;
@@ -50,7 +50,6 @@ public class LoadingScreen : Control
         if (loader == null)
         {
             SetProcess(false);
-            progressBar.SetProcess(false);
             return;
         }
         if (waitFrames > 0)
@@ -83,10 +82,9 @@ public class LoadingScreen : Control
 
     private void UpdateProgress()
     {
-        var progress = ((double)loader.GetStage()) / loader.GetStageCount();
-        progressBar.Value = progress;
-        progressBar.MaxValue = 1;
-
+        var progress = Convert.ToDouble(loader.GetStage()) / loader.GetStageCount();
+        GD.Print(progress);
+        GetNode<TextureProgress>("ProgressBar").Value = progress;
     }
 
     private void SetNewScene(PackedScene resource)

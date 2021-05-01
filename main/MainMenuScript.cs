@@ -23,7 +23,6 @@ public class MainMenuScript : Control
     public void OnCreateButtonPressed()
     {
         var loader = GetNode<LoadingScreen>("/root/LoadingScreen");
-        GD.Print("START LOADING");
         loader.Load("res://level/Main_Scene.tscn");
     }
 

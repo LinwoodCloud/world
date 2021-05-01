@@ -28,7 +28,8 @@ namespace LinwoodWorld.WorldSystem
         public void EnableMod(string name)
         {
             var configFile = new ConfigFile();
-            configFile.Load($"res://mods/{name}/mod.cfg");
+            GD.Print(name);
+            GD.Print(configFile.Load($"res://mods/{name}/mod.cfg"));
             Mod mod = new Mod(configFile, name);
             mods.Add(mod);
             var locales = TranslationServer.GetLoadedLocales();

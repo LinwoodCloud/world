@@ -10,6 +10,7 @@ namespace LinwoodWorld.Particles
     {
         private SurfaceTool surfaceTool;
         private Tween tween;
+        private string block;
         // Declare member variables here. Examples:
         // private int a = 2;
         // private string b = "text";
@@ -24,6 +25,7 @@ namespace LinwoodWorld.Particles
         public void Setup(VoxelChunk voxelChunk, string block, Vector3 currentPos)
         {
             this.currentPos = currentPos;
+            this.block = block;
             Translation = currentPos;
             ((ShaderMaterial)MaterialOverride).SetShaderParam("block_texture", voxelChunk.World.Texture);
             surfaceTool = new SurfaceTool();
@@ -61,13 +63,13 @@ namespace LinwoodWorld.Particles
         {
             if (name == "fade_out")
             {
-                EmitSignal(nameof(OnStop), currentPos);
+                EmitSignal(nameof(OnStop), currentPos, block);
                 QueueFree();
             }
         }
 
         [Signal]
-        public delegate void OnStop(Vector3 position);
+        public delegate void OnStop(Vector3 position, string block);
         private Vector3 currentPos;
 
         internal void ChangePosition(Vector3 position)
