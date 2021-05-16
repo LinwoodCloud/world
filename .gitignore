@@ -18,6 +18,9 @@ export/
 .vs
 *.iml
 .idea
+*.old
+*.user
+*.suo
 
 # Game specific
 textures/tileset.png
