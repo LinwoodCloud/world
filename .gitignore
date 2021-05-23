@@ -9,6 +9,8 @@ export_presets.cfg
 # Mono-specific ignores
 .mono/
 data_*/
+mono_crash*.json
+*.dll
 
 # Exports
 export/
@@ -21,6 +23,15 @@ export/
 *.old
 *.user
 *.suo
+.kdev4
+*.kdev4
+
+# Debugger
+vgcore*
+
+# GDNative
+*.os
+.sconsign.dblite
 
 # Game specific
 textures/tileset.png

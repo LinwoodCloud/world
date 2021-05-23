@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://ui/Roboto-Regular.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://main/MainMenuScript.cs" type="Script" id=2]
+[ext_resource path="res://main/MainMenuScript.gdns" type="Script" id=2]
 [ext_resource path="res://textures/blur_background.png" type="Texture" id=3]
 [ext_resource path="res://ui/blur.shader" type="Shader" id=4]
 [ext_resource path="res://main/ModList.cs" type="Script" id=5]
@@ -361,11 +361,10 @@ margin_right = 406.0
 margin_bottom = 27.0
 text = "Testmod"
 
-[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/CreateButton" to="." method="OnCreateButtonPressed"]
-[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/ModsButton" to="." method="OnModsButtonPressed"]
-[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/NewsButton" to="." method="OnNewsButtonPressed"]
-[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/WebsiteButton" to="." method="OnWebsiteButtonPressed"]
-[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/SourceButton" to="." method="OnSourceButtonPressed"]
-[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/LocalizationButton" to="." method="OnSourceButtonPressed"]
-[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/QuitButton" to="." method="OnQuitButtonPressed"]
-[connection signal="ModsInitialized" from="Control" to="ModsDialog/Panel/ScrollContainer/VBoxContainer" method="InitializeMods"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/CreateButton" to="." method="on_create_button_pressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/ModsButton" to="." method="on_mods_button_pressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/NewsButton" to="." method="on_news_button_pressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/WebsiteButton" to="." method="on_website_button_pressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/SourceButton" to="." method="on_source_button_pressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/LocalizationButton" to="." method="on_source_button_pressed"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/QuitButton" to="." method="on_quit_button_pressed"]

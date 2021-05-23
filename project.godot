@@ -9,13 +9,19 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
-"class": "Discord",
-"language": "GDScript",
-"path": "res://discord_sdk/discord.gd"
+"base": "WindowDialog",
+"class": "BackpackScript",
+"language": "NativeScript",
+"path": "res://level/BackpackScript.gdns"
+}, {
+"base": "Control",
+"class": "MainMenuScript",
+"language": "NativeScript",
+"path": "res://main/MainMenuScript.gdns"
 } ]
 _global_script_class_icons={
-"Discord": ""
+"BackpackScript": "",
+"MainMenuScript": ""
 }
 
 [application]
@@ -34,7 +40,7 @@ enabled=PoolStringArray(  )
 
 [gui]
 
-theme/custom="res://default_theme.tres"
+theme/custom="res://default_theme.theme"
 theme/custom_font="res://ui/Roboto.tres"
 
 [input]
