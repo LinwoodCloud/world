@@ -14,7 +14,6 @@
 - Build the bindings with (Platform can be `windows`, `linux` and `osx`):
 
   ```bash
-    godot --gdnative-generate-json-api api.json
     cd godot-cpp
     scons platform=<platform> generate_bindings=yes -j4 use_custom_api_file=yes custom_api_file=../api.json
     cd ..
