@@ -6,6 +6,22 @@
 [![Discord badge](https://img.shields.io/discord/735424757142519848?style=for-the-badge)](https://discord.linwood.tk)
 [![GitHub repo size](https://img.shields.io/github/repo-size/LinwoodCloud/world?style=for-the-badge)](https://github.com/LinwoodCloud/world/archive/main.zip)
 
+## Building
+
+- Download the Godot Engine 3.3.1 - Mono [here](https://godotengine.org/download)
+- Download the dependencies <https://docs.godotengine.org/en/stable/development/compiling/index.html>
+- Install all submodules with `git submodule update --init` in the root folder and in the `godot-cpp` submodule.
+- Build the bindings with (Platform can be `windows`, `linux` and `osx`):
+
+  ```bash
+    godot --gdnative-generate-json-api api.json
+    cd godot-cpp
+    scons platform=<platform> generate_bindings=yes -j4 use_custom_api_file=yes custom_api_file=../api.json
+    cd ..
+  ```
+
+- Open the project with godot
+
 ## Installation
 
 ### Mobile
@@ -51,13 +67,6 @@
 ## Contributing
 
 ![Locale chart](https://badges.awesome-crowdin.com/translation-200008942-8.png)
-
-### Coding
-
-- Download the Godot Engine - Mono [here](https://godotengine.org/download)
-- Download the requirements
-- Install the Discord Game SDK Library [here](https://github.com/LennyPhoenix/GodotDiscordSDK/wiki/Installation)
-- Open the project
 
 ### Issues
 
