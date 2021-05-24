@@ -14,6 +14,7 @@ namespace LinwoodWorld.WorldSystem
 
         public override void _Ready(){
             mods = new List<Mod>();
+            GD.Print("LOADING MODLOADER...");
             EnableMod("main");
             EmitSignal(nameof(ModsInitialized), mods);
         }
@@ -27,9 +28,15 @@ namespace LinwoodWorld.WorldSystem
 
         public void EnableMod(string name)
         {
+            GD.Print("ENABLE MOD!");
             var configFile = new ConfigFile();
-            GD.Print(name);
-            GD.Print(configFile.Load($"res://mods/{name}/mod.cfg"));
+            var path = $"res://mods/{name}/mod.cfg";
+            GD.Print(path);
+            var file = new File();
+            GD.Print(file.Open(path, File.ModeFlags.Read));
+            GD.Print(file.GetAsText());
+            file.Close();
+            GD.Print(configFile.Load(path));
             Mod mod = new Mod(configFile, name);
             mods.Add(mod);
             var locales = TranslationServer.GetLoadedLocales();

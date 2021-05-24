@@ -51,7 +51,7 @@ namespace LinwoodWorld.WorldSystem
 				textureCoords[texture] = coord / 64f;
 			}
 			img.ClearMipmaps();
-			img.SavePng("res://textures/tileset.png");
+			img.SavePng("user://tileset.png");
 			texture.CreateFromImage(img);
 			var flags = (Godot.Texture.FlagsEnum)texture.Flags;
 			if (flags.HasFlag(Godot.Texture.FlagsEnum.Filter))
@@ -66,6 +66,8 @@ namespace LinwoodWorld.WorldSystem
 			chunkScene = ResourceLoader.Load<PackedScene>("res://level/Voxel_Chunk.tscn");
 			LoadMods(mods);
 			BuildTileSet();
+			GD.Print("Keys:");
+			GD.Print(new List<string>(textureCoords.Keys).ToArray());
 			CreateWorld(new Vector3(4, 6, 4));
 		}
 
@@ -73,13 +75,14 @@ namespace LinwoodWorld.WorldSystem
 		{
 			foreach (var mod in mods)
 			{
+				GD.Print("Mod: " + mod.Path);
 				LoadMod(mod);
 			}
 		}
 		private void LoadMod(Mod mod)
 		{
 			var directory = new Directory();
-			var error = directory.Open($"res://mods/{mod.Path}/blocks/");
+			var error = directory.Open($"res://mods/{mod.Path}/blocks");
 			if (error != Error.Ok)
 				return;
 			directory.ListDirBegin(true);
@@ -97,16 +100,18 @@ namespace LinwoodWorld.WorldSystem
 
 
 			directory = new Directory();
-			error = directory.Open($"res://mods/{mod.Path}/textures/");
+			error = directory.Open($"res://mods/{mod.Path}/textures");
+			GD.Print(error);
 			if (error != Error.Ok)
 				return;
 			directory.ListDirBegin(true);
 			fileName = directory.GetNext();
 			while (!fileName.Empty())
 			{
-				if (!fileName.EndsWith(".import"))
+				GD.Print(fileName);
+				if (fileName.EndsWith(".png.import"))
 				{
-					var resource = GD.Load<StreamTexture>($"res://mods/{mod.Path}/textures/{fileName}");
+					var resource = GD.Load<StreamTexture>($"res://mods/{mod.Path}/textures/{fileName.Substr(0, fileName.Length - ".import".Length)}");
 					if (resource != null)
 						textures.Add(resource.ResourcePath);
 				}
@@ -132,17 +137,23 @@ namespace LinwoodWorld.WorldSystem
 						chunkHolder.AddChild(newChunk);
 						newChunk.GlobalTransform = new Transform(newChunk.GlobalTransform.basis, position * chunkSize);
 						newChunk.Setup(this, chunkSize, voxelUnitSize);
-						var thread = new System.Threading.Thread(new ThreadStart( () => CreateChunk(newChunk)));
-						thread.Start();
-						threads.Add(thread);
+						#if GODOT_WEB
+							CreateChunk(newChunk);
+						#else
+							var thread = new System.Threading.Thread(new ThreadStart( () => CreateChunk(newChunk)));
+							thread.Start();
+							threads.Add(thread);
+						#endif
 					}
 				}
 			}
-			GD.Print("Starting threading...");
-			foreach (var thread in threads)
-			{
-				thread.Join();
-			}
+			#if !GODOT_WEB
+				GD.Print("Starting threading...");
+				foreach (var thread in threads)
+				{
+					thread.Join();
+				}
+			#endif
 			GD.Print("Successfully created the world!");
 			SpawnPlayer();
 			EmitSignal(nameof(WorldCreated));
